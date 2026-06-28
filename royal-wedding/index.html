@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aarav &amp; Diya — Wedding Invitation</title>
+<meta name="description" content="You are cordially invited to the wedding celebration of Aarav &amp; Diya.">
+
+<!-- ===== SHARE / COVER IMAGE (Open Graph) =====
+     After deploying to Vercel, replace YOUR-LINK.vercel.app below with your real domain
+     so the WhatsApp/Instagram link preview shows the cover image. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aarav &amp; Diya — Wedding Invitation">
+<meta property="og:description" content="With the blessings of our families, we invite you to celebrate our wedding.">
+<meta property="og:image" content="https://YOUR-LINK.vercel.app/images/cover.jpg">
+<meta property="og:url" content="https://YOUR-LINK.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://YOUR-LINK.vercel.app/images/cover.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon:#5C0E1B; --maroon-dark:#3A080F; --gold:#C99A3D; --gold-light:#E8C97A;
+    --cream:#F7EEDD; --ink:#2A0A10;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--maroon-dark);color:var(--cream);
+    font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.6;
+    overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  }
+  .eyebrow{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.42em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+  section{position:relative}
+  .divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:34px 0;color:var(--gold)}
+  .divider span{height:1px;width:60px;background:linear-gradient(90deg,transparent,var(--gold))}
+  .divider span:last-child{background:linear-gradient(90deg,var(--gold),transparent)}
+  .divider .dot{font-size:1.1rem}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;text-align:center;padding:80px 24px;
+    background:radial-gradient(circle at 50% 42%,var(--maroon) 0%,var(--maroon-dark) 78%);position:relative}
+  .mandala{position:absolute;top:50%;left:50%;transform:translate(-50%,-54%);
+    width:min(86vw,560px);height:min(86vw,560px);opacity:.5;pointer-events:none}
+  .mandala circle, .mandala line, .mandala path{stroke:var(--gold-light);fill:none;
+    stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.6s ease forwards}
+  .mandala .r2{animation-delay:.3s} .mandala .r3{animation-delay:.6s}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  .hero-inner{position:relative;z-index:2;opacity:0;transform:translateY(18px);
+    animation:rise 1.2s ease .8s forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .names{font-size:clamp(3rem,13vw,5.8rem);font-weight:500;line-height:1.02;color:var(--cream)}
+  .names .amp{display:block;font-style:italic;font-size:.55em;color:var(--gold-light);margin:.1em 0}
+  .hero .date{font-family:'Cinzel',serif;font-size:.86rem;letter-spacing:.32em;
+    margin-top:1.4rem;color:var(--gold-light)}
+  .scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+    font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.3em;color:var(--gold);
+    opacity:.8;animation:bob 2s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateX(-50%) translateY(6px)}}
+
+  /* generic block */
+  .block{padding:72px 0;text-align:center}
+  .block h2{font-family:'Cinzel',serif;font-size:1.5rem;letter-spacing:.16em;
+    color:var(--gold-light);margin-bottom:.4rem}
+  .lead{font-size:1.3rem;max-width:560px;margin:0 auto;color:#efe2cf}
+
+  /* COUNTDOWN */
+  .countdown{display:flex;justify-content:center;gap:14px;margin-top:30px;flex-wrap:wrap}
+  .cd-box{background:rgba(201,154,61,.1);border:1px solid rgba(201,154,61,.4);
+    border-radius:10px;padding:16px 10px;min-width:78px}
+  .cd-box b{display:block;font-family:'Cinzel',serif;font-size:1.9rem;color:var(--cream)}
+  .cd-box small{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--gold)}
+
+  /* SCHEDULE */
+  .events{display:grid;gap:18px;margin-top:30px;text-align:left}
+  .ev{background:linear-gradient(180deg,rgba(92,14,27,.7),rgba(58,8,15,.7));
+    border:1px solid rgba(201,154,61,.32);border-radius:14px;padding:22px 24px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .ev h3{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:.1em;color:var(--gold-light)}
+  .ev p{color:#e6d6c1;font-size:1.05rem}
+  .ev .when{text-align:right;font-family:'Cinzel',serif;font-size:.78rem;color:var(--gold);white-space:nowrap}
+  .maplink{display:inline-block;margin-top:26px;font-family:'Cinzel',serif;font-size:.72rem;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--maroon-dark);
+    background:linear-gradient(180deg,var(--gold-light),var(--gold));
+    padding:13px 26px;border-radius:40px;text-decoration:none}
+
+  /* GALLERY */
+  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:30px}
+  .gallery img{width:100%;height:100%;object-fit:cover;border-radius:12px;
+    border:1px solid rgba(201,154,61,.3);aspect-ratio:4/5;display:block}
+
+  /* FORMS */
+  .card{background:linear-gradient(180deg,rgba(92,14,27,.65),rgba(58,8,15,.85));
+    border:1px solid rgba(201,154,61,.32);border-radius:18px;padding:34px 26px;
+    max-width:520px;margin:30px auto 0;text-align:left}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+  .field input,.field select,.field textarea{width:100%;background:rgba(247,238,221,.06);
+    border:1px solid rgba(201,154,61,.4);border-radius:9px;padding:13px 14px;color:var(--cream);
+    font-family:'Cormorant Garamond',serif;font-size:1.1rem}
+  .field input:focus,.field select,.field textarea:focus{outline:2px solid var(--gold-light)}
+  .field select option{color:#000}
+  .btn{display:inline-block;width:100%;text-align:center;cursor:pointer;border:none;
+    font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--maroon-dark);background:linear-gradient(180deg,var(--gold-light),var(--gold));
+    padding:15px;border-radius:40px;margin-top:6px}
+  .note{font-size:.95rem;color:#cdb89c;margin-top:12px;text-align:center}
+  .thanks{display:none;text-align:center;color:var(--gold-light);font-size:1.25rem;padding:10px 0}
+
+  footer{text-align:center;padding:50px 24px 90px;color:#bfa07a;font-size:1rem}
+  footer .heart{color:var(--gold-light)}
+
+  /* MUSIC */
+  .music-btn{position:fixed;top:16px;right:16px;z-index:60;width:46px;height:46px;border-radius:50%;
+    border:1px solid rgba(201,154,61,.6);background:rgba(58,8,15,.8);color:var(--gold-light);
+    cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+  .music-btn svg{width:20px;height:20px}
+
+  /* WHATSAPP CHAT WIDGET */
+  .chat-bubble{position:fixed;bottom:20px;right:20px;z-index:70;width:60px;height:60px;border-radius:50%;
+    background:#25D366;border:none;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.4);
+    display:flex;align-items:center;justify-content:center}
+  .chat-bubble svg{width:32px;height:32px;fill:#fff}
+  .chat-panel{position:fixed;bottom:90px;right:20px;z-index:70;width:300px;max-width:calc(100vw - 40px);
+    background:#fff;color:#222;border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.5);
+    overflow:hidden;display:none;font-family:'Cormorant Garamond',serif}
+  .chat-head{background:#075E54;color:#fff;padding:16px 18px}
+  .chat-head b{font-size:1.15rem}
+  .chat-head small{display:block;opacity:.85;font-size:.85rem}
+  .chat-body{padding:16px 18px}
+  .chat-body .msg{background:#f0f0f0;border-radius:10px;padding:10px 12px;font-size:1rem;margin-bottom:14px}
+  .chat-opt{display:block;width:100%;text-align:left;background:#fff;border:1px solid #25D366;
+    color:#075E54;border-radius:9px;padding:11px 13px;margin-bottom:9px;cursor:pointer;font-size:1rem;
+    font-family:inherit}
+  .chat-opt:hover{background:#25D366;color:#fff}
+
+  @media(min-width:680px){ .names{line-height:.96} }
+</style>
+</head>
+<body>
+
+<!-- MUSIC -->
+<button class="music-btn" id="musicBtn" aria-label="Toggle music">
+  <svg id="musicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+    <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+  </svg>
+</button>
+<audio id="bgAudio" loop preload="auto"><source src="audio/music.mp3" type="audio/mpeg"></audio>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="mandala" viewBox="0 0 200 200" aria-hidden="true">
+    <circle cx="100" cy="100" r="92"/>
+    <circle class="r2" cx="100" cy="100" r="70"/>
+    <circle class="r3" cx="100" cy="100" r="46"/>
+    <circle class="r2" cx="100" cy="100" r="24"/>
+  </svg>
+  <div class="hero-inner">
+    <div class="eyebrow">Together with our families</div>
+    <h1 class="names">Aarav<span class="amp">&amp;</span>Diya</h1>
+    <div class="date">Sunday &middot; 14 December 2026 &middot; Bhubaneswar</div>
+  </div>
+  <div class="scroll-cue">Scroll &darr;</div>
+</section>
+
+<!-- INVITATION LINE -->
+<section class="block wrap">
+  <div class="eyebrow">An invitation</div>
+  <p class="lead">With hearts full of joy and the blessings of our elders, we request the honour of your presence as we begin our journey together.</p>
+  <div class="divider"><span></span><span class="dot">&#10070;</span><span></span></div>
+</section>
+
+<!-- COUNTDOWN -->
+<section class="block wrap">
+  <h2>Counting down</h2>
+  <div class="countdown" id="countdown">
+    <div class="cd-box"><b id="cd-days">--</b><small>Days</small></div>
+    <div class="cd-box"><b id="cd-hours">--</b><small>Hours</small></div>
+    <div class="cd-box"><b id="cd-mins">--</b><small>Minutes</small></div>
+    <div class="cd-box"><b id="cd-secs">--</b><small>Seconds</small></div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="block wrap">
+  <h2>Wedding Functions</h2>
+  <div class="events">
+    <div class="ev"><div><h3>Haldi</h3><p>A morning of turmeric &amp; laughter</p></div><div class="when">12 Dec<br>10:00 AM</div></div>
+    <div class="ev"><div><h3>Sangeet</h3><p>An evening of music &amp; dance</p></div><div class="when">13 Dec<br>7:00 PM</div></div>
+    <div class="ev"><div><h3>Wedding Ceremony</h3><p>The sacred pheras</p></div><div class="when">14 Dec<br>6:30 PM</div></div>
+  </div>
+  <a class="maplink" href="https://maps.google.com/?q=Bhubaneswar" target="_blank" rel="noopener">View Venue on Map</a>
+</section>
+
+<!-- GALLERY -->
+<section class="block wrap">
+  <h2>Our Moments</h2>
+  <div class="gallery">
+    <img src="images/photo1.jpg" alt="Couple photo 1" loading="lazy">
+    <img src="images/photo2.jpg" alt="Couple photo 2" loading="lazy">
+    <img src="images/photo3.jpg" alt="Couple photo 3" loading="lazy">
+    <img src="images/photo4.jpg" alt="Couple photo 4" loading="lazy">
+  </div>
+</section>
+
+<!-- GUEST RSVP -->
+<section class="block wrap">
+  <h2>Will you join us?</h2>
+  <div class="card">
+    <div id="rsvpForm">
+      <div class="field"><label>Your name</label><input id="r-name" type="text" placeholder="Full name"></div>
+      <div class="field"><label>Number of guests</label>
+        <select id="r-count"><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+      <div class="field"><label>Will you attend?</label>
+        <select id="r-attend"><option>Joyfully accept</option><option>Regretfully decline</option></select></div>
+      <button class="btn" id="rsvpSend">Send RSVP</button>
+      <p class="note">Your RSVP goes straight to the couple on WhatsApp.</p>
+    </div>
+    <div class="thanks" id="rsvpThanks">Thank you! We can't wait to celebrate with you. &#10070;</div>
+  </div>
+</section>
+
+<!-- PRE-BOOK THIS DESIGN (vendor) -->
+<section class="block wrap" id="book" style="background:linear-gradient(180deg,rgba(92,14,27,.4),transparent)">
+  <div class="eyebrow">Love this invitation?</div>
+  <h2>Pre-book your own</h2>
+  <p class="lead">Get a personalised digital invite like this — your names, photos, music &amp; details. No advance confirmation needed, just reserve a slot.</p>
+  <div class="card">
+    <div id="bookForm">
+      <div class="field"><label>Your name</label><input id="b-name" type="text" placeholder="Your name"></div>
+      <div class="field"><label>Your phone / WhatsApp</label><input id="b-phone" type="tel" placeholder="Phone number"></div>
+      <div class="field"><label>Event date</label><input id="b-date" type="date"></div>
+      <div class="field"><label>Choose a design</label>
+        <select id="b-pkg">
+          <option>Royal Wedding (this one)</option>
+          <option>Floral Wedding</option>
+          <option>Birthday — Pop</option>
+          <option>Birthday — Elegant</option>
+          <option>Not sure yet</option>
+        </select></div>
+      <button class="btn" id="bookSend">Pre-book on WhatsApp</button>
+      <p class="note">No payment now. We'll confirm details on WhatsApp.</p>
+    </div>
+    <div class="thanks" id="bookThanks">Opening WhatsApp&hellip; if it didn't open, message us at +91 70778 17064. &#10070;</div>
+  </div>
+</section>
+
+<footer>
+  <div class="divider"><span></span><span class="dot">&#10070;</span><span></span></div>
+  Made with <span class="heart">&#10084;</span> &middot; Custom digital invitations<br>
+  <small>pp.develper &middot; +91 70778 17064</small>
+</footer>
+
+<!-- WHATSAPP CHAT WIDGET -->
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head"><b>Invite Studio</b><small>Typically replies in minutes</small></div>
+  <div class="chat-body">
+    <div class="msg">Hi! 👋 Want a custom invite like this? Pick one and I'll open WhatsApp for you.</div>
+    <button class="chat-opt" data-msg="Hi! I'd like a custom wedding invitation like the Royal design.">💍 I want a wedding invite</button>
+    <button class="chat-opt" data-msg="Hi! I'd like a custom birthday invitation.">🎂 I want a birthday invite</button>
+    <button class="chat-opt" data-msg="Hi! What are your prices for digital invitations?">💸 Ask about pricing</button>
+  </div>
+</div>
+<button class="chat-bubble" id="chatBubble" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.044zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+</button>
+
+<script>
+/* ES5-compatible JS for in-app browser compatibility */
+(function(){
+  var WHATSAPP = "917077817064";
+  var EVENT_DATE = new Date("2026-12-14T18:30:00+05:30");
+
+  /* ---- Music: autoplay on first interaction (browsers block autosound) ---- */
+  var audio = document.getElementById("bgAudio");
+  var musicBtn = document.getElementById("musicBtn");
+  var icon = document.getElementById("musicIcon");
+  var playing = false, started = false;
+  function setIcon(on){
+    icon.innerHTML = on
+      ? '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'
+      : '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><line x1="3" y1="3" x2="21" y2="21" stroke-width="1.7"/>';
+  }
+  function play(){ audio.play().then(function(){playing=true;started=true;setIcon(true);}).catch(function(){}); }
+  function toggle(){ if(playing){audio.pause();playing=false;setIcon(false);} else {play();} }
+  musicBtn.addEventListener("click", toggle);
+  function firstTap(){ if(!started){ play(); } document.removeEventListener("click", firstTap); document.removeEventListener("touchstart", firstTap); }
+  document.addEventListener("click", firstTap);
+  document.addEventListener("touchstart", firstTap);
+
+  /* ---- Countdown ---- */
+  function pad(n){ return (n<10?"0":"")+n; }
+  function tick(){
+    var diff = EVENT_DATE.getTime() - new Date().getTime();
+    if(diff < 0){ diff = 0; }
+    var d = Math.floor(diff/86400000);
+    var h = Math.floor(diff%86400000/3600000);
+    var m = Math.floor(diff%3600000/60000);
+    var s = Math.floor(diff%60000/1000);
+    document.getElementById("cd-days").innerHTML = pad(d);
+    document.getElementById("cd-hours").innerHTML = pad(h);
+    document.getElementById("cd-mins").innerHTML = pad(m);
+    document.getElementById("cd-secs").innerHTML = pad(s);
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ---- Guest RSVP -> WhatsApp ---- */
+  document.getElementById("rsvpSend").addEventListener("click", function(){
+    var name = document.getElementById("r-name").value || "A guest";
+    var count = document.getElementById("r-count").value;
+    var attend = document.getElementById("r-attend").value;
+    var text = "RSVP for Aarav & Diya's wedding%0AName: " + encodeURIComponent(name) +
+               "%0AGuests: " + encodeURIComponent(count) + "%0AResponse: " + encodeURIComponent(attend);
+    window.open("https://wa.me/" + WHATSAPP + "?text=" + text, "_blank");
+    document.getElementById("rsvpForm").style.display = "none";
+    document.getElementById("rsvpThanks").style.display = "block";
+  });
+
+  /* ---- Pre-book -> WhatsApp (no confirmation step) ---- */
+  document.getElementById("bookSend").addEventListener("click", function(){
+    var name = document.getElementById("b-name").value || "—";
+    var phone = document.getElementById("b-phone").value || "—";
+    var date = document.getElementById("b-date").value || "—";
+    var pkg = document.getElementById("b-pkg").value;
+    var text = "Pre-booking request%0ADesign: " + encodeURIComponent(pkg) +
+               "%0AName: " + encodeURIComponent(name) +
+               "%0APhone: " + encodeURIComponent(phone) +
+               "%0AEvent date: " + encodeURIComponent(date);
+    window.open("https://wa.me/" + WHATSAPP + "?text=" + text, "_blank");
+    document.getElementById("bookForm").style.display = "none";
+    document.getElementById("bookThanks").style.display = "block";
+  });
+
+  /* ---- Chat widget ---- */
+  var panel = document.getElementById("chatPanel");
+  document.getElementById("chatBubble").addEventListener("click", function(){
+    panel.style.display = (panel.style.display === "block") ? "none" : "block";
+  });
+  var opts = document.getElementsByClassName("chat-opt");
+  for(var i=0;i<opts.length;i++){
+    opts[i].addEventListener("click", function(){
+      var msg = encodeURIComponent(this.getAttribute("data-msg"));
+      window.open("https://wa.me/" + WHATSAPP + "?text=" + msg, "_blank");
+    });
+  }
+})();
+</script>
+</body>
+</html>
