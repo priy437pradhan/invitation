@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ipsita &amp; Rohan — South Indian Wedding Invitation</title>
+<meta name="description" content="A vibrant South Indian wedding celebration — join Ipsita & Rohan!">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ipsita &amp; Rohan — Wedding Invitation">
+<meta property="og:description" content="A traditional South Indian wedding celebration. Join us!">
+<meta property="og:image" content="hero2.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Marcellus&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --marigold:#f08a1c;
+    --marigold-deep:#d96b00;
+    --turmeric:#f3c01a;
+    --kumkum:#c0241f;
+    --leaf:#1f5c2f;
+    --leaf-deep:#0e3a1a;
+    --cream:#fff8e7;
+    --paper:#fdf1d4;
+    --ink:#2a1810;
+    --gold:#b8881e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(ellipse at top, #fff5d4 0%, transparent 50%),
+      radial-gradient(ellipse at bottom, #ffe1a8 0%, transparent 50%),
+      var(--paper);
+    color:var(--ink);font-family:'Mulish',sans-serif;
+    font-size:17px;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:'Mulish',sans-serif;font-size:.7rem;letter-spacing:.36em;
+    text-transform:uppercase;color:var(--marigold-deep);margin-bottom:1rem;font-weight:700}
+
+  /* Marigold garland border (SVG) */
+  .garland{
+    height:42px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 42'><g><circle cx='15' cy='21' r='9' fill='%23f08a1c'/><circle cx='15' cy='21' r='5' fill='%23d96b00'/><circle cx='15' cy='21' r='2' fill='%23c0241f'/><circle cx='45' cy='21' r='9' fill='%23f3c01a'/><circle cx='45' cy='21' r='5' fill='%23f08a1c'/><circle cx='45' cy='21' r='2' fill='%23c0241f'/><path d='M0 21 L6 21 M24 21 L36 21 M54 21 L60 21' stroke='%231f5c2f' stroke-width='1.5'/></g></svg>");
+    background-repeat:repeat-x;background-size:60px 42px
+  }
+
+  /* HERO */
+  .hero{
+    position:relative;text-align:center;padding:40px 24px 50px;
+    background:
+      linear-gradient(180deg, #fffbea 0%, #ffe9b8 60%, #f9d27a 100%);
+    border-bottom:4px solid var(--marigold);
+  }
+  .hero .ganesha{font-size:2rem;color:var(--marigold-deep);line-height:1}
+  .hero .yatra{font-family:'Yatra One',cursive;color:var(--kumkum);
+    font-size:1.5rem;letter-spacing:.04em;margin-top:6px}
+  .hero .families{font-family:'Marcellus',serif;font-style:italic;
+    font-size:1.1rem;color:var(--leaf-deep);margin-top:6px}
+
+  .hero-frame{
+    margin:24px auto 0;max-width:540px;position:relative;
+    padding:14px;border-radius:18px;
+    background:
+      linear-gradient(135deg, var(--marigold), var(--turmeric), var(--leaf), var(--kumkum));
+    box-shadow:0 22px 50px rgba(192,36,31,.28);
+  }
+  .hero-frame img{display:block;width:100%;height:auto;border-radius:12px;border:4px solid #fff8e7}
+
+  .names{
+    font-family:'Yatra One',cursive;font-weight:400;
+    font-size:clamp(2.6rem,11vw,4.4rem);line-height:1.05;color:var(--kumkum);
+    margin-top:30px;letter-spacing:.02em
+  }
+  .names .amp{font-family:'Marcellus',serif;color:var(--leaf);
+    font-size:.8em;font-style:italic;padding:0 .15em}
+  .date-line{margin-top:14px;font-size:.84rem;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--marigold-deep);font-weight:700}
+  .venue-line{margin-top:4px;font-family:'Marcellus',serif;
+    font-style:italic;color:var(--leaf);font-size:1.05rem}
+
+  .block{padding:62px 0;text-align:center;position:relative}
+  .block h2{font-family:'Marcellus',serif;font-size:2.2rem;
+    color:var(--leaf-deep);margin-bottom:.4rem}
+  .block h2::after{
+    content:"❁ ❁ ❁";display:block;color:var(--marigold);
+    font-size:.9rem;letter-spacing:.6em;margin-top:14px
+  }
+  .lead{font-size:1.1rem;max-width:580px;margin:18px auto 0;color:#5c3a18}
+  .hashtag{margin-top:18px;font-family:'Yatra One',cursive;font-size:1.6rem;color:var(--kumkum)}
+
+  /* COUNTDOWN */
+  .countdown{display:flex;justify-content:center;gap:14px;margin-top:30px;flex-wrap:wrap}
+  .cd-box{
+    background:linear-gradient(180deg,var(--turmeric),var(--marigold));
+    color:#fff;border-radius:18px;padding:20px 14px;min-width:84px;
+    box-shadow:0 10px 24px rgba(208,107,0,.3);
+    border:2px solid #fff
+  }
+  .cd-box b{display:block;font-family:'Yatra One',cursive;font-size:2.2rem;line-height:1}
+  .cd-box small{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+    font-weight:700;display:block;margin-top:4px}
+
+  /* EVENTS */
+  .events{display:grid;gap:18px;margin-top:30px;text-align:left}
+  .ev{
+    background:#fff;border-radius:18px;padding:26px 26px 26px 28px;
+    box-shadow:0 10px 28px rgba(31,92,47,.12);position:relative;overflow:hidden;
+    border-left:6px solid var(--marigold)
+  }
+  .ev:nth-child(2){border-left-color:var(--kumkum)}
+  .ev:nth-child(3){border-left-color:var(--leaf)}
+  .ev .icon{font-size:1.8rem;margin-bottom:4px}
+  .ev h3{font-family:'Marcellus',serif;font-size:1.5rem;color:var(--leaf-deep)}
+  .ev p{color:#6b4423;margin-top:4px}
+  .ev .when{color:var(--kumkum);font-weight:700;font-size:.78rem;letter-spacing:.16em;
+    text-transform:uppercase;margin-top:10px;display:block}
+  .maplink{display:inline-block;margin-top:26px;font-size:.76rem;letter-spacing:.2em;
+    text-transform:uppercase;font-weight:700;color:#fff;
+    background:linear-gradient(135deg,var(--leaf),var(--leaf-deep));
+    padding:15px 32px;border-radius:40px;text-decoration:none;
+    box-shadow:0 10px 24px rgba(14,58,26,.35)}
+
+  /* GALLERY — masonry-ish */
+  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:30px}
+  .gallery img{width:100%;object-fit:cover;border-radius:14px;display:block;
+    border:5px solid #fff;box-shadow:0 10px 26px rgba(192,36,31,.18)}
+  .gallery img:nth-child(1){aspect-ratio:4/5}
+  .gallery img:nth-child(2){aspect-ratio:4/5;margin-top:24px}
+  .gallery img:nth-child(3){aspect-ratio:4/5;margin-top:-24px}
+  .gallery img:nth-child(4){aspect-ratio:4/5}
+
+  /* FORM */
+  .card{background:linear-gradient(180deg,#fff,var(--cream));
+    border:2px solid var(--marigold);border-radius:22px;
+    padding:38px 28px 32px;max-width:530px;margin:32px auto 0;text-align:left;
+    box-shadow:0 18px 44px rgba(208,107,0,.18);position:relative}
+  .card::before{
+    content:"🌼";position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+    background:var(--paper);font-size:1.8rem;padding:0 10px;line-height:1
+  }
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--marigold-deep);margin-bottom:6px;font-weight:700}
+  .field input,.field select{width:100%;background:var(--cream);
+    border:1.5px solid var(--turmeric);border-radius:12px;padding:14px;
+    color:var(--ink);font-family:'Mulish',sans-serif;font-size:1rem}
+  .field input:focus,.field select:focus{outline:2px solid var(--marigold);border-color:var(--marigold)}
+  .btn{display:block;width:100%;text-align:center;cursor:pointer;border:none;
+    font-weight:700;font-size:.82rem;letter-spacing:.2em;text-transform:uppercase;
+    color:#fff;background:linear-gradient(135deg,var(--marigold),var(--kumkum));
+    padding:17px;border-radius:40px;margin-top:6px;
+    box-shadow:0 10px 24px rgba(192,36,31,.32)}
+  .note{font-size:.88rem;color:#8a6a3a;margin-top:12px;text-align:center}
+  .thanks{display:none;text-align:center;color:var(--leaf-deep);font-size:1.25rem;
+    padding:10px 0;font-family:'Marcellus',serif}
+
+  footer{text-align:center;padding:52px 24px 100px;color:#7a5226;font-size:.95rem;
+    background:linear-gradient(180deg,transparent,#fde7ad)}
+  footer .heart{color:var(--kumkum)}
+  footer .ornament{font-family:'Yatra One',cursive;color:var(--marigold-deep);
+    font-size:1.8rem;line-height:1;display:block;margin-bottom:8px}
+
+  /* MUSIC */
+  .music-btn{position:fixed;top:16px;right:16px;z-index:60;width:48px;height:48px;
+    border-radius:50%;border:2px solid var(--marigold);background:#fff;
+    color:var(--marigold-deep);cursor:pointer;display:flex;align-items:center;
+    justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.15)}
+  .music-btn svg{width:20px;height:20px}
+
+  /* CHAT */
+  .chat-bubble{position:fixed;bottom:20px;right:20px;z-index:70;width:62px;height:62px;
+    border-radius:50%;background:#25D366;border:none;cursor:pointer;
+    box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center}
+  .chat-bubble svg{width:34px;height:34px;fill:#fff}
+  .chat-panel{position:fixed;bottom:94px;right:20px;z-index:70;width:310px;
+    max-width:calc(100vw - 40px);background:#fff;color:#222;border-radius:16px;
+    box-shadow:0 16px 48px rgba(0,0,0,.25);overflow:hidden;display:none}
+  .chat-head{background:#075E54;color:#fff;padding:16px 18px}
+  .chat-head b{font-size:1.05rem}
+  .chat-head small{display:block;opacity:.85;font-size:.78rem}
+  .chat-body{padding:16px 18px}
+  .chat-body .msg{background:#f0f0f0;border-radius:10px;padding:10px 12px;
+    font-size:.92rem;margin-bottom:13px}
+  .chat-opt{display:block;width:100%;text-align:left;background:#fff;
+    border:1px solid #25D366;color:#075E54;border-radius:9px;padding:11px 13px;
+    margin-bottom:9px;cursor:pointer;font-size:.92rem;font-family:inherit}
+  .chat-opt:hover{background:#25D366;color:#fff}
+
+  /* Reveal animations */
+  .reveal{opacity:0;transform:translateY(28px);
+    transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .gallery img{transition:transform .5s ease,box-shadow .5s ease}
+  .gallery img:hover{transform:scale(1.05) rotate(-1deg);box-shadow:0 18px 42px rgba(192,36,31,.3);z-index:2;position:relative}
+  .ev,.cd-box,.btn,.maplink{transition:transform .3s ease,filter .3s ease}
+  .ev:hover,.cd-box:hover{transform:translateY(-3px)}
+  .btn:hover,.maplink:hover{transform:translateY(-2px);filter:brightness(1.06)}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1!important;transform:none!important}
+  }
+
+  /* ===== Animated banana trees + elephant procession ===== */
+  .hero{overflow:hidden}
+  .hero-stage{position:relative;max-width:680px;margin:0 auto;padding:0 6px}
+  .banana-l,.banana-r{position:absolute;bottom:-6px;width:min(34vw,176px);z-index:1;opacity:0;pointer-events:none}
+  .banana-l{left:-10px;animation:leafInL 1.1s ease .15s forwards, swayL 6s ease-in-out 1.3s infinite}
+  .banana-r{right:-10px;animation:leafInR 1.1s ease .15s forwards, swayR 6s ease-in-out 1.3s infinite}
+  @keyframes leafInL{from{opacity:0;transform:translateX(-22px) rotate(-3deg)}to{opacity:1;transform:translateX(0) rotate(0)}}
+  @keyframes leafInR{from{opacity:0;transform:translateX(22px) rotate(3deg)}to{opacity:1;transform:translateX(0) rotate(0)}}
+  @keyframes swayL{0%,100%{transform:rotate(0deg)}50%{transform:rotate(1.4deg)}}
+  @keyframes swayR{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-1.4deg)}}
+
+  .procession{display:block;position:relative;z-index:1;width:min(80vw,420px);height:auto;
+    margin:14px auto 0;filter:drop-shadow(0 16px 22px rgba(122,15,18,.28));
+    opacity:0;transform:translateY(16px);
+    animation:elephantIn 1s ease 1.1s forwards, elephantFloat 5s ease-in-out 2.2s infinite}
+  @keyframes elephantIn{to{opacity:1;transform:translateY(0)}}
+  @keyframes elephantFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-7px) rotate(.5deg)}}
+
+  @media (prefers-reduced-motion: reduce){
+    .banana-l,.banana-r,.procession{animation:none!important;opacity:1!important;transform:none!important}
+  }
+</style>
+</head>
+<body>
+
+<button class="music-btn" id="musicBtn" aria-label="Toggle music">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+</button>
+
+<div class="garland"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="ganesha">🕉️</div>
+  <div class="yatra">Shree Ganeshaya Namaha</div>
+  <p class="families">With the blessings of our beloved families</p>
+
+  <div class="hero-stage">
+    <svg class="banana-l" viewBox="0 0 220 360" aria-hidden="true">
+      <path d="M110 360 C105 270 108 195 102 128" stroke="#1f5c2f" stroke-width="9" fill="none" stroke-linecap="round"/>
+      <path d="M102 128 C34 110 -8 58 4 8 C58 17 100 64 105 128 Z" fill="#2e7a3f"/>
+      <path d="M102 128 C34 110 -8 58 4 8" stroke="#0e3a1a" stroke-width="3" fill="none"/>
+      <path d="M104 137 C42 150 -2 204 16 254 C70 228 100 186 107 137 Z" fill="#1f5c2f"/>
+      <path d="M104 137 C42 150 -2 204 16 254" stroke="#0e3a1a" stroke-width="3" fill="none"/>
+      <path d="M106 154 C60 183 30 246 56 297 C95 271 109 212 109 154 Z" fill="#2e7a3f"/>
+      <path d="M106 154 C60 183 30 246 56 297" stroke="#0e3a1a" stroke-width="3" fill="none"/>
+      <ellipse cx="84" cy="80" rx="12" ry="17" fill="#f3c01a" opacity=".9"/>
+    </svg>
+    <svg class="banana-r" viewBox="0 0 220 360" aria-hidden="true">
+      <path d="M110 360 C115 270 112 195 118 128" stroke="#1f5c2f" stroke-width="9" fill="none" stroke-linecap="round"/>
+      <path d="M118 128 C186 110 228 58 216 8 C162 17 120 64 115 128 Z" fill="#2e7a3f"/>
+      <path d="M118 128 C186 110 228 58 216 8" stroke="#0e3a1a" stroke-width="3" fill="none"/>
+      <path d="M116 137 C178 150 222 204 204 254 C150 228 120 186 113 137 Z" fill="#1f5c2f"/>
+      <path d="M116 137 C178 150 222 204 204 254" stroke="#0e3a1a" stroke-width="3" fill="none"/>
+      <path d="M114 154 C160 183 190 246 164 297 C125 271 111 212 111 154 Z" fill="#2e7a3f"/>
+      <path d="M114 154 C160 183 190 246 164 297" stroke="#0e3a1a" stroke-width="3" fill="none"/>
+      <ellipse cx="136" cy="80" rx="12" ry="17" fill="#f3c01a" opacity=".9"/>
+    </svg>
+
+    <div class="hero-frame">
+      <img src="hero2.jpg" alt="South Indian bride with long hair and jasmine gajra beside a decorated elephant and banana trees">
+    </div>
+  </div>
+
+  <!-- ornamental temple elephant (decorative motif) -->
+  <img class="procession" src="images/elephant.png" width="460" height="400"
+       alt="Decorated ceremonial South Indian elephant with a golden caparison and lotus">
+
+    <h1 class="names">Ipsita <span class="amp">weds</span> Rohan</h1>
+  <p class="date-line">Saturday · 13 February 2027</p>
+  <p class="venue-line">Toshali Sands · Puri, by the sea</p>
+</section>
+
+<div class="garland"></div>
+
+<!-- INVITATION -->
+<section class="block wrap">
+  <div class="eyebrow">You are warmly invited</div>
+  <h2>Join us in joy</h2>
+  <p class="lead reveal">Beneath garlands of marigold, the glow of brass diyas and the rhythm of
+    melam, two hearts become one. Your blessings and presence will be our greatest gift.</p>
+  <p class="hashtag">#RohanFoundHisIpsita</p>
+</section>
+
+<div class="garland"></div>
+
+<!-- COUNTDOWN -->
+<section class="block wrap">
+  <div class="eyebrow">Counting the days</div>
+  <h2>Until our muhurtham</h2>
+  <div class="countdown" id="countdown">
+    <div class="cd-box reveal"><b id="d">--</b><small>Days</small></div>
+    <div class="cd-box reveal"><b id="h">--</b><small>Hours</small></div>
+    <div class="cd-box reveal"><b id="m">--</b><small>Mins</small></div>
+    <div class="cd-box reveal"><b id="s">--</b><small>Secs</small></div>
+  </div>
+</section>
+
+<div class="garland"></div>
+
+<!-- EVENTS -->
+<section class="block wrap">
+  <div class="eyebrow">Festivities</div>
+  <h2>When &amp; Where</h2>
+  <div class="events">
+    <div class="ev reveal">
+      <div class="icon">🌿</div>
+      <h3>Mehendi &amp; Sangeet</h3>
+      <p>An evening of henna, song and dance with loved ones.</p>
+      <span class="when">12 Feb 2027 · 6:00 PM</span>
+    </div>
+    <div class="ev reveal">
+      <div class="icon">🐘</div>
+      <h3>The Wedding Muhurtham</h3>
+      <p>Sacred vows under the mandap with traditional South Indian rituals.</p>
+      <span class="when">13 Feb 2027 · 4:30 PM</span>
+    </div>
+    <div class="ev reveal">
+      <div class="icon">🍌</div>
+      <h3>Reception &amp; Banana-Leaf Feast</h3>
+      <p>A grand sadhya, music and dancing to celebrate the union.</p>
+      <span class="when">13 Feb 2027 · 7:30 PM</span>
+    </div>
+  </div>
+  <a class="maplink" href="https://maps.google.com/?q=Toshali+Sands+Puri" target="_blank" rel="noopener">Open in Maps</a>
+</section>
+
+<div class="garland"></div>
+
+<!-- GALLERY -->
+<section class="block wrap">
+  <div class="eyebrow">Our journey</div>
+  <h2>Memories &amp; Moments</h2>
+  <div class="gallery">
+    <img class="reveal" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80" alt="Couple moment">
+    <img class="reveal" src="https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?w=600&q=80" alt="Wedding ritual">
+    <img class="reveal" src="https://images.unsplash.com/photo-1607081692251-3eb8c3a1f12c?w=600&q=80" alt="South Indian bride">
+    <img class="reveal" src="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?w=600&q=80" alt="Couple celebration">
+  </div>
+</section>
+
+<div class="garland"></div>
+
+<!-- RSVP -->
+<section class="block wrap">
+  <div class="eyebrow">Kindly respond</div>
+  <h2>RSVP</h2>
+  <form class="card" id="rsvpForm" onsubmit="return sendRsvp(event)">
+    <div class="field">
+      <label for="rname">Your name</label>
+      <input id="rname" required placeholder="Full name">
+    </div>
+    <div class="field">
+      <label for="rcount">Number of guests</label>
+      <select id="rcount"><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select>
+    </div>
+    <div class="field">
+      <label for="rattend">Will you attend?</label>
+      <select id="rattend"><option>Yes, with blessings 🌼</option><option>Sorry, can't make it</option></select>
+    </div>
+    <button class="btn" type="submit">Send RSVP</button>
+    <p class="note">Sends straight to the family on WhatsApp.</p>
+  </form>
+  <p class="thanks" id="thanks">Dhanyavaad — we cannot wait to celebrate with you! 🌼</p>
+</section>
+
+<div class="garland"></div>
+
+<footer>
+  <span class="ornament">~ ❁ Subhamastu ❁ ~</span>
+  Ipsita &amp; Rohan · 13 February 2027<br>
+  Invitation designed with <span class="heart">♥</span> by pp.develper · +91 70778 17064
+</footer>
+
+<!-- WhatsApp chat -->
+<button class="chat-bubble" id="chatBubble" aria-label="Open chat">
+  <svg viewBox="0 0 32 32"><path d="M16 .4C7.4.4.4 7.4.4 16c0 2.8.7 5.5 2.1 7.9L0 32l8.3-2.2c2.3 1.3 5 2 7.7 2 8.6 0 15.6-7 15.6-15.6S24.6.4 16 .4zm0 28.6c-2.4 0-4.7-.6-6.7-1.8l-.5-.3-5 1.3 1.3-4.9-.3-.5C3.5 20.8 2.8 18.5 2.8 16 2.8 8.7 8.7 2.8 16 2.8S29.2 8.7 29.2 16 23.3 29 16 29zm7.4-9.9c-.4-.2-2.4-1.2-2.8-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.3-.4.3-.8.1-.4-.2-1.7-.6-3.2-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8.2-.2.4-.4.6-.7.2-.2.3-.4.4-.6.1-.3.1-.5 0-.7-.1-.2-.9-2.2-1.2-3-.3-.8-.6-.7-.9-.7H10c-.3 0-.7.1-1 .5s-1.3 1.3-1.3 3.2c0 1.9 1.4 3.7 1.6 4 .2.3 2.7 4.1 6.5 5.7.9.4 1.6.6 2.2.8.9.3 1.7.2 2.4.1.7-.1 2.2-.9 2.5-1.8.3-.9.3-1.6.2-1.7-.1-.2-.4-.3-.8-.5z"/></svg>
+</button>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head"><b>Invite Studio</b><small>Typically replies in minutes</small></div>
+  <div class="chat-body">
+    <div class="msg">Hi! 👋 Want a custom invite like this? Pick one and I'll open WhatsApp for you.</div>
+    <button class="chat-opt" data-msg="Hi! I'd like a wedding invite.">💐 I want a wedding invite</button>
+    <button class="chat-opt" data-msg="Hi! I'd like a birthday invite.">🎂 I want a birthday invite</button>
+    <button class="chat-opt" data-msg="Hi! Can you share pricing details?">💸 Ask about pricing</button>
+  </div>
+</div>
+
+<script>
+  const target = new Date("2027-02-13T16:30:00+05:30").getTime();
+  const d_=document.getElementById('d'),h_=document.getElementById('h'),m_=document.getElementById('m'),s_=document.getElementById('s');
+  function tick(){
+    const t = target - Date.now();
+    if(t<=0){document.getElementById('countdown').innerHTML='<p style="color:var(--kumkum);font-family:Marcellus,serif;font-size:1.4rem">It\'s our wedding day! 🌼</p>';return}
+    d_.textContent=Math.floor(t/86400000);
+    h_.textContent=Math.floor(t/3600000)%24;
+    m_.textContent=Math.floor(t/60000)%60;
+    s_.textContent=Math.floor(t/1000)%60;
+  }
+  tick(); setInterval(tick,1000);
+
+  const io = new IntersectionObserver((ents)=>{
+    ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const PHONE="917077817064";
+  function sendRsvp(e){
+    e.preventDefault();
+    const n=document.getElementById('rname').value.trim();
+    const c=document.getElementById('rcount').value;
+    const a=document.getElementById('rattend').value;
+    const msg=`Namaste! RSVP for Ipsita & Rohan's wedding:%0AName: ${encodeURIComponent(n)}%0AGuests: ${c}%0AAttending: ${encodeURIComponent(a)}`;
+    window.open(`https://wa.me/${PHONE}?text=${msg}`,'_blank');
+    document.getElementById('rsvpForm').style.display='none';
+    document.getElementById('thanks').style.display='block';
+    return false;
+  }
+
+  const cb=document.getElementById('chatBubble'),cp=document.getElementById('chatPanel');
+  cb.addEventListener('click',()=>{cp.style.display=cp.style.display==='block'?'none':'block'});
+  document.querySelectorAll('.chat-opt').forEach(b=>{
+    b.addEventListener('click',()=>{
+      window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(b.dataset.msg)}`,'_blank');
+    });
+  });
+
+  const mb=document.getElementById('musicBtn');
+  const audio=new Audio(); audio.loop=true;
+  let playing=false;
+  mb.addEventListener('click',()=>{
+    if(!audio.src){alert('Add your music track URL to enable playback.');return}
+    if(playing){audio.pause()}else{audio.play()} playing=!playing;
+  });
+</script>
+</body>
+</html>
