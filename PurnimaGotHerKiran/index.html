@@ -10,11 +10,13 @@
 <meta property="og:title" content="Purnima &amp; Kiran — Wedding Invitation">
 <meta property="og:description" content="A traditional South Indian wedding celebration. Join us!">
 <!-- IMPORTANT: WhatsApp needs an ABSOLUTE url here. After deploying, replace with your full Vercel link, e.g. https://your-project.vercel.app/images/hero2.jpg -->
-<meta property="og:image" content="https://YOUR-PROJECT.vercel.app/images/hero2.jpg">
+<meta property="og:image" content="https://purnima-kiran.vercel.app/images/hero2.jpg">
+<meta property="og:url" content="https://purnima-kiran.vercel.app/">
+<meta name="twitter:image" content="https://purnima-kiran.vercel.app/images/hero2.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:url" content="https://YOUR-PROJECT.vercel.app/">
-<meta name="twitter:card" content="summary_large_image">
+<!-- <meta property="og:url" content="https://YOUR-PROJECT.vercel.app/">
+<meta name="twitter:card" content="summary_large_image"> -->
 <meta name="twitter:title" content="Purnima &amp; Kiran — Wedding Invitation">
 <meta name="twitter:description" content="A traditional South Indian wedding celebration. Join us!">
 <meta name="twitter:image" content="https://YOUR-PROJECT.vercel.app/images/hero2.jpg">
@@ -55,6 +57,8 @@
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 42'><g><circle cx='15' cy='21' r='9' fill='%23f08a1c'/><circle cx='15' cy='21' r='5' fill='%23d96b00'/><circle cx='15' cy='21' r='2' fill='%23c0241f'/><circle cx='45' cy='21' r='9' fill='%23f3c01a'/><circle cx='45' cy='21' r='5' fill='%23f08a1c'/><circle cx='45' cy='21' r='2' fill='%23c0241f'/><path d='M0 21 L6 21 M24 21 L36 21 M54 21 L60 21' stroke='%231f5c2f' stroke-width='1.5'/></g></svg>");
     background-repeat:repeat-x;background-size:60px 42px
   }
+  .deities{align-items:stretch}
+.deities img{height:clamp(70px,19vw,108px);width:auto;object-fit:cover;}
 
   /* ===== GATEFOLD OPENER ("card folder") ===== */
   .opener{
@@ -277,13 +281,13 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="deities">
+<div class="deities">
     <figure>
-      <img src="images/jagannath.png" alt="Lord Jagannath">
+      <img src="images/jagannath.jpg" alt="Lord Jagannath" style="height:108px;width:auto;object-fit:cover;">
       <figcaption>Shree Jagannath</figcaption>
     </figure>
     <figure>
-      <img src="images/venkateshwara.png" alt="Sri Venkateshwara">
+      <img src="images/venkateshwara.jpg" alt="Sri Venkateshwara" style="height:108px;width:auto;object-fit:cover;">
       <figcaption>Sri Venkateshwara</figcaption>
     </figure>
   </div>
@@ -314,7 +318,7 @@
     </svg>
 
     <div class="hero-frame">
-      <img src="images/hero.jpg" alt="Purnima and Kiran in traditional South Indian wedding attire">
+      <img src="images/hero2.jpg" alt="Purnima and Kiran in traditional South Indian wedding attire">
     </div>
   </div>
 
@@ -425,7 +429,7 @@
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
   /* ---------- Music ---------- */
-  const audio=new Audio('images/wedding-music.mp3');
+  const audio=new Audio('audio/music.mp3');
   audio.loop=true; audio.volume=0.7;
   const mb=document.getElementById('musicBtn');
   let playing=false;
@@ -459,8 +463,8 @@
   function startPetals(){
     if(reduce){ return; }
     petalsOn=true;
-    for(let i=0;i<18;i++) setTimeout(spawnPetal, i*120);  
-    setInterval(spawnPetal, 650);                         
+    for(let i=0;i<18;i++) setTimeout(spawnPetal, i*120);   // opening burst
+    setInterval(spawnPetal, 650);                          // gentle ambient fall
   }
 
   /* ---------- Gatefold opener ---------- */
