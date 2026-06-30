@@ -197,14 +197,20 @@
     box-shadow:0 10px 24px rgba(14,58,26,.35)}
   .venue-detail{margin-top:20px;font-family:'Marcellus',serif;color:#5c3a18;font-style:italic}
 
-  /* GALLERY — masonry-ish */
-  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:30px}
-  .gallery img{width:100%;object-fit:cover;border-radius:14px;display:block;
-    border:5px solid #fff;box-shadow:0 10px 26px rgba(192,36,31,.18)}
-  .gallery img:nth-child(1){aspect-ratio:4/5}
-  .gallery img:nth-child(2){aspect-ratio:4/5;margin-top:24px}
-  .gallery img:nth-child(3){aspect-ratio:4/5;margin-top:-24px}
-  .gallery img:nth-child(4){aspect-ratio:4/5}
+/* GALLERY — masonry, no cropping */
+.gallery{
+  columns:2;
+  column-gap:14px;
+  margin-top:30px
+}
+.gallery img{
+  width:100%;height:auto;display:block;
+  margin-bottom:14px;
+  border-radius:14px;
+  border:5px solid #fff;
+  box-shadow:0 10px 26px rgba(192,36,31,.18);
+  break-inside:avoid
+}
 
   footer{text-align:center;padding:52px 24px 70px;color:#7a5226;font-size:.95rem;
     background:linear-gradient(180deg,transparent,#fde7ad)}
@@ -319,7 +325,7 @@
     </svg>
 
     <div class="hero-frame">
-      <img src="images/hero2.jpg" alt="Purnima and Kiran in traditional South Indian wedding attire">
+      <img src="images/hero.jpeg" alt="Purnima and Kiran in traditional South Indian wedding attire">
     </div>
   </div>
 
@@ -394,10 +400,10 @@
   <div class="eyebrow">Our journey</div>
   <h2>Memories &amp; Moments</h2>
   <div class="gallery">
-    <img class="reveal" src="images/g1.jpg" alt="Purnima and Kiran moment one">
-    <img class="reveal" src="images/g2.jpg" alt="Purnima and Kiran moment two">
-    <img class="reveal" src="images/g3.jpg" alt="Purnima and Kiran moment three">
-    <img class="reveal" src="images/g4.jpg" alt="Purnima and Kiran moment four">
+    <img class="reveal" src="images/g1.jpeg" alt="Purnima and Kiran moment one">
+    <img class="reveal" src="images/g2.jpeg" alt="Purnima and Kiran moment two">
+    <img class="reveal" src="images/g3.jpeg" alt="Purnima and Kiran moment three">
+    <img class="reveal" src="images/g4.jpeg" alt="Purnima and Kiran moment four">
   </div>
 </section>
 
