@@ -3,13 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ipsita &amp; Rohan — South Indian Wedding Invitation</title>
-<meta name="description" content="A vibrant South Indian wedding celebration — join Ipsita & Rohan!">
+<title>Purnima &amp; Kiran — South Indian Wedding Invitation</title>
+<meta name="description" content="A vibrant South Indian wedding celebration — join Purnima & Kiran!">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Ipsita &amp; Rohan — Wedding Invitation">
+<meta property="og:title" content="Purnima &amp; Kiran — Wedding Invitation">
 <meta property="og:description" content="A traditional South Indian wedding celebration. Join us!">
-<meta property="og:image" content="hero2.jpg">
+<!-- IMPORTANT: WhatsApp needs an ABSOLUTE url here. After deploying, replace with your full Vercel link, e.g. https://your-project.vercel.app/images/hero2.jpg -->
+<meta property="og:image" content="https://YOUR-PROJECT.vercel.app/images/hero2.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://YOUR-PROJECT.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Purnima &amp; Kiran — Wedding Invitation">
+<meta name="twitter:description" content="A traditional South Indian wedding celebration. Join us!">
+<meta name="twitter:image" content="https://YOUR-PROJECT.vercel.app/images/hero2.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,11 +56,62 @@
     background-repeat:repeat-x;background-size:60px 42px
   }
 
+  /* ===== GATEFOLD OPENER ("card folder") ===== */
+  .opener{
+    position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+    perspective:1700px;overflow:hidden;cursor:pointer;
+    background:radial-gradient(ellipse at center,#fff5d4 0%,#f3c01a 55%,#d96b00 100%);
+    transition:opacity .6s ease
+  }
+  .opener.gone{opacity:0}
+  .door{
+    position:absolute;top:0;bottom:0;width:50.6%;z-index:2;
+    background:linear-gradient(135deg,var(--kumkum) 0%,var(--marigold-deep) 60%,var(--marigold) 100%);
+    transition:transform 1.25s cubic-bezier(.7,0,.25,1);
+    backface-visibility:hidden;will-change:transform
+  }
+  .door::before{ /* gold inner trim */
+    content:"";position:absolute;top:18px;bottom:18px;width:0;
+    border:2px solid rgba(243,192,26,.55);
+  }
+  .door::after{ /* faint mandala glow */
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 100% 50%, rgba(243,192,26,.22), transparent 60%);
+  }
+  .door.left{left:0;transform-origin:left center;box-shadow:inset -34px 0 60px rgba(0,0,0,.28)}
+  .door.left::before{right:18px}
+  .door.right{right:0;transform-origin:right center;box-shadow:inset 34px 0 60px rgba(0,0,0,.28)}
+  .door.right::before{left:18px}
+  .opener.open .door.left{transform:rotateY(-120deg)}
+  .opener.open .door.right{transform:rotateY(120deg)}
+
+  .seal{position:relative;z-index:3;text-align:center;color:var(--cream);
+    transition:opacity .5s ease,transform .5s ease;padding:0 20px}
+  .opener.open .seal{opacity:0;transform:scale(.82)}
+  .seal .om{font-size:2.4rem;line-height:1}
+  .seal .ring{width:128px;height:128px;border:3px solid var(--turmeric);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;margin:14px auto 18px;
+    box-shadow:0 0 0 9px rgba(255,248,231,.14)}
+  .seal .couple{font-family:'Yatra One',cursive;font-size:clamp(1.6rem,7vw,2.3rem);color:var(--turmeric)}
+  .seal .couple span{color:var(--cream);padding:0 .25em;font-size:.7em}
+  .seal .sub{font-family:'Marcellus',serif;font-style:italic;font-size:.95rem;margin-top:6px;opacity:.92}
+  .seal .tap{margin-top:22px;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;
+    font-weight:700;animation:bob 1.7s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+  /* Falling flora */
+  .petals{position:fixed;inset:0;pointer-events:none;z-index:150;overflow:hidden}
+  .petal{position:absolute;top:-44px;will-change:transform,opacity}
+  @keyframes fall{
+    0%{transform:translate(0,-44px) rotate(0deg);opacity:0}
+    8%{opacity:1}
+    100%{transform:translate(var(--drift),108vh) rotate(360deg);opacity:.15}
+  }
+
   /* HERO */
   .hero{
-    position:relative;text-align:center;padding:40px 24px 50px;
-    background:
-      linear-gradient(180deg, #fffbea 0%, #ffe9b8 60%, #f9d27a 100%);
+    position:relative;text-align:center;padding:40px 24px 50px;overflow:hidden;
+    background:linear-gradient(180deg, #fffbea 0%, #ffe9b8 60%, #f9d27a 100%);
     border-bottom:4px solid var(--marigold);
   }
   .hero .ganesha{font-size:2rem;color:var(--marigold-deep);line-height:1}
@@ -64,8 +123,7 @@
   .hero-frame{
     margin:24px auto 0;max-width:540px;position:relative;
     padding:14px;border-radius:18px;
-    background:
-      linear-gradient(135deg, var(--marigold), var(--turmeric), var(--leaf), var(--kumkum));
+    background:linear-gradient(135deg, var(--marigold), var(--turmeric), var(--leaf), var(--kumkum));
     box-shadow:0 22px 50px rgba(192,36,31,.28);
   }
   .hero-frame img{display:block;width:100%;height:auto;border-radius:12px;border:4px solid #fff8e7}
@@ -123,6 +181,7 @@
     background:linear-gradient(135deg,var(--leaf),var(--leaf-deep));
     padding:15px 32px;border-radius:40px;text-decoration:none;
     box-shadow:0 10px 24px rgba(14,58,26,.35)}
+  .venue-detail{margin-top:20px;font-family:'Marcellus',serif;color:#5c3a18;font-style:italic}
 
   /* GALLERY — masonry-ish */
   .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:30px}
@@ -133,32 +192,7 @@
   .gallery img:nth-child(3){aspect-ratio:4/5;margin-top:-24px}
   .gallery img:nth-child(4){aspect-ratio:4/5}
 
-  /* FORM */
-  .card{background:linear-gradient(180deg,#fff,var(--cream));
-    border:2px solid var(--marigold);border-radius:22px;
-    padding:38px 28px 32px;max-width:530px;margin:32px auto 0;text-align:left;
-    box-shadow:0 18px 44px rgba(208,107,0,.18);position:relative}
-  .card::before{
-    content:"🌼";position:absolute;top:-20px;left:50%;transform:translateX(-50%);
-    background:var(--paper);font-size:1.8rem;padding:0 10px;line-height:1
-  }
-  .field{margin-bottom:16px}
-  .field label{display:block;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--marigold-deep);margin-bottom:6px;font-weight:700}
-  .field input,.field select{width:100%;background:var(--cream);
-    border:1.5px solid var(--turmeric);border-radius:12px;padding:14px;
-    color:var(--ink);font-family:'Mulish',sans-serif;font-size:1rem}
-  .field input:focus,.field select:focus{outline:2px solid var(--marigold);border-color:var(--marigold)}
-  .btn{display:block;width:100%;text-align:center;cursor:pointer;border:none;
-    font-weight:700;font-size:.82rem;letter-spacing:.2em;text-transform:uppercase;
-    color:#fff;background:linear-gradient(135deg,var(--marigold),var(--kumkum));
-    padding:17px;border-radius:40px;margin-top:6px;
-    box-shadow:0 10px 24px rgba(192,36,31,.32)}
-  .note{font-size:.88rem;color:#8a6a3a;margin-top:12px;text-align:center}
-  .thanks{display:none;text-align:center;color:var(--leaf-deep);font-size:1.25rem;
-    padding:10px 0;font-family:'Marcellus',serif}
-
-  footer{text-align:center;padding:52px 24px 100px;color:#7a5226;font-size:.95rem;
+  footer{text-align:center;padding:52px 24px 70px;color:#7a5226;font-size:.95rem;
     background:linear-gradient(180deg,transparent,#fde7ad)}
   footer .heart{color:var(--kumkum)}
   footer .ornament{font-family:'Yatra One',cursive;color:var(--marigold-deep);
@@ -170,25 +204,8 @@
     color:var(--marigold-deep);cursor:pointer;display:flex;align-items:center;
     justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.15)}
   .music-btn svg{width:20px;height:20px}
-
-  /* CHAT */
-  .chat-bubble{position:fixed;bottom:20px;right:20px;z-index:70;width:62px;height:62px;
-    border-radius:50%;background:#25D366;border:none;cursor:pointer;
-    box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center}
-  .chat-bubble svg{width:34px;height:34px;fill:#fff}
-  .chat-panel{position:fixed;bottom:94px;right:20px;z-index:70;width:310px;
-    max-width:calc(100vw - 40px);background:#fff;color:#222;border-radius:16px;
-    box-shadow:0 16px 48px rgba(0,0,0,.25);overflow:hidden;display:none}
-  .chat-head{background:#075E54;color:#fff;padding:16px 18px}
-  .chat-head b{font-size:1.05rem}
-  .chat-head small{display:block;opacity:.85;font-size:.78rem}
-  .chat-body{padding:16px 18px}
-  .chat-body .msg{background:#f0f0f0;border-radius:10px;padding:10px 12px;
-    font-size:.92rem;margin-bottom:13px}
-  .chat-opt{display:block;width:100%;text-align:left;background:#fff;
-    border:1px solid #25D366;color:#075E54;border-radius:9px;padding:11px 13px;
-    margin-bottom:9px;cursor:pointer;font-size:.92rem;font-family:inherit}
-  .chat-opt:hover{background:#25D366;color:#fff}
+  .music-btn.playing{background:var(--marigold);color:#fff;animation:pulse 1.8s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 6px 18px rgba(0,0,0,.15)}50%{box-shadow:0 0 0 7px rgba(240,138,28,.25)}}
 
   /* Reveal animations */
   .reveal{opacity:0;transform:translateY(28px);
@@ -196,15 +213,14 @@
   .reveal.in{opacity:1;transform:none}
   .gallery img{transition:transform .5s ease,box-shadow .5s ease}
   .gallery img:hover{transform:scale(1.05) rotate(-1deg);box-shadow:0 18px 42px rgba(192,36,31,.3);z-index:2;position:relative}
-  .ev,.cd-box,.btn,.maplink{transition:transform .3s ease,filter .3s ease}
+  .ev,.cd-box,.maplink{transition:transform .3s ease,filter .3s ease}
   .ev:hover,.cd-box:hover{transform:translateY(-3px)}
-  .btn:hover,.maplink:hover{transform:translateY(-2px);filter:brightness(1.06)}
+  .maplink:hover{transform:translateY(-2px);filter:brightness(1.06)}
   @media (prefers-reduced-motion: reduce){
     .reveal{opacity:1!important;transform:none!important}
   }
 
   /* ===== Animated banana trees + elephant procession ===== */
-  .hero{overflow:hidden}
   .hero-stage{position:relative;max-width:680px;margin:0 auto;padding:0 6px}
   .banana-l,.banana-r{position:absolute;bottom:-6px;width:min(34vw,176px);z-index:1;opacity:0;pointer-events:none}
   .banana-l{left:-10px;animation:leafInL 1.1s ease .15s forwards, swayL 6s ease-in-out 1.3s infinite}
@@ -227,6 +243,22 @@
 </style>
 </head>
 <body>
+
+<!-- ===== GATEFOLD OPENER ===== -->
+<div class="opener" id="opener" role="button" aria-label="Tap to open the invitation">
+  <div class="door left"></div>
+  <div class="door right"></div>
+  <div class="seal">
+    <div class="om">🕉️</div>
+    <div class="ring">
+      <div class="couple">Purnima <span>❁</span> Kiran</div>
+    </div>
+    <div class="sub">request the pleasure of your presence</div>
+    <div class="tap">Tap to open ✦</div>
+  </div>
+</div>
+
+<div class="petals" id="petals" aria-hidden="true"></div>
 
 <button class="music-btn" id="musicBtn" aria-label="Toggle music">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
@@ -263,7 +295,7 @@
     </svg>
 
     <div class="hero-frame">
-      <img src="images/hero2.jpg" alt="South Indian bride with long hair and jasmine gajra beside a decorated elephant and banana trees">
+      <img src="images/hero2.jpg" alt="Purnima and Kiran in traditional South Indian wedding attire">
     </div>
   </div>
 
@@ -271,9 +303,9 @@
   <img class="procession" src="images/elephant.webp" width="460" height="400"
        alt="Decorated ceremonial South Indian elephant with a golden caparison and lotus">
 
-    <h1 class="names">Ipsita <span class="amp">weds</span> Rohan</h1>
-  <p class="date-line">Saturday · 13 February 2027</p>
-  <p class="venue-line">Toshali Sands · Puri, by the sea</p>
+  <h1 class="names">Purnima <span class="amp">weds</span> Kiran</h1>
+  <p class="date-line">Sunday · 23 August 2026</p>
+  <p class="venue-line">Laxmi Vallabha Kalyan Mandap · Bengaluru</p>
 </section>
 
 <div class="garland"></div>
@@ -284,7 +316,7 @@
   <h2>Join us in joy</h2>
   <p class="lead reveal">Beneath garlands of marigold, the glow of brass diyas and the rhythm of
     melam, two hearts become one. Your blessings and presence will be our greatest gift.</p>
-  <p class="hashtag">#RohanFoundHisIpsita</p>
+  <p class="hashtag">#KiranFoundHisPurnima</p>
 </section>
 
 <div class="garland"></div>
@@ -309,25 +341,26 @@
   <h2>When &amp; Where</h2>
   <div class="events">
     <div class="ev reveal">
+      <div class="icon">🎶</div>
+      <h3>Reception</h3>
+      <p>An evening of celebration, music and feasting with family and friends.</p>
+      <span class="when">22 Aug 2026 · 7:00 PM onwards</span>
+    </div>
+    <div class="ev reveal">
       <div class="icon">🌿</div>
-      <h3>Mehendi &amp; Sangeet</h3>
-      <p>An evening of henna, song and dance with loved ones.</p>
-      <span class="when">12 Feb 2027 · 6:00 PM</span>
+      <h3>Haladi Shastra</h3>
+      <p>The auspicious turmeric ceremony to bless the couple.</p>
+      <span class="when">23 Aug 2026 · 6:00 – 7:00 AM</span>
     </div>
     <div class="ev reveal">
       <div class="icon">🐘</div>
       <h3>The Wedding Muhurtham</h3>
       <p>Sacred vows under the mandap with traditional South Indian rituals.</p>
-      <span class="when">13 Feb 2027 · 4:30 PM</span>
-    </div>
-    <div class="ev reveal">
-      <div class="icon">🍌</div>
-      <h3>Reception &amp; Banana-Leaf Feast</h3>
-      <p>A grand sadhya, music and dancing to celebrate the union.</p>
-      <span class="when">13 Feb 2027 · 7:30 PM</span>
+      <span class="when">23 Aug 2026 · 10:00 – 11:30 AM</span>
     </div>
   </div>
-  <a class="maplink" href="https://maps.google.com/?q=Toshali+Sands+Puri" target="_blank" rel="noopener">Open in Maps</a>
+  <p class="venue-detail">Laxmi Vallabha Kalyan Mandap, Konanakunte Cross, Bengaluru – 560062</p>
+  <a class="maplink" href="https://maps.google.com/?q=Laxmi+Vallabha+Kalyan+Mandap+Konanakunte+Cross+Bangalore+560062" target="_blank" rel="noopener">Open in Maps</a>
 </section>
 
 <div class="garland"></div>
@@ -337,63 +370,24 @@
   <div class="eyebrow">Our journey</div>
   <h2>Memories &amp; Moments</h2>
   <div class="gallery">
-    <img class="reveal" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80" alt="Couple moment">
-    <img class="reveal" src="https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?w=600&q=80" alt="Wedding ritual">
-    <img class="reveal" src="https://images.unsplash.com/photo-1607081692251-3eb8c3a1f12c?w=600&q=80" alt="South Indian bride">
-    <img class="reveal" src="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?w=600&q=80" alt="Couple celebration">
+    <img class="reveal" src="images/g1.jpg" alt="Purnima and Kiran moment one">
+    <img class="reveal" src="images/g2.jpg" alt="Purnima and Kiran moment two">
+    <img class="reveal" src="images/g3.jpg" alt="Purnima and Kiran moment three">
+    <img class="reveal" src="images/g4.jpg" alt="Purnima and Kiran moment four">
   </div>
-</section>
-
-<div class="garland"></div>
-
-<!-- RSVP -->
-<section class="block wrap">
-  <div class="eyebrow">Kindly respond</div>
-  <h2>RSVP</h2>
-  <form class="card" id="rsvpForm" onsubmit="return sendRsvp(event)">
-    <div class="field">
-      <label for="rname">Your name</label>
-      <input id="rname" required placeholder="Full name">
-    </div>
-    <div class="field">
-      <label for="rcount">Number of guests</label>
-      <select id="rcount"><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select>
-    </div>
-    <div class="field">
-      <label for="rattend">Will you attend?</label>
-      <select id="rattend"><option>Yes, with blessings 🌼</option><option>Sorry, can't make it</option></select>
-    </div>
-    <button class="btn" type="submit">Send RSVP</button>
-    <p class="note">Sends straight to the family on WhatsApp.</p>
-  </form>
-  <p class="thanks" id="thanks">Dhanyavaad — we cannot wait to celebrate with you! 🌼</p>
 </section>
 
 <div class="garland"></div>
 
 <footer>
   <span class="ornament">~ ❁ Subhamastu ❁ ~</span>
-  Ipsita &amp; Rohan · 13 February 2027<br>
+  Purnima &amp; Kiran · 23 August 2026<br>
   Invitation designed with <span class="heart">♥</span> by pp.develper · +91 70778 17064
 </footer>
 
-<!-- WhatsApp chat -->
-<button class="chat-bubble" id="chatBubble" aria-label="Open chat">
-  <svg viewBox="0 0 32 32"><path d="M16 .4C7.4.4.4 7.4.4 16c0 2.8.7 5.5 2.1 7.9L0 32l8.3-2.2c2.3 1.3 5 2 7.7 2 8.6 0 15.6-7 15.6-15.6S24.6.4 16 .4zm0 28.6c-2.4 0-4.7-.6-6.7-1.8l-.5-.3-5 1.3 1.3-4.9-.3-.5C3.5 20.8 2.8 18.5 2.8 16 2.8 8.7 8.7 2.8 16 2.8S29.2 8.7 29.2 16 23.3 29 16 29zm7.4-9.9c-.4-.2-2.4-1.2-2.8-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.3-.4.3-.8.1-.4-.2-1.7-.6-3.2-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8.2-.2.4-.4.6-.7.2-.2.3-.4.4-.6.1-.3.1-.5 0-.7-.1-.2-.9-2.2-1.2-3-.3-.8-.6-.7-.9-.7H10c-.3 0-.7.1-1 .5s-1.3 1.3-1.3 3.2c0 1.9 1.4 3.7 1.6 4 .2.3 2.7 4.1 6.5 5.7.9.4 1.6.6 2.2.8.9.3 1.7.2 2.4.1.7-.1 2.2-.9 2.5-1.8.3-.9.3-1.6.2-1.7-.1-.2-.4-.3-.8-.5z"/></svg>
-</button>
-
-<div class="chat-panel" id="chatPanel">
-  <div class="chat-head"><b>Invite Studio</b><small>Typically replies in minutes</small></div>
-  <div class="chat-body">
-    <div class="msg">Hi! 👋 Want a custom invite like this? Pick one and I'll open WhatsApp for you.</div>
-    <button class="chat-opt" data-msg="Hi! I'd like a wedding invite.">💐 I want a wedding invite</button>
-    <button class="chat-opt" data-msg="Hi! I'd like a birthday invite.">🎂 I want a birthday invite</button>
-    <button class="chat-opt" data-msg="Hi! Can you share pricing details?">💸 Ask about pricing</button>
-  </div>
-</div>
-
 <script>
-  const target = new Date("2027-02-13T16:30:00+05:30").getTime();
+  /* ---------- Countdown to muhurtham ---------- */
+  const target = new Date("2026-08-23T10:00:00+05:30").getTime();
   const d_=document.getElementById('d'),h_=document.getElementById('h'),m_=document.getElementById('m'),s_=document.getElementById('s');
   function tick(){
     const t = target - Date.now();
@@ -405,39 +399,67 @@
   }
   tick(); setInterval(tick,1000);
 
+  /* ---------- Scroll reveal ---------- */
   const io = new IntersectionObserver((ents)=>{
     ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
   },{threshold:.15});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  const PHONE="917077817064";
-  function sendRsvp(e){
-    e.preventDefault();
-    const n=document.getElementById('rname').value.trim();
-    const c=document.getElementById('rcount').value;
-    const a=document.getElementById('rattend').value;
-    const msg=`Namaste! RSVP for Ipsita & Rohan's wedding:%0AName: ${encodeURIComponent(n)}%0AGuests: ${c}%0AAttending: ${encodeURIComponent(a)}`;
-    window.open(`https://wa.me/${PHONE}?text=${msg}`,'_blank');
-    document.getElementById('rsvpForm').style.display='none';
-    document.getElementById('thanks').style.display='block';
-    return false;
+  /* ---------- Music ---------- */
+  const audio=new Audio('images/wedding-music.mp3');
+  audio.loop=true; audio.volume=0.7;
+  const mb=document.getElementById('musicBtn');
+  let playing=false;
+  function setIcon(){ mb.classList.toggle('playing', playing); }
+  function playMusic(){ audio.play().then(()=>{playing=true;setIcon();}).catch(()=>{}); }
+  mb.addEventListener('click',()=>{
+    if(playing){ audio.pause(); playing=false; }
+    else { audio.play().then(()=>{playing=true;}).catch(()=>{}); }
+    setIcon();
+  });
+
+  /* ---------- Falling flora (petals) ---------- */
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const layer=document.getElementById('petals');
+  const glyphs=['🌼','🌸','🏵️','💛','🌺'];
+  let petalsOn=false, live=0;
+  const MAX_LIVE = 26;
+  function spawnPetal(){
+    if(!petalsOn || live>=MAX_LIVE) return;
+    const p=document.createElement('span');
+    p.className='petal';
+    p.textContent=glyphs[Math.floor(Math.random()*glyphs.length)];
+    p.style.left=(Math.random()*100)+'vw';
+    p.style.fontSize=(14+Math.random()*22)+'px';
+    p.style.setProperty('--drift',(Math.random()*160-80)+'px');
+    const dur=5+Math.random()*5;
+    p.style.animation='fall '+dur+'s linear forwards';
+    layer.appendChild(p); live++;
+    p.addEventListener('animationend',()=>{p.remove();live--;});
+  }
+  function startPetals(){
+    if(reduce){ return; }
+    petalsOn=true;
+    for(let i=0;i<18;i++) setTimeout(spawnPetal, i*120);   // opening burst
+    setInterval(spawnPetal, 650);                          // gentle ambient fall
   }
 
-  const cb=document.getElementById('chatBubble'),cp=document.getElementById('chatPanel');
-  cb.addEventListener('click',()=>{cp.style.display=cp.style.display==='block'?'none':'block'});
-  document.querySelectorAll('.chat-opt').forEach(b=>{
-    b.addEventListener('click',()=>{
-      window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(b.dataset.msg)}`,'_blank');
-    });
-  });
-
-  const mb=document.getElementById('musicBtn');
-  const audio=new Audio(); audio.loop=true;
-  let playing=false;
-  mb.addEventListener('click',()=>{
-    if(!audio.src){alert('Add your music track URL to enable playback.');return}
-    if(playing){audio.pause()}else{audio.play()} playing=!playing;
-  });
+  /* ---------- Gatefold opener ---------- */
+  const opener=document.getElementById('opener');
+  let opened=false;
+  function openInvite(){
+    if(opened) return; opened=true;
+    opener.classList.add('open');
+    startPetals();
+    playMusic();
+    if(reduce){
+      opener.style.display='none';
+    } else {
+      setTimeout(()=>opener.classList.add('gone'),1150);
+      setTimeout(()=>{opener.style.display='none';},1800);
+    }
+  }
+  opener.addEventListener('click', openInvite);
 </script>
 </body>
 </html>
