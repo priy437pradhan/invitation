@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>For you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --line:#7a2a48; --cream:#fff7fb;
+    --petal:#ff5c8a;--cherry:#e13b6b;--ink:#5a2440;--gold:#e0a53f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:'Poppins',system-ui,sans-serif;color:var(--ink);
+    background:#20121a;display:flex;justify-content:center;align-items:center;height:100dvh;overflow:hidden}
+
+  /* -------- VERTICAL / REEL FRAME (9:16) -------- */
+  .stage{position:relative;width:min(100vw, calc(100dvh * 9 / 16));height:100dvh;overflow:hidden;
+    background:linear-gradient(#fffdff 0%, #fff5fa 55%, #ffeef4 100%)}
+  .stage svg{stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+  .stage svg .dot{fill:currentColor;stroke:none}
+  .stage svg .shadow{opacity:.28}
+
+  .rainsky{position:absolute;inset:0;z-index:1;opacity:0;transition:opacity 2s ease;
+    background:linear-gradient(rgba(96,112,140,0),rgba(96,112,140,.24))}
+  .stage.rain .rainsky{opacity:1}
+
+  .crest{position:absolute;top:22px;left:0;right:0;z-index:9;text-align:center;
+    font-family:'Pacifico',cursive;font-size:24px;color:var(--cherry);display:flex;align-items:center;justify-content:center;gap:10px}
+  .crest svg{width:22px;height:20px;color:var(--cherry)}
+
+  .backdrop{position:absolute;left:0;right:0;bottom:230px;width:100%;height:auto;color:var(--line);opacity:.26;z-index:2}
+  .lamp-glow{opacity:0;transition:opacity 1.5s ease}
+  .stage.rain .lamp-glow{opacity:.5}
+
+  .cloud{position:absolute;top:-140px;width:110px;height:auto;color:var(--line);opacity:0;z-index:3;
+    transition:top 2.2s ease, opacity 2.2s ease}
+  .cloud.c1{left:10%}.cloud.c2{left:56%;width:128px}
+  .stage.rain .cloud{opacity:.9}
+  .stage.rain .cloud.c1{top:70px}.stage.rain .cloud.c2{top:48px}
+
+  .ground-line{position:absolute;left:0;right:0;bottom:230px;height:2px;background:var(--line);opacity:.42;z-index:2}
+  .road-lines{position:absolute;left:-10%;bottom:206px;width:130%;height:2px;z-index:2;opacity:.4;
+    background:repeating-linear-gradient(90deg,var(--line) 0 20px, transparent 20px 52px)}
+  .road-lines.scroll{animation:road 1.4s linear infinite}
+  @keyframes road{to{transform:translateX(-72px)}}
+
+  .drop{position:absolute;top:-16px;width:1.6px;height:14px;border-radius:2px;background:var(--line);
+    opacity:.4;z-index:6;pointer-events:none}
+  @keyframes raindrop{to{transform:translateY(120vh);opacity:0}}
+
+  /* -------- DANCE FLOOR (wraps actors so they move as one, staying hand-in-hand) -------- */
+  .floor{position:absolute;inset:0;z-index:4;transform-origin:50% 86%}
+  .floor.dancing{animation:floorSalsa 1.25s ease-in-out infinite}
+  @keyframes floorSalsa{0%,100%{transform:rotate(-3deg) translateY(0)}50%{transform:rotate(3deg) translateY(-10px)}}
+
+  /* -------- ACTORS -------- */
+  .actor{position:absolute;bottom:234px;width:120px;height:208px;left:0;color:var(--line);
+    transition:left 2.6s cubic-bezier(.37,0,.3,1)}
+  .actor svg{width:100%;height:100%;display:block}
+  .girl > svg{transform:scaleX(-1)}
+
+  .actor .ls,.actor .lk,.actor .ld,.actor .lr{opacity:0;transition:opacity .45s ease}
+  .actor.pose-stand .ls{opacity:1}
+  .actor.pose-kneel .lk{opacity:1}
+  .actor.pose-dance .ld{opacity:1}
+  .actor.pose-reach .lr{opacity:1}
+
+  .armL,.armR,.legL,.legR{transform-box:fill-box;transform-origin:50% 8%}
+  .actor.walking.pose-stand .armL{animation:swA .7s linear infinite}
+  .actor.walking.pose-stand .armR{animation:swB .7s linear infinite}
+  .actor.walking.pose-stand .legL{animation:swB .7s linear infinite}
+  .actor.walking.pose-stand .legR{animation:swA .7s linear infinite}
+  .actor.walking{animation:bob .7s ease-in-out infinite}
+  @keyframes swA{0%,100%{transform:rotate(14deg)}50%{transform:rotate(-14deg)}}
+  @keyframes swB{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+  /* -------- PROPS -------- */
+  .bubble{position:absolute;left:50%;top:-6px;transform:translate(-50%,-100%) scale(0);
+    background:#fff;color:var(--ink);font-family:'Fredoka',sans-serif;font-weight:500;font-size:15px;
+    padding:9px 15px;border-radius:16px;white-space:nowrap;box-shadow:0 8px 20px -8px rgba(122,42,72,.45);
+    border:1.5px solid var(--line);transition:transform .35s cubic-bezier(.2,1.4,.4,1);z-index:7;
+    display:flex;align-items:center;gap:6px}
+  .bubble:after{content:"";position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);border:7px solid transparent;border-top-color:#fff;border-bottom:0}
+  .bubble:before{content:"";position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);border:8px solid transparent;border-top-color:var(--line);border-bottom:0}
+  .bubble.on{transform:translate(-50%,-100%) scale(1)}
+  .bubble svg{width:16px;height:15px;color:var(--cherry);stroke:currentColor;fill:none;stroke-width:2}
+
+  .reaction{position:absolute;left:50%;top:-10px;transform:translateX(-50%);z-index:7;pointer-events:none}
+  .rh{position:absolute;color:var(--petal);animation:rhpop 1.6s ease-out forwards}
+  .rh svg{width:22px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+  @keyframes rhpop{0%{transform:translate(-50%,0) scale(.4);opacity:0}20%{opacity:1}100%{transform:translate(-50%,-90px) scale(1.15);opacity:0}}
+
+  .gift{position:absolute;width:56px;height:66px;color:var(--line);opacity:0;transform:scale(0);z-index:8;left:0;top:0;
+    transition:opacity .5s ease, transform .5s ease}
+  .gift.moving{transition:left 1.6s cubic-bezier(.4,0,.2,1), top 1.6s cubic-bezier(.4,0,.2,1), opacity .5s ease, transform .5s ease}
+  .gift svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2.4}
+  .gift.show{opacity:1;transform:scale(1)}
+
+  .umbrella{position:absolute;width:150px;height:162px;color:var(--line);opacity:0;left:0;top:0;
+    transform:translate(-50%,12px) scale(0);transform-origin:center bottom;z-index:9;
+    transition:left 1.2s ease, top 1.2s ease, transform 1.2s cubic-bezier(.2,1.4,.3,1), opacity 1s ease}
+  .umbrella svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2.6}
+  .umbrella.show{opacity:1;transform:translate(-50%,0) scale(1)}
+  .umbrella.toss{opacity:0;transform:translate(90px,-360px) rotate(240deg) scale(1)}
+
+  .handhold{position:absolute;color:var(--line);opacity:0;z-index:6;transition:opacity .5s ease}
+  .handhold.on{opacity:1}
+  .handhold svg{stroke:currentColor;fill:none;stroke-width:2.4}
+
+  /* -------- OVERLAYS -------- */
+  .caption{position:absolute;left:0;right:0;bottom:132px;z-index:9;text-align:center;padding:0 26px;
+    font-family:'Fredoka',sans-serif;font-size:clamp(17px,4.8vw,22px);color:var(--ink)}
+  .caption b{color:var(--cherry)}
+  .caption span{display:inline-block;animation:capin .5s ease both}
+  @keyframes capin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .cta,.replay{position:absolute;left:50%;transform:translateX(-50%) translateY(6px);bottom:52px;z-index:9;
+    display:inline-flex;align-items:center;gap:9px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;
+    color:#fff;cursor:pointer;border:none;border-radius:999px;padding:16px 34px;white-space:nowrap;
+    background:linear-gradient(135deg,var(--petal),var(--cherry));box-shadow:0 14px 30px -8px rgba(225,59,107,.7);
+    opacity:0;pointer-events:none;transition:opacity .4s ease, transform .4s ease, box-shadow .18s ease}
+  .cta.on,.replay.on{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+  .cta:hover,.replay:hover{box-shadow:0 20px 38px -8px rgba(225,59,107,.85)}
+  .cta svg,.replay svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2.2}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none !important}}
+</style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="rainsky"></div>
+    <div class="crest" id="crest"></div>
+
+    <svg class="backdrop" viewBox="0 0 320 150" preserveAspectRatio="xMidYMax meet">
+      <path d="M14 150 V78 H58 V150"/>
+      <path d="M24 92 h8 M42 92 h8 M24 108 h8 M42 108 h8 M24 124 h8 M42 124 h8"/>
+      <path d="M64 150 V54 H100 V150"/>
+      <path d="M72 68 h8 M86 68 h8 M72 86 h8 M86 86 h8 M72 104 h8 M86 104 h8 M72 122 h8 M86 122 h8"/>
+      <path d="M244 150 V70 H288 V150"/>
+      <path d="M254 84 h8 M272 84 h8 M254 102 h8 M272 102 h8 M254 120 h8 M272 120 h8"/>
+      <path d="M296 150 V96 H316 V150"/>
+      <path d="M170 150 V58 q0 -8 8 -8 h10"/>
+      <circle class="lamp-glow" cx="192" cy="52" r="9" style="fill:currentColor;stroke:none"/>
+      <path d="M188 50 h8 v6 h-8 z"/>
+    </svg>
+
+    <div class="cloud c1"><svg viewBox="0 0 96 52"><path d="M20 44 Q4 44 7 30 Q4 16 20 19 Q24 5 42 10 Q54 1 65 12 Q84 8 84 26 Q94 28 86 42 Q83 46 74 44 Z"/></svg></div>
+    <div class="cloud c2"><svg viewBox="0 0 96 52"><path d="M20 44 Q4 44 7 30 Q4 16 20 19 Q24 5 42 10 Q54 1 65 12 Q84 8 84 26 Q94 28 86 42 Q83 46 74 44 Z"/></svg></div>
+
+    <div class="ground-line"></div>
+    <div class="road-lines" id="roadLines"></div>
+
+    <div class="floor" id="floor">
+      <!-- BOY : Rahul -->
+      <div class="actor boy pose-stand" id="boy">
+        <div class="bubble" id="bubble">Hi</div>
+        <svg viewBox="0 0 120 210" xmlns="http://www.w3.org/2000/svg">
+          <ellipse class="shadow" cx="60" cy="206" rx="24" ry="3"/>
+          <path d="M39 48 Q40 28 60 27 Q80 28 81 48 Q73 39 60 39 Q47 39 39 48"/>
+          <circle cx="60" cy="50" r="22"/>
+          <circle class="dot" cx="52" cy="51" r="2"/><circle class="dot" cx="68" cy="51" r="2"/>
+          <path d="M53 60 Q60 66 67 60"/>
+          <path d="M55 71 V77"/><path d="M65 71 V77"/>
+          <path d="M46 80 Q46 77 51 77 L69 77 Q74 77 74 80 L77 133 Q60 139 43 133 Z"/>
+          <path d="M53 78 L60 85 L67 78"/>
+          <g class="ls">
+            <g class="armL"><path d="M48 84 L39 124"/></g>
+            <g class="armR"><path d="M72 84 L81 124"/></g>
+            <g class="legL"><path d="M54 133 L50 196"/><path d="M44 197 Q50 201 57 196"/></g>
+            <g class="legR"><path d="M66 133 L70 196"/><path d="M63 196 Q70 201 76 197"/></g>
+          </g>
+          <g class="lk">
+            <path d="M55 133 L52 168 L54 196"/><path d="M47 197 Q54 201 60 196"/>
+            <path d="M66 133 L84 166 L66 176"/>
+            <path d="M50 84 L42 66 L52 50"/>
+            <path d="M72 84 L94 98"/>
+          </g>
+          <g class="ld">
+            <g class="armL"><path d="M48 84 L31 60"/></g>
+            <path d="M72 84 L96 108"/>
+            <path d="M54 133 L44 196"/><path d="M38 197 Q45 201 51 196"/>
+            <path d="M66 133 L78 196"/><path d="M72 197 Q79 201 85 196"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- GIRL : Anjali -->
+      <div class="actor girl pose-stand" id="girl">
+        <div class="reaction" id="reaction"></div>
+        <svg viewBox="0 0 120 210" xmlns="http://www.w3.org/2000/svg">
+          <ellipse class="shadow" cx="60" cy="206" rx="24" ry="3"/>
+          <path d="M40 46 Q30 74 36 116 Q42 122 48 112"/>
+          <path d="M80 46 Q90 74 84 116 Q78 122 72 112"/>
+          <path d="M39 48 Q40 26 60 25 Q80 26 81 48 Q72 39 60 39 Q48 39 39 48"/>
+          <path d="M60 26 L48 20 L48 32 Z"/><path d="M60 26 L72 20 L72 32 Z"/><circle cx="60" cy="26" r="3"/>
+          <circle cx="60" cy="50" r="22"/>
+          <circle class="dot" cx="52" cy="51" r="2"/><circle class="dot" cx="68" cy="51" r="2"/>
+          <path d="M53 60 Q60 67 67 60"/>
+          <path d="M50 78 L70 78 L88 150 L32 150 Z"/>
+          <path d="M53 78 Q60 84 67 78"/>
+          <path d="M42 104 L78 104"/>
+          <path d="M52 108 L46 150"/><path d="M60 108 L60 150"/><path d="M68 108 L74 150"/>
+          <g class="ls">
+            <g class="armL"><path d="M50 82 L38 120"/></g>
+            <g class="armR"><path d="M70 82 L82 120"/></g>
+            <g class="legL"><path d="M54 150 L50 194"/><path d="M45 195 Q51 199 57 194"/></g>
+            <g class="legR"><path d="M66 150 L70 194"/><path d="M63 194 Q70 199 76 195"/></g>
+          </g>
+          <g class="lr">
+            <g class="armL"><path d="M50 82 L54 118"/></g>
+            <g class="armR"><path d="M70 82 L66 118"/></g>
+            <path d="M54 150 L50 194"/><path d="M45 195 Q51 199 57 194"/>
+            <path d="M66 150 L70 194"/><path d="M63 194 Q70 199 76 195"/>
+          </g>
+          <g class="ld">
+            <g class="armL"><path d="M50 82 L34 60"/></g>
+            <path d="M70 82 L96 108"/>
+            <path d="M54 150 L44 194"/><path d="M38 195 Q45 199 51 194"/>
+            <path d="M66 150 L78 194"/><path d="M72 195 Q79 199 85 194"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="handhold" id="handhold"></div>
+      <div class="gift" id="gift"></div>
+      <div class="umbrella" id="umbrella"></div>
+    </div>
+
+    <div class="caption" id="caption"><span>&nbsp;</span></div>
+    <button class="cta" id="cta">Accept</button>
+  </div>
+
+<script>
+/* ===================================================================
+   CONFIG  —  swap from your dashboard / API later.
+   =================================================================== */
+var CONFIG = {
+  her: { name: "Anjali Sharma", photo: "" },
+  him: { name: "Rahul Khanna",  photo: "" }
+};
+
+/* line-art props */
+var HEART='<svg viewBox="0 0 24 24"><path d="M12 20.5C4.5 14 2.5 9.4 6 6.4 8.6 4.4 11.4 6.4 12 8.4 12.6 6.4 15.4 4.4 18 6.4 21.5 9.4 19.5 14 12 20.5Z"/></svg>';
+var ROSES='<svg viewBox="0 0 60 72"><path d="M22 46 L38 46 L34 68 L26 68 Z"/><path d="M30 46 V30"/><path d="M30 46 L20 34"/><path d="M30 46 L40 34"/><path d="M18 42 q-6 -2 -3 -7"/><path d="M42 42 q6 -2 3 -7"/><circle cx="30" cy="20" r="8"/><path d="M30 14 q6 3 3 8 q-3 4 -7 1 q-2 -4 2 -6"/><circle cx="16" cy="28" r="6.5"/><path d="M16 24 q5 2 2 6 q-3 2 -5 -1"/><circle cx="44" cy="28" r="6.5"/><path d="M44 24 q-5 2 -2 6 q3 2 5 -1"/></svg>';
+var CHOC='<svg viewBox="0 0 60 60"><rect x="10" y="26" width="40" height="26" rx="3"/><path d="M10 34 H50"/><path d="M30 26 V52"/><path d="M30 26 q-9 -12 -15 -5 q4 9 15 5"/><path d="M30 26 q9 -12 15 -5 q-4 9 -15 5"/><circle class="dot" cx="30" cy="25" r="2"/></svg>';
+var UMBRELLA='<svg viewBox="0 0 96 104"><path d="M8 44 Q48 -4 88 44"/><path d="M8 44 q10 12 20 0 q10 12 20 0 q10 12 20 0 q10 12 20 0"/><path d="M48 10 V44"/><path d="M28 44 Q32 22 48 10"/><path d="M68 44 Q64 22 48 10"/><path d="M48 44 V92 Q48 100 39 100 Q33 100 33 94"/></svg>';
+
+var REDUCE = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+var $=function(id){return document.getElementById(id);};
+var stage=$("stage"),floor=$("floor"),boy=$("boy"),girl=$("girl"),bubble=$("bubble"),
+    reaction=$("reaction"),gift=$("gift"),umbrella=$("umbrella"),handhold=$("handhold"),
+    roadLines=$("roadLines"),caption=$("caption"),cta=$("cta");
+var HER=CONFIG.her.name, HIM=CONFIG.him.name;
+var HERF=HER.split(" ")[0], HIMF=HIM.split(" ")[0];
+var AUTO=/[?&]auto/.test(location.search);   /* hands-free play-through for recording */
+umbrella.innerHTML=UMBRELLA;
+
+function pose(el,p){ el.classList.remove("pose-stand","pose-kneel","pose-dance","pose-reach"); el.classList.add("pose-"+p); }
+function move(el,pct){ el.style.left=pct+"%"; }
+function say(t){ bubble.innerHTML=t; bubble.classList.add("on"); }
+function hush(){ bubble.classList.remove("on"); }
+function cap(t){ caption.innerHTML="<span>"+t+"</span>"; }
+function showBtn(label,fn){ cta.innerHTML=label; cta.onclick=fn; cta.classList.add("on");
+  if(AUTO){ setTimeout(function(){ if(cta.classList.contains("on")&&cta.onclick) cta.onclick(); }, 1000); } }
+function hideBtn(){ cta.classList.remove("on"); cta.onclick=null; }
+function hearts(){
+  for(var i=0;i<4;i++){(function(k){
+    var h=document.createElement("div");h.className="rh";h.innerHTML=HEART;
+    h.style.left=(50+(k-1.5)*18)+"%";h.style.animationDelay=(k*0.14)+"s";
+    reaction.appendChild(h);setTimeout(function(){h.remove();},1700);
+  })(i);}
+}
+
+/* page point of a local (viewBox) coord inside an actor; flip x for the girl */
+function pt(actor, lx, ly){
+  var r=actor.getBoundingClientRect();
+  var x = (actor===girl) ? (120-lx) : lx;
+  return { x:r.left + x*(r.width/120), y:r.top + ly*(r.height/210) };
+}
+function stageRect(){ return stage.getBoundingClientRect(); }
+
+/* rain */
+var raining=false;
+setInterval(function(){
+  if(!raining||REDUCE) return;
+  var d=document.createElement("div");d.className="drop";
+  d.style.left=Math.random()*100+"%";
+  var dur=(0.55+Math.random()*0.45);
+  d.style.animation="raindrop "+dur+"s linear forwards";
+  stage.appendChild(d);setTimeout(function(){d.remove();},dur*1000+80);
+},50);
+
+/* gift: first shown resting in Rahul's hand, then handed to Anjali's hand on accept */
+function presentGift(kind){
+  gift.innerHTML=(kind==="roses")?ROSES:CHOC;
+  gift.classList.remove("moving");
+  var sr=stageRect(), gw=56, gh=66, from=pt(boy,84,116);   /* his standing hand */
+  gift.style.left=(from.x-sr.left-gw/2)+"px";
+  gift.style.top =(from.y-sr.top -gh/2)+"px";
+  requestAnimationFrame(function(){ gift.classList.add("show"); });
+}
+function acceptGift(done){
+  pose(girl,"reach");
+  var sr=stageRect(), gw=56, gh=66, to=pt(girl,58,120);   /* her reaching hands */
+  gift.classList.add("moving");
+  gift.style.left=(to.x-sr.left-gw/2)+"px";
+  gift.style.top =(to.y-sr.top -gh/2)+"px";
+  setTimeout(function(){ hearts(); },1500);
+  setTimeout(function(){ gift.classList.remove("show","moving"); pose(girl,"stand"); if(done)done(); },2200);
+}
+/* umbrella: opened in Rahul's hand while he asks, then re-centred over both on accept */
+function presentUmbrella(){
+  var sr=stageRect(), head=pt(boy,60,34);
+  umbrella.style.left=(head.x-sr.left)+"px";
+  umbrella.style.top =(head.y-sr.top-150)+"px";
+  umbrella.classList.add("show");
+}
+
+var timers=[];
+function at(ms,fn){ timers.push(setTimeout(fn,ms)); }
+function clearAll(){ for(var i=0;i<timers.length;i++) clearTimeout(timers[i]); timers=[]; }
+
+function reset(){
+  clearAll();
+  stage.classList.remove("rain"); raining=false;
+  floor.classList.remove("dancing");
+  roadLines.classList.remove("scroll");
+  pose(boy,"stand"); boy.classList.remove("walking");
+  pose(girl,"stand"); girl.classList.remove("walking");
+  move(boy,-36); move(girl,58);
+  hush(); gift.classList.remove("show","moving");
+  umbrella.classList.remove("show","toss");
+  handhold.classList.remove("on");
+  hideBtn();
+  cap("&nbsp;");
+}
+
+/* -------- STORY BEATS (each gate asks, button accepts) -------- */
+function intro(){
+  reset();
+  if(REDUCE){ finale(true); return; }
+  cap("Under this whole quiet sky, my only world is you.");
+  at(400,function(){ cap("One look at you, and every fight we ever had turned to nothing."); boy.classList.add("walking"); move(boy,30); });
+  at(3300,function(){ boy.classList.remove("walking"); pose(boy,"stand"); say("I&rsquo;m sorry, "+HERF+"."); });
+  at(3900,function(){ cap("I&rsquo;m so sorry &mdash; take me back, and I&rsquo;ll spend my life making it right."); say("These are for you");
+                      presentGift("roses"); showBtn("Accept my roses", doRoses); });
+}
+function doRoses(){
+  hideBtn(); cap("Each rose carries a sorry my lips were too proud to say.");
+  acceptGift(function(){
+    cap("A little sweetness, so your days are never bitter again."); say("&hellip;and your favourite chocolate");
+    presentGift("choc");
+    showBtn("Accept my chocolate", doChoc);
+  });
+}
+function doChoc(){
+  hideBtn(); cap("You took them &mdash; and my heart remembered how to beat.");
+  acceptGift(function(){
+    pose(boy,"stand"); say("Will you keep me?");
+    cap("Keep me close, and I&rsquo;ll love you softer than the rain.");
+    showBtn("Walk with me", doWalk);
+  });
+}
+function doWalk(){
+  hideBtn(); hush();
+  boy.classList.add("walking"); girl.classList.add("walking");
+  roadLines.classList.add("scroll"); move(boy,34); move(girl,60);
+  cap("You slid your hand into mine, and the whole world fell into step.");
+  at(3200,function(){
+    boy.classList.remove("walking"); girl.classList.remove("walking");
+    roadLines.classList.remove("scroll");
+    stage.classList.add("rain"); raining=true;
+    presentUmbrella();
+    cap("Then the heavens opened &mdash; as if the sky itself wanted to bless us.");
+    say("Come closer to me.");
+    showBtn("Come under my umbrella", doUmbrella);
+  });
+}
+function doUmbrella(){
+  hideBtn(); move(girl,47);          /* Anjali walks over to Rahul, under his umbrella */
+  at(2700,function(){
+    var sr=stageRect(), bh=pt(boy,60,34), gh=pt(girl,60,34);
+    umbrella.style.left=(((bh.x+gh.x)/2)-sr.left)+"px";
+    umbrella.style.top =(Math.min(bh.y,gh.y)-sr.top-150)+"px";
+    say("I&rsquo;ll always keep you safe and dry.");
+    cap("One umbrella, two hearts, and the rain singing just for us.");
+    showBtn("Dance with me", doDance);
+  });
+}
+function doDance(){
+  hideBtn(); hush(); umbrella.classList.add("toss");
+  cap("You tossed the umbrella away &mdash; some feelings, you must let pour.");
+  pose(boy,"dance"); pose(girl,"dance");
+  move(boy,33); move(girl,54);
+  at(2700,function(){
+    /* link their inner hands, then sway as one so they stay hand-in-hand */
+    var sr=stageRect();
+    var bh=pt(boy,96,108), gh=pt(girl,96,108);
+    var x1=Math.min(bh.x,gh.x)-sr.left, x2=Math.max(bh.x,gh.x)-sr.left;
+    var w=Math.max(24,x2-x1), y=((bh.y+gh.y)/2)-sr.top;
+    handhold.style.left=x1+"px"; handhold.style.top=(y-12)+"px";
+    handhold.innerHTML='<svg width="'+w+'" height="24" viewBox="0 0 '+w+' 24"><path d="M0 12 H'+w+'"/><circle cx="'+(w/2)+'" cy="12" r="4"/><path d="M'+(w/2-9)+' 8 q9 8 18 0"/></svg>';
+    handhold.classList.add("on");
+    floor.classList.add("dancing"); hearts();
+    cap("So we danced in the pouring rain, hand in hand, our hearts as one.");
+  });
+  at(5200,function(){ hearts(); });
+  at(6400,function(){ say("Always you, "+HERF+". "+HEART); cap("It was always you. It will always be you &mdash; forever."); window.__reelDone=true; });
+}
+function finale(instant){
+  move(boy,33); move(girl,54); pose(boy,"dance"); pose(girl,"dance");
+  stage.classList.add("rain"); floor.classList.add(instant?"":"dancing");
+  cap("It was always you. It will always be you &mdash; forever."); window.__reelDone=true;
+}
+
+(function(){
+  $("crest").innerHTML=HERF+" "+HEART+" "+HIMF;
+  intro();
+})();
+</script>
+</body>
+</html>
