@@ -68,15 +68,37 @@
     background:linear-gradient(90deg,transparent,var(--gold),transparent)}
   .divider .lamp-mini{flex:none;opacity:.95}
 
-  /* Hero lantern with a warm glow */
+  /* Hero lantern — lit-flame glow */
   .hero-lamp{position:relative;display:flex;justify-content:center;margin-bottom:4px}
-  .hero-lamp::before{content:"";position:absolute;top:34%;left:50%;width:120px;height:120px;
-    transform:translate(-50%,-30%);z-index:0;
-    background:radial-gradient(circle,rgba(236,208,138,.4),transparent 68%);filter:blur(4px)}
+  /* outer warm halo, gentle breathe */
+  .hero-lamp::before{content:"";position:absolute;left:50%;top:52%;width:140px;height:140px;z-index:0;
+    background:radial-gradient(circle,rgba(255,178,84,.5),rgba(236,208,138,.22) 52%,transparent 72%);
+    filter:blur(9px);transform:translate(-50%,-50%);
+    animation:flameGlow 3.4s ease-in-out infinite}
+  /* inner flame core, irregular flicker */
+  .hero-lamp::after{content:"";position:absolute;left:50%;top:55%;width:64px;height:92px;z-index:0;
+    border-radius:50% 50% 48% 48%;
+    background:radial-gradient(circle at 50% 62%,rgba(255,238,196,.95),rgba(255,150,54,.55) 46%,transparent 72%);
+    filter:blur(5px);transform:translate(-50%,-50%);
+    animation:flameFlicker 2.3s ease-in-out infinite}
   .hero-lamp .lamp-hero{position:relative;z-index:1;color:var(--gold-light);
     transform-origin:top center;animation:sway 4.5s ease-in-out infinite}
   @keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
-  @media (prefers-reduced-motion:reduce){.hero-lamp .lamp-hero{animation:none}}
+  @keyframes flameGlow{0%,100%{opacity:.32;transform:translate(-50%,-50%) scale(1)}
+    50%{opacity:.54;transform:translate(-50%,-50%) scale(1.14)}}
+  @keyframes flameFlicker{
+    0%{opacity:.6;transform:translate(-50%,-50%) scale(1,1)}
+    12%{opacity:.86;transform:translate(-50%,-51%) scale(1.05,1.09)}
+    22%{opacity:.54;transform:translate(-50%,-49%) scale(.97,.99)}
+    35%{opacity:.9;transform:translate(-50%,-52%) scale(1.06,1.12)}
+    47%{opacity:.62;transform:translate(-50%,-50%) scale(1.01,1.03)}
+    60%{opacity:.88;transform:translate(-50%,-52%) scale(1.05,1.1)}
+    72%{opacity:.56;transform:translate(-50%,-49%) scale(.99,1)}
+    85%{opacity:.82;transform:translate(-50%,-51%) scale(1.04,1.06)}
+    100%{opacity:.64;transform:translate(-50%,-50%) scale(1.01,1.02)}}
+  @media (prefers-reduced-motion:reduce){
+    .hero-lamp .lamp-hero{animation:none}
+    .hero-lamp::before,.hero-lamp::after{animation:none;opacity:.42}}
 
   /* ===== GATEFOLD OPENER (arched doors) ===== */
   .opener{
