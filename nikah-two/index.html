@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayaan &amp; Zoya — Nikah Under the Stars</title>
+<meta name="description" content="With the grace of Allah, join us for the Nikah of Ayaan & Zoya.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ayaan &amp; Zoya — Nikah Invitation">
+<meta property="og:description" content="Written in the stars, sealed in dua. Join us for our Nikah.">
+<meta property="og:image" content="https://YOUR-PROJECT.vercel.app/images/hero.jpeg">
+<meta property="og:url" content="https://YOUR-PROJECT.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Amiri:ital@0;1&family=Jost:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --midnight:#090f26;
+    --navy:#121b3c;
+    --navy-soft:#1a2650;
+    --ivory:#f2eee4;
+    --silver:#aebbd8;
+    --champagne:#e3c48f;
+    --champagne-deep:#c39d5e;
+    --star:#ffe9c2;
+    --line:rgba(227,196,143,.3);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(ellipse 120% 60% at 50% -10%, #1c2a5e 0%, transparent 60%),
+      radial-gradient(ellipse 100% 50% at 50% 110%, #131c40 0%, transparent 60%),
+      var(--midnight);
+    color:var(--ivory);font-family:'Jost',sans-serif;font-weight:300;
+    font-size:17.5px;line-height:1.75;overflow-x:hidden;-webkit-font-smoothing:antialiased
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.44em;
+    text-transform:uppercase;color:var(--champagne);margin-bottom:1rem}
+  .arabic{font-family:'Amiri',serif}
+
+  /* fixed starfield */
+  .starfield{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      radial-gradient(1.4px 1.4px at 12% 18%,rgba(255,233,194,.9),transparent),
+      radial-gradient(1.1px 1.1px at 32% 64%,rgba(174,187,216,.8),transparent),
+      radial-gradient(1.6px 1.6px at 55% 30%,rgba(255,233,194,.85),transparent),
+      radial-gradient(1px 1px at 71% 72%,rgba(174,187,216,.7),transparent),
+      radial-gradient(1.3px 1.3px at 86% 22%,rgba(255,233,194,.8),transparent),
+      radial-gradient(1px 1px at 44% 88%,rgba(174,187,216,.65),transparent),
+      radial-gradient(1.2px 1.2px at 92% 55%,rgba(255,233,194,.7),transparent),
+      radial-gradient(1px 1px at 8% 82%,rgba(174,187,216,.6),transparent);
+    animation:twinkle 5s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.55}50%{opacity:1}}
+  main{position:relative;z-index:1}
+
+  /* ===== OPENER: moon seal, iris-collapse reveal ===== */
+  .opener{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:14px;cursor:pointer;text-align:center;
+    background:
+      radial-gradient(ellipse at 50% 30%, #1c2a5e 0%, var(--midnight) 65%);
+    transition:clip-path 1.5s cubic-bezier(.75,0,.2,1), opacity .4s ease 1.35s;
+    clip-path:circle(150% at 50% 38%)}
+  .opener.open{clip-path:circle(0% at 50% 38%);opacity:0}
+  .moon{position:relative;width:190px;height:190px;margin-bottom:8px}
+  .moon svg{width:100%;height:100%;display:block;
+    filter:drop-shadow(0 0 34px rgba(255,233,194,.35));
+    animation:moonFloat 5s ease-in-out infinite}
+  @keyframes moonFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  .opener .couple{font-family:'Cinzel',serif;font-weight:500;
+    font-size:clamp(1.8rem,7.5vw,2.5rem);letter-spacing:.08em;color:var(--ivory)}
+  .opener .couple span{color:var(--champagne);font-family:'Amiri',serif;font-style:italic;
+    font-size:.6em;padding:0 .3em;letter-spacing:0}
+  .opener .sub{font-family:'Amiri',serif;font-style:italic;font-size:1.1rem;color:var(--silver)}
+  .opener .tap{font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.4em;
+    text-transform:uppercase;color:var(--champagne);margin-top:16px;
+    animation:bob 1.9s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+  /* falling stars layer */
+  .shooting{position:fixed;inset:0;pointer-events:none;z-index:150;overflow:hidden}
+  .fstar{position:absolute;top:-24px;color:var(--star);will-change:transform,opacity;
+    text-shadow:0 0 8px rgba(255,233,194,.8)}
+  @keyframes fallStar{
+    0%{transform:translate(0,-24px) rotate(0);opacity:0}
+    10%{opacity:1}
+    100%{transform:translate(var(--drift),105vh) rotate(200deg);opacity:0}}
+
+  /* ===== HERO ===== */
+  .hero{position:relative;text-align:center;padding:56px 24px 60px}
+  .hero .bismillah{font-family:'Amiri',serif;font-size:clamp(1.9rem,8vw,2.7rem);
+    color:var(--champagne);line-height:1.2}
+  .hero .bismillah-en{font-family:'Amiri',serif;font-style:italic;color:var(--silver);
+    font-size:1rem;margin-top:2px}
+  .hero .families{font-family:'Jost',sans-serif;font-weight:300;font-size:1.02rem;
+    color:var(--silver);margin-top:16px;letter-spacing:.04em}
+
+  /* moon-window portrait: circular photo with crescent rim */
+  .moon-frame{position:relative;width:min(74vw,330px);height:min(74vw,330px);margin:34px auto 0}
+  .moon-frame::before{content:"";position:absolute;inset:-13%;border-radius:50%;
+    background:radial-gradient(circle,rgba(227,196,143,.16),transparent 62%)}
+  .moon-frame img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;
+    border:2px solid var(--champagne);box-shadow:0 0 0 12px rgba(227,196,143,.08),
+      0 26px 60px rgba(0,0,0,.55)}
+  .moon-frame .crescent-rim{position:absolute;inset:-7.5%;pointer-events:none}
+  .moon-frame .crescent-rim svg{width:100%;height:100%;display:block;
+    animation:rimSpin 44s linear infinite}
+  @keyframes rimSpin{to{transform:rotate(360deg)}}
+
+  .names{font-family:'Cinzel',serif;font-weight:500;letter-spacing:.06em;
+    font-size:clamp(2.4rem,10vw,3.8rem);line-height:1.12;color:var(--ivory);margin-top:34px}
+  .names .amp{display:block;font-family:'Amiri',serif;font-style:italic;
+    color:var(--champagne);font-size:.48em;margin:2px 0;letter-spacing:0}
+  .date-line{margin-top:16px;font-family:'Cinzel',serif;font-size:.8rem;
+    letter-spacing:.34em;text-transform:uppercase;color:var(--champagne)}
+  .venue-line{margin-top:6px;font-family:'Amiri',serif;font-style:italic;
+    color:var(--silver);font-size:1.08rem}
+
+  /* ===== Moon-phase divider ===== */
+  .phases{display:flex;align-items:center;justify-content:center;gap:14px;
+    max-width:420px;margin:0 auto;padding:12px 24px}
+  .phases::before,.phases::after{content:"";flex:1;height:1px;
+    background:linear-gradient(90deg,transparent,var(--line),transparent)}
+  .phases svg{flex:none;display:block}
+
+  /* ===== Blocks ===== */
+  .block{padding:66px 0;text-align:center;position:relative}
+  .block h2{font-family:'Cinzel',serif;font-weight:500;font-size:1.9rem;
+    letter-spacing:.05em;color:var(--ivory);margin-bottom:.3rem}
+  .block h2 .arabic{display:block;font-size:1.5rem;color:var(--champagne);margin-bottom:4px}
+  .lead{font-size:1.05rem;max-width:560px;margin:16px auto 0;color:var(--silver)}
+  .verse{font-family:'Amiri',serif;font-style:italic;font-size:1.28rem;
+    max-width:560px;margin:22px auto 0;color:var(--ivory);line-height:1.75}
+  .verse cite{display:block;font-style:normal;font-family:'Cinzel',serif;
+    font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--champagne);margin-top:14px}
+  .hashtag{margin-top:22px;font-family:'Amiri',serif;font-style:italic;
+    font-size:1.4rem;color:var(--champagne)}
+
+  /* ===== CONSTELLATION DATE ===== */
+  .sky-map{position:relative;margin:32px auto 0;max-width:560px;border-radius:22px;
+    overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#182452 0%,#0b1230 70%);
+    border:1px solid var(--line);box-shadow:0 22px 55px rgba(0,0,0,.5)}
+  .sky-map svg{display:block;width:100%;height:auto}
+  .sky-map .const-line{fill:none;stroke:var(--champagne);stroke-width:1.4;
+    stroke-linecap:round;stroke-dasharray:640;stroke-dashoffset:640;opacity:.85}
+  .sky-map.lit .const-line{animation:drawLine 3s ease forwards .3s}
+  @keyframes drawLine{to{stroke-dashoffset:0}}
+  .sky-map .const-star{fill:var(--star);opacity:.25;transform-box:fill-box;transform-origin:center}
+  .sky-map.lit .const-star{animation:starPop .7s ease forwards}
+  .sky-map.lit .const-star:nth-of-type(2){animation-delay:.35s}
+  .sky-map.lit .const-star:nth-of-type(3){animation-delay:.7s}
+  .sky-map.lit .const-star:nth-of-type(4){animation-delay:1.05s}
+  .sky-map.lit .const-star:nth-of-type(5){animation-delay:1.4s}
+  .sky-map.lit .const-star:nth-of-type(6){animation-delay:1.75s}
+  .sky-map.lit .const-star:nth-of-type(7){animation-delay:2.1s}
+  @keyframes starPop{60%{opacity:1;transform:scale(1.9)}100%{opacity:1;transform:scale(1)}}
+  .sky-map .const-date{font-family:'Cinzel',serif;font-size:34px;letter-spacing:6px;
+    fill:var(--star);opacity:0}
+  .sky-map .const-day{font-family:'Jost',sans-serif;font-size:12.5px;letter-spacing:5px;
+    fill:var(--silver);opacity:0;text-transform:uppercase}
+  .sky-map .const-ia{font-family:'Amiri',serif;font-style:italic;font-size:16px;
+    fill:var(--champagne);opacity:0}
+  .sky-map.lit .const-date{animation:fadeGlow 1.4s ease forwards 2.5s}
+  .sky-map.lit .const-day{animation:fadeGlow 1.4s ease forwards 2.9s}
+  .sky-map.lit .const-ia{animation:fadeGlow 1.4s ease forwards 3.2s}
+  @keyframes fadeGlow{to{opacity:1}}
+
+  /* ===== COUNTDOWN ===== */
+  .countdown{display:flex;justify-content:center;gap:14px;margin-top:30px;flex-wrap:wrap}
+  .cd-box{background:linear-gradient(180deg,var(--navy-soft),var(--navy));color:var(--star);
+    border-radius:16px;padding:20px 14px;min-width:82px;border:1px solid var(--line);
+    box-shadow:0 12px 28px rgba(0,0,0,.45)}
+  .cd-box b{display:block;font-family:'Cinzel',serif;font-weight:500;font-size:1.9rem;line-height:1.1}
+  .cd-box small{font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:.3em;
+    text-transform:uppercase;display:block;margin-top:6px;color:var(--silver)}
+
+  /* ===== EVENTS ===== */
+  .events{display:grid;gap:18px;margin-top:32px;text-align:left}
+  .ev{background:linear-gradient(180deg,rgba(26,38,80,.75),rgba(18,27,60,.9));
+    border-radius:18px;padding:26px 28px;position:relative;
+    border:1px solid var(--line);box-shadow:0 14px 34px rgba(0,0,0,.4)}
+  .ev .k{font-family:'Amiri',serif;font-size:1.4rem;color:var(--champagne);line-height:1}
+  .ev h3{font-family:'Cinzel',serif;font-weight:500;font-size:1.35rem;
+    letter-spacing:.04em;color:var(--ivory);margin-top:4px}
+  .ev p{color:var(--silver);margin-top:6px;font-size:.98rem}
+  .ev .when{color:var(--champagne);font-family:'Cinzel',serif;font-size:.68rem;
+    letter-spacing:.22em;text-transform:uppercase;margin-top:12px;display:block}
+  .venue-detail{margin-top:22px;font-family:'Amiri',serif;font-style:italic;color:var(--silver)}
+  .maplink{display:inline-block;margin-top:20px;font-family:'Cinzel',serif;font-size:.7rem;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--midnight);
+    background:linear-gradient(135deg,var(--champagne),var(--champagne-deep));
+    padding:16px 36px;border-radius:40px;text-decoration:none;
+    box-shadow:0 12px 30px rgba(227,196,143,.28)}
+
+  /* ===== GALLERY ===== */
+  .gallery{columns:2;column-gap:14px;margin-top:30px}
+  .gallery img{width:100%;height:auto;display:block;margin-bottom:14px;border-radius:14px;
+    border:1px solid var(--line);box-shadow:0 14px 34px rgba(0,0,0,.5);break-inside:avoid;
+    transition:transform .5s ease,box-shadow .5s ease}
+  .gallery img:hover{transform:scale(1.04);box-shadow:0 0 0 2px var(--champagne),
+    0 20px 46px rgba(0,0,0,.6);position:relative;z-index:2}
+
+  footer{position:relative;z-index:1;text-align:center;padding:56px 24px 74px;color:var(--silver)}
+  footer .ar{font-family:'Amiri',serif;font-size:1.9rem;color:var(--champagne);display:block;margin-bottom:6px}
+  footer .names-f{font-family:'Cinzel',serif;letter-spacing:.08em;font-size:1.05rem;color:var(--ivory)}
+  footer small{display:block;margin-top:14px;opacity:.7;font-size:.82rem}
+  footer a{color:var(--champagne)}
+
+  /* ===== MUSIC ===== */
+  .music-btn{position:fixed;top:16px;right:16px;z-index:60;width:48px;height:48px;border-radius:50%;
+    border:1px solid var(--champagne);background:var(--navy);color:var(--champagne);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+  .music-btn svg{width:20px;height:20px}
+  .music-btn.playing{animation:pulse 1.9s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 6px 18px rgba(0,0,0,.4)}50%{box-shadow:0 0 0 7px rgba(227,196,143,.25)}}
+
+  .reveal{opacity:0;transform:translateY(26px);
+    transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .ev,.cd-box,.maplink{transition:transform .3s ease,filter .3s ease,box-shadow .3s ease}
+  .ev:hover,.cd-box:hover{transform:translateY(-3px)}
+  .maplink:hover{transform:translateY(-2px);filter:brightness(1.07)}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1!important;transform:none!important}
+    .starfield,.moon svg,.crescent-rim svg{animation:none!important}
+    .sky-map .const-line{stroke-dashoffset:0!important}
+    .sky-map .const-star,.sky-map .const-date,.sky-map .const-day,.sky-map .const-ia{opacity:1!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="starfield" aria-hidden="true"></div>
+
+<!-- ===== OPENER ===== -->
+<div class="opener" id="opener" role="button" aria-label="Tap to open the invitation">
+  <div class="moon" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <defs>
+        <radialGradient id="mg" cx="42%" cy="38%" r="70%">
+          <stop offset="0" stop-color="#fff4dd"/><stop offset=".55" stop-color="#f0dcb0"/>
+          <stop offset="1" stop-color="#cfae72"/>
+        </radialGradient>
+        <mask id="mcut">
+          <rect width="200" height="200" fill="white"/>
+          <circle cx="138" cy="86" r="76" fill="black"/>
+        </mask>
+      </defs>
+      <circle cx="100" cy="100" r="88" fill="url(#mg)" mask="url(#mcut)"/>
+      <circle cx="138" cy="60" r="2.6" fill="#fff4dd"/>
+      <circle cx="156" cy="96" r="1.8" fill="#fff4dd"/>
+      <circle cx="146" cy="132" r="2.2" fill="#fff4dd"/>
+    </svg>
+  </div>
+  <!-- EDIT: couple names -->
+  <div class="couple">Ayaan <span>&amp;</span> Zoya</div>
+  <div class="sub">written in the stars, sealed in dua</div>
+  <div class="tap">Tap to open ✦</div>
+</div>
+
+<div class="shooting" id="shooting" aria-hidden="true"></div>
+
+<button class="music-btn" id="musicBtn" aria-label="Toggle music">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+</button>
+
+<main>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="bismillah arabic">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+  <p class="bismillah-en">In the name of Allah, the Most Gracious, the Most Merciful</p>
+  <p class="families">With the blessings of the Almighty and our beloved families</p>
+
+  <div class="moon-frame">
+    <!-- EDIT: hero photo -->
+    <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=900&amp;h=900&amp;fit=crop&amp;crop=faces&amp;auto=format&amp;q=70"
+         alt="Ayaan and Zoya holding hands">
+    <div class="crescent-rim" aria-hidden="true">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="48.6" stroke="rgba(227,196,143,.35)" stroke-width=".6"
+          stroke-dasharray="1.8 5.2"/>
+        <circle cx="50" cy="1.4" r="1.7" fill="#ffe9c2"/>
+        <circle cx="50" cy="98.6" r="1.1" fill="#ffe9c2"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- EDIT: couple names -->
+  <h1 class="names">Ayaan<span class="amp arabic">و</span>Zoya</h1>
+  <!-- EDIT: date + venue -->
+  <p class="date-line">Saturday · 12 December 2026</p>
+  <p class="venue-line">Grand Ballroom, The Royal Palms · Bengaluru</p>
+</section>
+
+<div class="phases" aria-hidden="true">
+  <svg width="126" height="18" viewBox="0 0 126 18">
+    <g stroke="#e3c48f" stroke-width="1" fill="none">
+      <circle cx="9"  cy="9" r="6"/>
+      <path d="M36 3 A6 6 0 1 0 36 15 A4.6 6 0 1 1 36 3 Z" fill="#e3c48f" stroke="none" opacity=".85"/>
+      <path d="M63 3 A6 6 0 0 0 63 15 Z" fill="#e3c48f" stroke="none" opacity=".9"/>
+      <circle cx="90" cy="9" r="6" fill="#e3c48f" stroke="none"/>
+      <circle cx="117" cy="9" r="6"/>
+    </g>
+  </svg>
+</div>
+
+<!-- ===== INVITATION ===== -->
+<section class="block wrap">
+  <div class="eyebrow">You are warmly invited</div>
+  <h2><span class="arabic">دعوة</span>Two souls, one sky</h2>
+  <p class="verse reveal">And among His signs is this, that He created for you mates from among yourselves,
+    that you may dwell in tranquillity with them, and He has put love and mercy between your hearts.
+    <cite>— Qur'an 30 : 21</cite></p>
+  <!-- EDIT: hashtag -->
+  <p class="hashtag">#AyaanFoundHisZoya</p>
+</section>
+
+<div class="phases" aria-hidden="true">
+  <svg width="126" height="18" viewBox="0 0 126 18">
+    <g stroke="#e3c48f" stroke-width="1" fill="none">
+      <circle cx="9"  cy="9" r="6"/>
+      <path d="M36 3 A6 6 0 1 0 36 15 A4.6 6 0 1 1 36 3 Z" fill="#e3c48f" stroke="none" opacity=".85"/>
+      <path d="M63 3 A6 6 0 0 0 63 15 Z" fill="#e3c48f" stroke="none" opacity=".9"/>
+      <circle cx="90" cy="9" r="6" fill="#e3c48f" stroke="none"/>
+      <circle cx="117" cy="9" r="6"/>
+    </g>
+  </svg>
+</div>
+
+<!-- ===== CONSTELLATION DATE ===== -->
+<section class="block wrap">
+  <div class="eyebrow">Save the date</div>
+  <h2>Written in the stars</h2>
+  <p class="lead reveal">On a clear December night, the stars align for us.</p>
+
+  <div class="sky-map" id="skyMap">
+    <svg viewBox="0 0 560 300" role="img" aria-label="Constellation revealing the wedding date">
+      <!-- backdrop stars -->
+      <g fill="#aebbd8" opacity=".5">
+        <circle cx="40" cy="40" r="1.2"/><circle cx="120" cy="24" r="1"/>
+        <circle cx="210" cy="52" r="1.3"/><circle cx="330" cy="30" r="1"/>
+        <circle cx="450" cy="44" r="1.2"/><circle cx="520" cy="80" r="1"/>
+        <circle cx="60" cy="240" r="1"/><circle cx="500" cy="236" r="1.2"/>
+        <circle cx="280" cy="270" r="1"/><circle cx="150" cy="260" r="1.1"/>
+      </g>
+      <!-- constellation: crescent arc of 7 stars -->
+      <path class="const-line" d="M84 96 L156 66 L242 56 L326 62 L402 84 L452 122 L474 168"/>
+      <circle class="const-star" cx="84"  cy="96"  r="4"/>
+      <circle class="const-star" cx="156" cy="66"  r="4.6"/>
+      <circle class="const-star" cx="242" cy="56"  r="4"/>
+      <circle class="const-star" cx="326" cy="62"  r="4.8"/>
+      <circle class="const-star" cx="402" cy="84"  r="4"/>
+      <circle class="const-star" cx="452" cy="122" r="4.4"/>
+      <circle class="const-star" cx="474" cy="168" r="4"/>
+      <!-- EDIT: date -->
+      <text class="const-day"  x="280" y="176" text-anchor="middle">Saturday</text>
+      <text class="const-date" x="280" y="216" text-anchor="middle">12 · 12 · 2026</text>
+      <text class="const-ia"   x="280" y="252" text-anchor="middle">InshaAllah</text>
+    </svg>
+  </div>
+</section>
+
+<div class="phases" aria-hidden="true">
+  <svg width="126" height="18" viewBox="0 0 126 18">
+    <g stroke="#e3c48f" stroke-width="1" fill="none">
+      <circle cx="9"  cy="9" r="6"/>
+      <path d="M36 3 A6 6 0 1 0 36 15 A4.6 6 0 1 1 36 3 Z" fill="#e3c48f" stroke="none" opacity=".85"/>
+      <path d="M63 3 A6 6 0 0 0 63 15 Z" fill="#e3c48f" stroke="none" opacity=".9"/>
+      <circle cx="90" cy="9" r="6" fill="#e3c48f" stroke="none"/>
+      <circle cx="117" cy="9" r="6"/>
+    </g>
+  </svg>
+</div>
+
+<!-- ===== COUNTDOWN ===== -->
+<section class="block wrap">
+  <div class="eyebrow">Counting the nights</div>
+  <h2>Until our Nikah</h2>
+  <div class="countdown" id="countdown">
+    <div class="cd-box reveal"><b id="d">--</b><small>Days</small></div>
+    <div class="cd-box reveal"><b id="h">--</b><small>Hours</small></div>
+    <div class="cd-box reveal"><b id="m">--</b><small>Mins</small></div>
+    <div class="cd-box reveal"><b id="s">--</b><small>Secs</small></div>
+  </div>
+</section>
+
+<div class="phases" aria-hidden="true">
+  <svg width="126" height="18" viewBox="0 0 126 18">
+    <g stroke="#e3c48f" stroke-width="1" fill="none">
+      <circle cx="9"  cy="9" r="6"/>
+      <path d="M36 3 A6 6 0 1 0 36 15 A4.6 6 0 1 1 36 3 Z" fill="#e3c48f" stroke="none" opacity=".85"/>
+      <path d="M63 3 A6 6 0 0 0 63 15 Z" fill="#e3c48f" stroke="none" opacity=".9"/>
+      <circle cx="90" cy="9" r="6" fill="#e3c48f" stroke="none"/>
+      <circle cx="117" cy="9" r="6"/>
+    </g>
+  </svg>
+</div>
+
+<!-- ===== EVENTS ===== -->
+<section class="block wrap">
+  <div class="eyebrow">Festivities</div>
+  <h2>When &amp; Where</h2>
+  <div class="events">
+    <div class="ev reveal">
+      <div class="k arabic">حِنَّاء</div>
+      <h3>Mehndi</h3>
+      <p>An evening of henna, music and joy as the celebrations begin.</p>
+      <span class="when">10 Dec 2026 · 6:00 PM onwards</span>
+    </div>
+    <div class="ev reveal">
+      <div class="k arabic">نِكاح</div>
+      <h3>Nikah</h3>
+      <p>The sacred solemnisation of our union, in the presence of family and dear ones.</p>
+      <span class="when">12 Dec 2026 · 4:00 PM</span>
+    </div>
+    <div class="ev reveal">
+      <div class="k arabic">وَليمة</div>
+      <h3>Walima</h3>
+      <p>A grand feast to celebrate the newlyweds — dinner, laughter and blessings.</p>
+      <span class="when">13 Dec 2026 · 7:30 PM onwards</span>
+    </div>
+  </div>
+  <!-- EDIT: full venue + map query -->
+  <p class="venue-detail">The Royal Palms Convention, MG Road, Bengaluru – 560001</p>
+  <a class="maplink" href="https://maps.google.com/?q=Royal+Palms+Convention+MG+Road+Bengaluru" target="_blank" rel="noopener">Open in Maps</a>
+</section>
+
+<div class="phases" aria-hidden="true">
+  <svg width="126" height="18" viewBox="0 0 126 18">
+    <g stroke="#e3c48f" stroke-width="1" fill="none">
+      <circle cx="9"  cy="9" r="6"/>
+      <path d="M36 3 A6 6 0 1 0 36 15 A4.6 6 0 1 1 36 3 Z" fill="#e3c48f" stroke="none" opacity=".85"/>
+      <path d="M63 3 A6 6 0 0 0 63 15 Z" fill="#e3c48f" stroke="none" opacity=".9"/>
+      <circle cx="90" cy="9" r="6" fill="#e3c48f" stroke="none"/>
+      <circle cx="117" cy="9" r="6"/>
+    </g>
+  </svg>
+</div>
+
+<!-- ===== GALLERY ===== -->
+<section class="block wrap">
+  <div class="eyebrow">Our journey</div>
+  <h2>Moments under the same sky</h2>
+  <!-- EDIT: swap in your photos -->
+  <div class="gallery">
+    <img class="reveal" src="https://images.unsplash.com/photo-1595231712612-754e8fe9d29b?w=700&amp;h=900&amp;fit=crop&amp;crop=faces&amp;auto=format&amp;q=70" alt="Bride in red and gold attire">
+    <img class="reveal" src="https://images.unsplash.com/photo-1644337111604-aa1816b542a1?w=700&amp;h=1000&amp;fit=crop&amp;crop=faces&amp;auto=format&amp;q=70" alt="Pre-wedding couple portrait">
+    <img class="reveal" src="https://images.unsplash.com/photo-1493728695749-5a3603bd6908?w=700&amp;h=820&amp;fit=crop&amp;crop=faces&amp;auto=format&amp;q=70" alt="Couple holding hands">
+    <img class="reveal" src="https://images.unsplash.com/photo-1728368686380-acaca58a5e76?w=700&amp;h=960&amp;fit=crop&amp;crop=faces&amp;auto=format&amp;q=70" alt="Couple seated together">
+  </div>
+</section>
+
+<footer>
+  <span class="ar">بَارَكَ اللّٰهُ لَكُمَا</span>
+  <span class="names-f">Ayaan &amp; Zoya · 12 December 2026</span>
+  <small>Invitation designed with care by pp.develper · <a href="tel:+917077817064">+91 70778 17064</a></small>
+</footer>
+
+</main>
+
+<script>
+  /* ---------- Countdown ---------- */
+  // EDIT: match your Nikah date/time
+  var target = new Date("2026-12-12T16:00:00+05:30").getTime();
+  var d_=document.getElementById('d'),h_=document.getElementById('h'),m_=document.getElementById('m'),s_=document.getElementById('s');
+  function tick(){
+    var t = target - Date.now();
+    if(t<=0){document.getElementById('countdown').innerHTML='<p style="color:var(--champagne);font-family:Cinzel,serif;font-size:1.4rem">Tonight is the blessed night ✦</p>';return}
+    d_.textContent=Math.floor(t/86400000);
+    h_.textContent=Math.floor(t/3600000)%24;
+    m_.textContent=Math.floor(t/60000)%60;
+    s_.textContent=Math.floor(t/1000)%60;
+  }
+  tick(); setInterval(tick,1000);
+
+  /* ---------- Scroll reveal ---------- */
+  var io = new IntersectionObserver(function(ents){
+    ents.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  /* ---------- Constellation lights when scrolled to ---------- */
+  var skyMap = document.getElementById('skyMap');
+  var skyIO = new IntersectionObserver(function(ents){
+    ents.forEach(function(e){ if(e.isIntersecting){ skyMap.classList.add('lit'); skyIO.unobserve(skyMap);} });
+  },{threshold:.45});
+  skyIO.observe(skyMap);
+  skyMap.addEventListener('click', function(){
+    skyMap.classList.remove('lit'); void skyMap.offsetWidth;
+    setTimeout(function(){ skyMap.classList.add('lit'); }, 50);
+  });
+
+  /* ---------- Music ---------- */
+  // EDIT: for a published invite, self-host a royalty-free track at audio/music.mp3
+  var audio = new Audio('https://archive.org/download/r-12356661-1632393571-2601/Raag%20Bhimpalasi%20-%20Teen%20Taal.mp3');
+  audio.loop = true; audio.volume = 0.6;
+  var mb = document.getElementById('musicBtn');
+  var playing = false;
+  function setIcon(){ mb.classList.toggle('playing', playing); }
+  function playMusic(){ audio.play().then(function(){ playing=true; setIcon(); }).catch(function(){}); }
+  mb.addEventListener('click', function(){
+    if(playing){ audio.pause(); playing=false; }
+    else { audio.play().then(function(){ playing=true; }).catch(function(){}); }
+    setIcon();
+  });
+
+  /* ---------- Falling stars ---------- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var layer = document.getElementById('shooting');
+  var glyphs = ['✦','✧','⋆','·'];
+  var on=false, live=0, MAX=18;
+  function spawn(){
+    if(!on || live>=MAX) return;
+    var s = document.createElement('span'); s.className='fstar';
+    s.textContent = glyphs[Math.floor(Math.random()*glyphs.length)];
+    s.style.left = (Math.random()*100)+'vw';
+    s.style.fontSize = (9+Math.random()*13)+'px';
+    s.style.setProperty('--drift',(Math.random()*160-80)+'px');
+    s.style.animation = 'fallStar '+(6+Math.random()*5)+'s linear forwards';
+    layer.appendChild(s); live++;
+    s.addEventListener('animationend', function(){ s.remove(); live--; });
+  }
+  function startStars(){
+    if(reduce) return; on=true;
+    for(var i=0;i<9;i++) setTimeout(spawn, i*170);
+    setInterval(spawn, 850);
+  }
+
+  /* ---------- Opener (iris collapse into the moon) ---------- */
+  var opener = document.getElementById('opener');
+  var opened = false;
+  function openInvite(){
+    if(opened) return; opened=true;
+    opener.classList.add('open');
+    startStars();
+    playMusic();
+    setTimeout(function(){ opener.style.display='none'; }, reduce?50:1750);
+  }
+  opener.addEventListener('click', openInvite);
+</script>
+</body>
+</html>
