@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Aditya &amp; Ananya — Shubh Vivah</title>
+<meta name="description" content="With the blessings of Lord Ganesha, join us for the wedding of Aditya & Ananya.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aditya &amp; Ananya — Shubh Vivah">
+<meta property="og:description" content="Shubh Vivah — an invitation dipped in gold and marigold.">
+<!-- EDIT: after deploying, set absolute og:image + og:url -->
+<meta property="og:url" content="https://YOUR-PROJECT.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Amiri:ital@0;1&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold-dark:#8a6420;
+    --gold:#c9a15c;
+    --gold-light:#eed9a8;
+    --gold-pale:#f9efd6;
+    --ink:#7a2434;
+    --ink-deep:#5c1424;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden;max-width:100%}
+  body{background:#2a0a0c;font-family:'Cormorant Garamond',serif;-webkit-font-smoothing:antialiased;
+    display:flex;justify-content:center}
+
+  /* ================= FIXED GOLDEN STAGE ================= */
+  .card{position:relative;width:min(100vw,480px);height:100vh;height:100svh;overflow:hidden;
+    background:
+      radial-gradient(90% 42% at 50% -4%, rgba(242,148,54,.4) 0%, transparent 60%),
+      radial-gradient(120% 90% at 50% 108%, #45080e 0%, transparent 55%),
+      linear-gradient(180deg,#7c1420 0%, #6a111b 42%, #571016 72%, #470b12 100%)}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;
+    box-shadow:inset 0 0 150px rgba(38,3,7,.55), inset 0 0 46px rgba(38,3,7,.3)}
+
+  /* twinkling bokeh layers */
+  .bokeh,.bokeh2{position:absolute;inset:-4%;pointer-events:none}
+  .bokeh{z-index:1;filter:blur(1px);
+    background-image:
+      radial-gradient(9px 9px at 12% 16%, rgba(255,240,200,.85), transparent 60%),
+      radial-gradient(6px 6px at 84% 12%, rgba(255,236,190,.8), transparent 60%),
+      radial-gradient(11px 11px at 22% 62%, rgba(255,238,196,.55), transparent 60%),
+      radial-gradient(7px 7px at 90% 48%, rgba(255,240,200,.6), transparent 60%),
+      radial-gradient(5px 5px at 8% 44%, rgba(255,244,210,.8), transparent 60%),
+      radial-gradient(8px 8px at 70% 84%, rgba(255,238,196,.6), transparent 60%),
+      radial-gradient(6px 6px at 38% 90%, rgba(255,240,200,.7), transparent 60%),
+      radial-gradient(5px 5px at 60% 6%, rgba(255,244,210,.75), transparent 60%);
+    animation:tw1 4.6s ease-in-out infinite}
+  .bokeh2{z-index:1;filter:blur(7px);
+    background-image:
+      radial-gradient(46px 46px at 16% 26%, rgba(255,226,160,.28), transparent 65%),
+      radial-gradient(60px 60px at 86% 20%, rgba(255,222,150,.24), transparent 65%),
+      radial-gradient(52px 52px at 78% 72%, rgba(255,226,160,.22), transparent 65%),
+      radial-gradient(40px 40px at 10% 78%, rgba(255,230,170,.24), transparent 65%),
+      radial-gradient(56px 56px at 50% 96%, rgba(255,222,150,.2), transparent 65%);
+    animation:tw2 6.4s ease-in-out infinite}
+  @keyframes tw1{0%,100%{opacity:.55}50%{opacity:1}}
+  @keyframes tw2{0%,100%{opacity:.9}50%{opacity:.5}}
+
+  .veil{position:absolute;inset:0;z-index:2;pointer-events:none}
+  .veil svg{width:100%;height:100%;display:block}
+
+  /* floating micro sparkles (JS) */
+  .dust{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden}
+  .mote{position:absolute;bottom:-14px;color:#ffe9b6;text-shadow:0 0 9px rgba(255,220,150,.9);
+    will-change:transform,opacity;font-size:10px;line-height:1}
+  @keyframes rise{
+    0%{transform:translate(0,0) scale(.6);opacity:0}
+    12%{opacity:.95}
+    100%{transform:translate(var(--dx),-108vh) scale(1.15) rotate(120deg);opacity:0}}
+  .fleck{position:absolute;top:-30px;width:9px;height:14px;border-radius:60% 40% 55% 45%;
+    background:radial-gradient(circle at 40% 35%, #f9e8bd, #d9ab5e 70%);
+    filter:blur(.4px);opacity:.85;will-change:transform,opacity}
+  @keyframes drift{
+    0%{transform:translate(0,-30px) rotate(0)}
+    100%{transform:translate(var(--dx),108vh) rotate(300deg);opacity:.1}}
+
+  /* ================= SLIDES (in-place transitions) ================= */
+  .slides{position:absolute;z-index:5;left:16%;right:16%;top:25%;bottom:13.5%;
+    display:flex;align-items:center;justify-content:center}
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;text-align:center;gap:6px;padding:6px 2px;
+    opacity:0;transform:translateY(18px) scale(.985);filter:blur(7px);
+    transition:opacity 1.15s ease,transform 1.15s ease,filter 1.15s ease;pointer-events:none}
+  .slide.on{opacity:1;transform:none;filter:none}
+
+  .goldtext{background:linear-gradient(100deg,#8a6420 0%,#c9a15c 22%,#f7e7b0 40%,#fff7dd 50%,#f7e7b0 60%,#c9a15c 78%,#8a6420 100%);
+    background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shine 7s linear infinite;
+    filter:drop-shadow(0 1px 1px rgba(90,60,10,.35))}
+  @keyframes shine{to{background-position:220% 0}}
+
+  .s-name{font-family:'Great Vibes',cursive;font-size:clamp(2.9rem,15vw,4rem);line-height:1.12}
+  .s-with{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;
+    color:var(--ink);letter-spacing:.06em;margin:2px 0}
+  .s-parents{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.98rem;
+    color:#8a3a4a;line-height:1.55;opacity:.92}
+
+  .bismillah{font-family:'Amiri',serif;font-size:clamp(1.7rem,8vw,2.3rem);line-height:1.4}
+  .invocation{font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(1rem,4.4vw,1.16rem);color:var(--ink);line-height:1.95;max-width:34ch}
+  .invocation b{font-weight:600;color:var(--ink-deep)}
+
+  .heartwith{position:relative;width:112px;height:96px;margin:2px 0}
+  .heartwith svg{width:100%;height:100%;display:block}
+  .heartwith span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--ink-deep);
+    padding-bottom:8px}
+
+  .prog-title{font-family:'Great Vibes',cursive;font-size:clamp(1.9rem,9vw,2.5rem);margin-bottom:2px}
+  .rule{width:150px;height:12px;color:var(--gold)}
+  .rule svg{width:100%;height:100%;display:block}
+  .mini{position:relative;margin-top:12px;padding:18px 22px 20px;max-width:100%;
+    background:linear-gradient(180deg,rgba(255,250,236,.5),rgba(255,244,218,.32));
+    border:1.3px solid rgba(160,120,50,.6);box-shadow:0 0 0 4px rgba(255,248,230,.25) inset}
+  .mini::before{content:"";position:absolute;inset:5px;border:1px solid rgba(160,120,50,.45);pointer-events:none}
+  .mini h3{font-family:'Great Vibes',cursive;font-weight:400;font-size:1.7rem;margin-bottom:6px}
+  .mini p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.02rem;
+    color:var(--ink);line-height:1.75}
+  .rsvp{margin-top:16px;font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:var(--ink-deep)}
+  .rsvp b{font-weight:600}
+
+  .regards-list{font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(1rem,4.6vw,1.18rem);color:var(--ink);line-height:2.05}
+
+  .shloka{font-family:'Tiro Devanagari Hindi',serif;font-size:clamp(1.02rem,4.6vw,1.2rem);
+    color:var(--ink-deep);line-height:2.05;max-width:32ch}
+  .dev{font-family:'Tiro Devanagari Hindi',serif}
+  .flame{transform-origin:50% 90%;animation:flick 2.6s ease-in-out infinite}
+  @keyframes flick{0%,100%{transform:scale(1) rotate(0)}30%{transform:scale(1.08,1.16) rotate(-2deg)}
+    55%{transform:scale(.95,.94) rotate(1.6deg)}80%{transform:scale(1.05,1.1) rotate(-1deg)}}
+  @media (prefers-reduced-motion:reduce){.flame{animation:none}}
+  /* dots + hint */
+  .dots{position:absolute;z-index:7;left:0;right:0;bottom:calc(6.5% + 2px);
+    display:flex;justify-content:center;gap:9px}
+  .dot{width:6px;height:6px;border-radius:50%;background:rgba(246,222,180,.4);
+    transition:all .5s ease}
+  .dot.on{background:#c9a15c;box-shadow:0 0 8px rgba(230,190,110,.9);transform:scale(1.25)}
+  .hint{position:absolute;z-index:7;left:0;right:0;bottom:3%;text-align:center;
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.86rem;color:#f6d9a8;
+    letter-spacing:.12em;opacity:.9;transition:opacity .8s ease;animation:hb 2s ease-in-out infinite}
+  .hint.off{opacity:0}
+  @keyframes hb{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+  /* music */
+  .music-btn{position:absolute;top:14px;right:14px;z-index:20;width:44px;height:44px;border-radius:50%;
+    border:1px solid var(--gold);background:rgba(255,248,230,.75);color:var(--gold-dark);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 5px 15px rgba(90,60,10,.25)}
+  .music-btn svg{width:18px;height:18px}
+  .music-btn.playing{animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 5px 15px rgba(90,60,10,.25)}50%{box-shadow:0 0 0 7px rgba(201,161,92,.28)}}
+
+  /* tap sparkle */
+  .tp{position:absolute;z-index:30;color:#ffe9b6;pointer-events:none;line-height:1;
+    text-shadow:0 0 12px rgba(255,215,140,.95);
+    transform:translate(-50%,-50%) scale(.3);animation:tpop .7s ease-out forwards}
+  @keyframes tpop{60%{opacity:1}100%{transform:translate(-50%,-72%) scale(1.7) rotate(20deg);opacity:0}}
+
+  @media (prefers-reduced-motion:reduce){
+    .bokeh,.bokeh2,.goldtext,.hint{animation:none}
+    .slide{transition:opacity .6s ease;transform:none;filter:none}
+    .mote,.fleck,.tp{display:none}}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+
+  <div class="bokeh" aria-hidden="true"></div>
+  <div class="bokeh2" aria-hidden="true"></div>
+
+  <!-- ============ ORNATE GOLD FRAME (pearls, arch, roses) ============ -->
+  <div class="veil" aria-hidden="true">
+    <svg viewBox="0 0 480 860" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="goldM" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f7e7b0"/><stop offset=".45" stop-color="#d9b26a"/>
+          <stop offset="1" stop-color="#8a6420"/>
+        </linearGradient>
+        <radialGradient id="lotusG" cx="50%" cy="26%" r="85%">
+          <stop offset="0" stop-color="#ffd9c4"/><stop offset=".55" stop-color="#eda06a"/>
+          <stop offset="1" stop-color="#a5522a"/>
+        </radialGradient>
+        <radialGradient id="panelG" cx="50%" cy="38%" r="75%">
+          <stop offset="0" stop-color="#fdf5e0" stop-opacity=".95"/>
+          <stop offset=".62" stop-color="#f7e9c6" stop-opacity=".78"/>
+          <stop offset="1" stop-color="#f0dcae" stop-opacity=".3"/>
+        </radialGradient>
+        <radialGradient id="flameG" cx="50%" cy="68%" r="60%">
+          <stop offset="0" stop-color="#fff4c2"/><stop offset=".55" stop-color="#ffb238"/>
+          <stop offset="1" stop-color="#e2621c" stop-opacity=".2"/>
+        </radialGradient>
+        <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4"/></filter>
+        <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#ffdf9a" flood-opacity=".9"/>
+        </filter>
+        <filter id="fglow" x="-120%" y="-120%" width="340%" height="340%">
+          <feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="#ffab3c" flood-opacity=".95"/>
+        </filter>
+      </defs>
+
+      <!-- inner glowing panel -->
+      <path d="M96,812 L96,318 A144,144 0 0 1 384,318 L384,812 Z" fill="url(#panelG)" filter="url(#soft)"/>
+
+      <!-- arch -->
+      <path d="M88,820 L88,316 A152,152 0 0 1 392,316 L392,820" fill="none"
+            stroke="url(#goldM)" stroke-width="7" filter="url(#glow)"/>
+      <path d="M102,820 L102,320 A138,138 0 0 1 378,320 L378,820" fill="none"
+            stroke="#f3dfae" stroke-width="1.6" opacity=".85"/>
+
+      <!-- temple bell at arch apex -->
+      <g filter="url(#glow)">
+        <line x1="240" y1="172" x2="240" y2="192" stroke="#c9a15c" stroke-width="1.8"/>
+        <path d="M226,214 C226,200 232,192 240,192 C248,192 254,200 254,214 L256,220 L224,220 Z"
+              fill="url(#goldM)" stroke="#8a6420" stroke-width="1.6"/>
+        <rect x="222" y="220" width="36" height="5" rx="2.5" fill="#8a6420"/>
+        <circle cx="240" cy="231" r="4.2" fill="#f6ead2"/>
+      </g>
+
+      <!-- marigold garland swags (two-tone dotted) -->
+      <g fill="none" stroke-linecap="round">
+        <path d="M-8,20 Q120,142 244,58" stroke="#e2621c" stroke-width="11" stroke-dasharray="0 15"/>
+        <path d="M-8,20 Q120,142 244,58" stroke="#ffb238" stroke-width="6.5" stroke-dasharray="0 15"/>
+        <path d="M488,20 Q360,142 236,58" stroke="#e2621c" stroke-width="11" stroke-dasharray="0 15"/>
+        <path d="M488,20 Q360,142 236,58" stroke="#ffb238" stroke-width="6.5" stroke-dasharray="0 15"/>
+        <path d="M64,6 L64,84" stroke="#e2621c" stroke-width="10" stroke-dasharray="0 14"/>
+        <path d="M64,6 L64,84" stroke="#ffb238" stroke-width="6" stroke-dasharray="0 14"/>
+        <path d="M416,6 L416,84" stroke="#e2621c" stroke-width="10" stroke-dasharray="0 14"/>
+        <path d="M416,6 L416,84" stroke="#ffb238" stroke-width="6" stroke-dasharray="0 14"/>
+      </g>
+      <path d="M60,92 C60,86 68,86 68,92 C68,98 60,98 60,92 Z M64,84 l-5,7 M64,84 l5,7"
+            fill="#2c6b2f" stroke="#2c6b2f" stroke-width="2"/>
+      <path d="M412,92 C412,86 420,86 420,92 C420,98 412,98 412,92 Z M416,84 l-5,7 M416,84 l5,7"
+            fill="#2c6b2f" stroke="#2c6b2f" stroke-width="2"/>
+
+      <!-- corner lotus (bottom-left, mirrored) -->
+      <g id="lotusL">
+        <g fill="none" stroke="url(#goldM)" stroke-width="3" stroke-linecap="round">
+          <path d="M30,796 C78,764 146,766 190,802 C210,818 236,824 256,816"/>
+          <path d="M48,826 C88,806 140,810 172,836"/>
+        </g>
+        <g transform="translate(104,796)" stroke="#8a4b1e" stroke-width="1.4">
+          <path d="M-58,10 C-52,-14 -34,-26 -14,-22 C-26,-6 -40,4 -58,10 Z" fill="url(#lotusG)"/>
+          <path d="M58,10 C52,-14 34,-26 14,-22 C26,-6 40,4 58,10 Z" fill="url(#lotusG)"/>
+          <path d="M-34,4 C-30,-26 -14,-42 0,-44 C-2,-22 -14,-6 -34,4 Z" fill="url(#lotusG)"/>
+          <path d="M34,4 C30,-26 14,-42 0,-44 C2,-22 14,-6 34,4 Z" fill="url(#lotusG)"/>
+          <path d="M0,8 C-10,-22 -6,-44 0,-54 C6,-44 10,-22 0,8 Z" fill="#ffe1c4"/>
+          <path d="M-62,12 Q0,34 62,12 L54,24 Q0,42 -54,24 Z" fill="url(#goldM)" stroke="#7a5a24"/>
+        </g>
+        <circle cx="196" cy="812" r="4.6" fill="#f6ead2" filter="url(#glow)"/>
+        <circle cx="34" cy="768" r="3.8" fill="#f6ead2" filter="url(#glow)"/>
+      </g>
+      <use href="#lotusL" transform="translate(480,0) scale(-1,1)"/>
+
+      <!-- centre diya with living flame -->
+      <g transform="translate(240,836)">
+        <ellipse cx="0" cy="14" rx="46" ry="7" fill="rgba(30,2,4,.35)"/>
+        <path d="M-42,-2 C-30,12 30,12 42,-2 L34,10 C20,20 -20,20 -34,10 Z"
+              fill="url(#goldM)" stroke="#7a5a24" stroke-width="1.6"/>
+        <path d="M-42,-2 Q0,8 42,-2" fill="none" stroke="#f3dfae" stroke-width="1.4"/>
+        <g class="flame" filter="url(#fglow)">
+          <path d="M0,-34 C10,-20 12,-10 6,-2 C2,3 -2,3 -6,-2 C-12,-10 -10,-20 0,-34 Z" fill="url(#flameG)"/>
+          <path d="M0,-20 C4,-13 4,-7 0,-4 C-4,-7 -4,-13 0,-20 Z" fill="#fff6cf"/>
+        </g>
+        <rect x="-2" y="-4" width="4" height="6" rx="2" fill="#5c2a10"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="dust"    </svg>
+  </div>
+
+  <div class="dust" id="dust" aria-hidden="true"></div>
+
+  <button class="music-btn" id="musicBtn" aria-label="Toggle music">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+  </button>
+
+  <!-- ================= THE SLIDES ================= -->
+  <div class="slides" id="slides">
+
+    <!-- 1 · names -->
+    <div class="slide on">
+      <!-- EDIT: couple names -->
+      <div class="s-name goldtext">Aditya</div>
+      <div class="s-with">weds</div>
+      <div class="s-name goldtext">Ananya</div>
+    </div>
+
+    <!-- 2 · ganesh vandana -->
+    <div class="slide">
+      <div class="prog-title goldtext dev" style="font-size:clamp(1.5rem,7vw,1.9rem)">॥ श्री गणेशाय नमः ॥</div>
+      <p class="shloka">वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।<br>
+        निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥</p>
+      <!-- EDIT: invocation wording -->
+      <p class="invocation" style="margin-top:8px">With the blessings of <b>Lord Ganesha</b> and our
+        beloved elders, we request the honour of your gracious presence at the
+        <b>wedding ceremony</b> of our beloved son</p>
+    </div>
+
+    <!-- 3 · names with parents -->
+    <div class="slide">
+      <div class="s-name goldtext" style="font-size:clamp(2.3rem,11vw,3rem)">Aditya</div>
+      <!-- EDIT: groom's parents -->
+      <p class="s-parents">S/o Mr. Rajesh Sharma &amp;<br>Mrs. Kavita Sharma</p>
+      <div class="heartwith" style="width:96px;height:88px">
+        <svg viewBox="0 0 112 108" fill="none" stroke="#8a6420" stroke-width="2">
+          <path d="M38 52 C34 76 44 92 56 92 C68 92 78 76 74 52 Z" fill="rgba(238,217,168,.45)"/>
+          <path d="M36 52 H76 M40 46 H72" stroke-width="2.4"/>
+          <path d="M56 46 C50 34 40 32 32 38 M56 46 C62 34 72 32 80 38 M56 46 C52 30 56 20 56 20 M56 46 C60 30 66 24 70 20 M56 46 C52 30 46 24 42 20"
+                stroke="#2c6b2f" stroke-width="2.2"/>
+          <circle cx="56" cy="17" r="5" fill="#e8b04a" stroke="#8a6420"/>
+        </svg>
+        <span style="padding-bottom:0;padding-top:34px;font-size:1rem">Weds</span>
+      </div>
+      <div class="s-name goldtext" style="font-size:clamp(2.3rem,11vw,3rem)">Ananya</div>
+      <!-- EDIT: bride's parents -->
+      <p class="s-parents">D/o Mr. Mohan Patil &amp;<br>Mrs. Sunita Patil</p>
+    </div>
+
+    <!-- 4 · programme -->
+    <div class="slide">
+      <div class="prog-title goldtext dev">शुभ विवाह</div>
+      <div class="rule"><svg viewBox="0 0 150 12" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M0 6 H62 M88 6 H150"/><path d="M75 1 L80 6 L75 11 L70 6 Z" fill="currentColor" stroke="none"/>
+      </svg></div>
+      <div class="mini">
+        <h3 class="goldtext">Vivah Muhurat</h3>
+        <!-- EDIT: vivah details -->
+        <p>Saturday, 12 December 2026 · 10:20 AM<br>Shree Krishna Kalyana Mantap<br>Malleshwaram, Bengaluru</p>
+      </div>
+      <div class="mini" style="margin-top:14px">
+        <h3 class="goldtext">Reception</h3>
+        <!-- EDIT: reception details -->
+        <p>Sunday, 13 December 2026 · 7:30 PM<br>The Grand Utsav Hall<br>Bengaluru</p>
+      </div>
+      <!-- EDIT: RSVP -->
+      <p class="rsvp">RSVP :- <b>+91 70778 17064</b></p>
+    </div>
+
+    <!-- 5 · darshanabhilashi -->
+    <div class="slide">
+      <div class="prog-title goldtext dev" style="font-size:clamp(1.7rem,8vw,2.2rem)">दर्शनाभिलाषी</div>
+      <div class="rule"><svg viewBox="0 0 150 12" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M0 6 H62 M88 6 H150"/><path d="M75 1 L80 6 L75 11 L70 6 Z" fill="currentColor" stroke="none"/>
+      </svg></div>
+      <!-- EDIT: family names -->
+      <p class="regards-list">Mr. Suresh Sharma &amp; Family<br>
+        Mr. Dinesh Sharma &amp; Family<br>
+        Mrs. Lata Deshmukh<br>
+        Sharma &amp; Patil Parivar<br>
+        Cousins, Friends &amp; Family</p>
+    </div>
+
+  </div>
+
+  <div class="dots" id="dots" aria-hidden="true"></div>
+  <div class="hint" id="hint">tap to continue ✦</div>
+</div>
+
+<script>
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- slides: auto + tap, transitions in place ---------- */
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var dotsBox = document.getElementById('dots');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');d.className='dot'+(i===0?' on':'');dotsBox.appendChild(d);
+  });
+  var dots = Array.prototype.slice.call(dotsBox.children);
+  var idx = 0, timer = null, HOLD = 4800;
+
+  function show(i){
+    slides[idx].classList.remove('on'); dots[idx].classList.remove('on');
+    idx = (i + slides.length) % slides.length;
+    slides[idx].classList.add('on'); dots[idx].classList.add('on');
+  }
+  function next(){ show(idx+1); }
+  function arm(){ clearInterval(timer); timer = setInterval(next, HOLD); }
+  arm();
+
+  /* ---------- music ---------- */
+  // EDIT: for a published invite, self-host a royalty-free track at audio/music.mp3
+  var audio = new Audio('https://archive.org/download/r-12356661-1632393571-2601/Raag%20Bhimpalasi%20-%20Teen%20Taal.mp3');
+  audio.loop = true; audio.volume = 0.55;
+  var mb = document.getElementById('musicBtn');
+  var playing = false, musicTried = false;
+  function setIcon(){ mb.classList.toggle('playing', playing); }
+  function playMusic(){ audio.play().then(function(){ playing=true; setIcon(); }).catch(function(){}); }
+  mb.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(playing){ audio.pause(); playing=false; } else { playMusic(); }
+    setIcon();
+  });
+
+  /* ---------- tap anywhere: advance + sparkle ---------- */
+  var card = document.getElementById('card');
+  var hint = document.getElementById('hint');
+  card.addEventListener('pointerdown', function(e){
+    if(e.target.closest('.music-btn')) return;
+    next(); arm();
+    hint.classList.add('off');
+    if(!musicTried){ musicTried = true; playMusic(); }
+    if(reduce) return;
+    var s=document.createElement('span'); s.className='tp'; s.textContent='✦';
+    var r=card.getBoundingClientRect();
+    s.style.left=(e.clientX-r.left)+'px'; s.style.top=(e.clientY-r.top)+'px';
+    s.style.fontSize=(16+Math.random()*10)+'px';
+    card.appendChild(s);
+    s.addEventListener('animationend',function(){s.remove();});
+  });
+
+  /* ---------- rising gold dust + drifting petals ---------- */
+  var dust = document.getElementById('dust');
+  var live = 0;
+  function mote(){
+    if(reduce || live>18) return;
+    var m=document.createElement('span'); m.className='mote'; m.textContent='✦';
+    m.style.left=(3+Math.random()*94)+'%';
+    m.style.fontSize=(6+Math.random()*8)+'px';
+    m.style.setProperty('--dx',(Math.random()*90-45)+'px');
+    m.style.animation='rise '+(9+Math.random()*7)+'s linear forwards';
+    dust.appendChild(m); live++;
+    m.addEventListener('animationend',function(){m.remove();live--;});
+  }
+  function fleck(){
+    if(reduce || live>18) return;
+    var f=document.createElement('span'); f.className='fleck';
+    f.style.left=(5+Math.random()*90)+'%';
+    f.style.setProperty('--dx',(Math.random()*120-60)+'px');
+    f.style.animation='drift '+(11+Math.random()*8)+'s linear forwards';
+    dust.appendChild(f); live++;
+    f.addEventListener('animationend',function(){f.remove();live--;});
+  }
+  if(!reduce){
+    for(var i=0;i<8;i++) setTimeout(mote, i*420);
+    setInterval(mote, 900);
+    setInterval(fleck, 2600);
+  }
+</script>
+</body>
+</html>
