@@ -32,7 +32,7 @@
     font-family:'Pacifico',cursive;font-size:24px;color:var(--cherry);display:flex;align-items:center;justify-content:center;gap:10px}
   .crest svg{width:22px;height:20px;color:var(--cherry)}
 
-  .backdrop{position:absolute;left:0;right:0;bottom:230px;width:100%;height:auto;color:var(--line);opacity:.26;z-index:2}
+  .backdrop{position:absolute;left:0;right:0;bottom:40%;width:100%;height:auto;color:var(--line);opacity:.26;z-index:2}
   .lamp-glow{opacity:0;transition:opacity 1.5s ease}
   .stage.rain .lamp-glow{opacity:.5}
 
@@ -42,8 +42,8 @@
   .stage.rain .cloud{opacity:.9}
   .stage.rain .cloud.c1{top:70px}.stage.rain .cloud.c2{top:48px}
 
-  .ground-line{position:absolute;left:0;right:0;bottom:230px;height:2px;background:var(--line);opacity:.42;z-index:2}
-  .road-lines{position:absolute;left:-10%;bottom:206px;width:130%;height:2px;z-index:2;opacity:.4;
+  .ground-line{position:absolute;left:0;right:0;bottom:40%;height:2px;background:var(--line);opacity:.42;z-index:2}
+  .road-lines{position:absolute;left:-10%;bottom:37%;width:130%;height:2px;z-index:2;opacity:.4;
     background:repeating-linear-gradient(90deg,var(--line) 0 20px, transparent 20px 52px)}
   .road-lines.scroll{animation:road 1.4s linear infinite}
   @keyframes road{to{transform:translateX(-72px)}}
@@ -58,7 +58,7 @@
   @keyframes floorSalsa{0%,100%{transform:rotate(-3deg) translateY(0)}50%{transform:rotate(3deg) translateY(-10px)}}
 
   /* -------- ACTORS -------- */
-  .actor{position:absolute;bottom:234px;width:120px;height:208px;left:0;color:var(--line);
+  .actor{position:absolute;bottom:40.4%;width:19%;aspect-ratio:120/210;left:0;color:var(--line);
     transition:left 2.6s cubic-bezier(.37,0,.3,1)}
   .actor svg{width:100%;height:100%;display:block}
   .girl > svg{transform:scaleX(-1)}
@@ -95,13 +95,13 @@
   .rh svg{width:22px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
   @keyframes rhpop{0%{transform:translate(-50%,0) scale(.4);opacity:0}20%{opacity:1}100%{transform:translate(-50%,-90px) scale(1.15);opacity:0}}
 
-  .gift{position:absolute;width:56px;height:66px;color:var(--line);opacity:0;transform:scale(0);z-index:8;left:0;top:0;
+  .gift{position:absolute;width:80px;height:94px;color:var(--line);opacity:0;transform:scale(0);z-index:8;left:0;top:0;
     transition:opacity .5s ease, transform .5s ease}
   .gift.moving{transition:left 1.6s cubic-bezier(.4,0,.2,1), top 1.6s cubic-bezier(.4,0,.2,1), opacity .5s ease, transform .5s ease}
   .gift svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2.4}
   .gift.show{opacity:1;transform:scale(1)}
 
-  .umbrella{position:absolute;width:150px;height:162px;color:var(--line);opacity:0;left:0;top:0;
+  .umbrella{position:absolute;width:196px;height:212px;color:var(--line);opacity:0;left:0;top:0;
     transform:translate(-50%,12px) scale(0);transform-origin:center bottom;z-index:9;
     transition:left 1.2s ease, top 1.2s ease, transform 1.2s cubic-bezier(.2,1.4,.3,1), opacity 1s ease}
   .umbrella svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2.6}
@@ -113,13 +113,13 @@
   .handhold svg{stroke:currentColor;fill:none;stroke-width:2.4}
 
   /* -------- OVERLAYS -------- */
-  .caption{position:absolute;left:0;right:0;bottom:132px;z-index:9;text-align:center;padding:0 26px;
+  .caption{position:absolute;left:0;right:0;bottom:20%;z-index:9;text-align:center;padding:0 26px;
     font-family:'Fredoka',sans-serif;font-size:clamp(17px,4.8vw,22px);color:var(--ink)}
   .caption b{color:var(--cherry)}
   .caption span{display:inline-block;animation:capin .5s ease both}
   @keyframes capin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-  .cta,.replay{position:absolute;left:50%;transform:translateX(-50%) translateY(6px);bottom:52px;z-index:9;
+  .cta,.replay{position:absolute;left:50%;transform:translateX(-50%) translateY(6px);bottom:7%;z-index:9;
     display:inline-flex;align-items:center;gap:9px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px;
     color:#fff;cursor:pointer;border:none;border-radius:999px;padding:16px 34px;white-space:nowrap;
     background:linear-gradient(135deg,var(--petal),var(--cherry));box-shadow:0 14px 30px -8px rgba(225,59,107,.7);
@@ -299,14 +299,14 @@ setInterval(function(){
 function presentGift(kind){
   gift.innerHTML=(kind==="roses")?ROSES:CHOC;
   gift.classList.remove("moving");
-  var sr=stageRect(), gw=56, gh=66, from=pt(boy,84,116);   /* his standing hand */
+  var sr=stageRect(), gw=80, gh=94, from=pt(boy,84,116);   /* his standing hand */
   gift.style.left=(from.x-sr.left-gw/2)+"px";
   gift.style.top =(from.y-sr.top -gh/2)+"px";
   requestAnimationFrame(function(){ gift.classList.add("show"); });
 }
 function acceptGift(done){
   pose(girl,"reach");
-  var sr=stageRect(), gw=56, gh=66, to=pt(girl,58,120);   /* her reaching hands */
+  var sr=stageRect(), gw=80, gh=94, to=pt(girl,58,120);   /* her reaching hands */
   gift.classList.add("moving");
   gift.style.left=(to.x-sr.left-gw/2)+"px";
   gift.style.top =(to.y-sr.top -gh/2)+"px";
@@ -317,7 +317,7 @@ function acceptGift(done){
 function presentUmbrella(){
   var sr=stageRect(), head=pt(boy,60,34);
   umbrella.style.left=(head.x-sr.left)+"px";
-  umbrella.style.top =(head.y-sr.top-150)+"px";
+  umbrella.style.top =(head.y-sr.top-umbrella.offsetHeight*0.9)+"px";
   umbrella.classList.add("show");
 }
 
@@ -386,7 +386,7 @@ function doUmbrella(){
   at(2700,function(){
     var sr=stageRect(), bh=pt(boy,60,34), gh=pt(girl,60,34);
     umbrella.style.left=(((bh.x+gh.x)/2)-sr.left)+"px";
-    umbrella.style.top =(Math.min(bh.y,gh.y)-sr.top-150)+"px";
+    umbrella.style.top =(Math.min(bh.y,gh.y)-sr.top-umbrella.offsetHeight*0.9)+"px";
     say("I&rsquo;ll always keep you safe and dry.");
     cap("One umbrella, two hearts, and the rain singing just for us.");
     showBtn("Dance with me", doDance);
