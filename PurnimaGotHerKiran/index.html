@@ -186,6 +186,7 @@
 .ev:nth-child(2){border-left-color:var(--kumkum)}
   .ev:nth-child(3){border-left-color:var(--leaf)}
   .ev:nth-child(4){border-left-color:var(--turmeric)}
+  .ev:nth-child(5){border-left-color:var(--marigold-deep)}
   .ev .icon{font-size:1.8rem;margin-bottom:4px}
   .ev h3{font-family:'Marcellus',serif;font-size:1.5rem;color:var(--leaf-deep)}
   .ev p{color:#6b4423;margin-top:4px}
@@ -378,6 +379,12 @@
       <span class="when">20 Aug 2026 · 4:00 PM onwards</span>
     </div>
     <div class="ev reveal">
+      <div class="icon">🪔</div>
+      <h3>Baale Shaastra</h3>
+      <p>A traditional ceremony to invoke blessings for the couple.</p>
+      <span class="when">21 Aug 2026 · 11:00 AM – 1:00 PM</span>
+    </div>
+    <div class="ev reveal">
       <div class="icon">🎶</div>
       <h3>Reception</h3>
       <p>An evening of celebration, music and feasting with family and friends.</p>
@@ -424,10 +431,10 @@
 
 <script>
   /* ---------- Countdown to muhurtham ---------- */
-  const target = new Date("2026-08-23T10:00:00+05:30").getTime();
-  const d_=document.getElementById('d'),h_=document.getElementById('h'),m_=document.getElementById('m'),s_=document.getElementById('s');
+  var target = new Date("2026-08-23T10:00:00+05:30").getTime();
+  var d_=document.getElementById('d'),h_=document.getElementById('h'),m_=document.getElementById('m'),s_=document.getElementById('s');
   function tick(){
-    const t = target - Date.now();
+    var t = target - Date.now();
     if(t<=0){document.getElementById('countdown').innerHTML='<p style="color:var(--kumkum);font-family:Marcellus,serif;font-size:1.4rem">It\'s our wedding day! 🌼</p>';return}
     d_.textContent=Math.floor(t/86400000);
     h_.textContent=Math.floor(t/3600000)%24;
@@ -437,53 +444,53 @@
   tick(); setInterval(tick,1000);
 
   /* ---------- Scroll reveal ---------- */
-  const io = new IntersectionObserver((ents)=>{
-    ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  var io = new IntersectionObserver(function(ents){
+    ents.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
   },{threshold:.15});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
   /* ---------- Music ---------- */
-  const audio=new Audio('audio/music.mp3');
+  var audio=new Audio('audio/music.mp3');
   audio.loop=true; audio.volume=0.7;
-  const mb=document.getElementById('musicBtn');
-  let playing=false;
+  var mb=document.getElementById('musicBtn');
+  var playing=false;
   function setIcon(){ mb.classList.toggle('playing', playing); }
-  function playMusic(){ audio.play().then(()=>{playing=true;setIcon();}).catch(()=>{}); }
-  mb.addEventListener('click',()=>{
+  function playMusic(){ audio.play().then(function(){playing=true;setIcon();}).catch(function(){}); }
+  mb.addEventListener('click',function(){
     if(playing){ audio.pause(); playing=false; }
-    else { audio.play().then(()=>{playing=true;}).catch(()=>{}); }
+    else { audio.play().then(function(){playing=true;}).catch(function(){}); }
     setIcon();
   });
 
   /* ---------- Falling flora (petals) ---------- */
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const layer=document.getElementById('petals');
-  const glyphs=['🌼','🌸','🏵️','💛','🌺'];
-  let petalsOn=false, live=0;
-  const MAX_LIVE = 26;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var layer=document.getElementById('petals');
+  var glyphs=['🌼','🌸','🏵️','💛','🌺'];
+  var petalsOn=false, live=0;
+  var MAX_LIVE = 26;
   function spawnPetal(){
     if(!petalsOn || live>=MAX_LIVE) return;
-    const p=document.createElement('span');
+    var p=document.createElement('span');
     p.className='petal';
     p.textContent=glyphs[Math.floor(Math.random()*glyphs.length)];
     p.style.left=(Math.random()*100)+'vw';
     p.style.fontSize=(14+Math.random()*22)+'px';
     p.style.setProperty('--drift',(Math.random()*160-80)+'px');
-    const dur=5+Math.random()*5;
+    var dur=5+Math.random()*5;
     p.style.animation='fall '+dur+'s linear forwards';
     layer.appendChild(p); live++;
-    p.addEventListener('animationend',()=>{p.remove();live--;});
+    p.addEventListener('animationend',function(){p.remove();live--;});
   }
   function startPetals(){
     if(reduce){ return; }
     petalsOn=true;
-    for(let i=0;i<18;i++) setTimeout(spawnPetal, i*120);   // opening burst
+    for(var i=0;i<18;i++) setTimeout(spawnPetal, i*120);   // opening burst
     setInterval(spawnPetal, 650);                          // gentle ambient fall
   }
 
   /* ---------- Gatefold opener ---------- */
-  const opener=document.getElementById('opener');
-  let opened=false;
+  var opener=document.getElementById('opener');
+  var opened=false;
   function openInvite(){
     if(opened) return; opened=true;
     opener.classList.add('open');
@@ -492,8 +499,8 @@
     if(reduce){
       opener.style.display='none';
     } else {
-      setTimeout(()=>opener.classList.add('gone'),1150);
-      setTimeout(()=>{opener.style.display='none';},1800);
+      setTimeout(function(){opener.classList.add('gone')},1150);
+      setTimeout(function(){opener.style.display='none';},1800);
     }
   }
   opener.addEventListener('click', openInvite);
