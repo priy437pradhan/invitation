@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Us, after every fight 💞</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { height:100%; overflow:hidden; }
+  body {
+    font-family:'Baloo 2','Segoe UI',system-ui,sans-serif;
+    position:fixed; width:100%;
+    background:linear-gradient(180deg,#8f5f9e 0%,#c98bb9 40%,#eda9ad 72%,#f7cfa8 100%);
+    -webkit-user-select:none; user-select:none;
+  }
+
+  .star { position:absolute; background:#ffeede; border-radius:50%; z-index:1;
+          animation:twinkle 3s ease-in-out infinite; }
+  @keyframes twinkle { 0%,100%{opacity:.15;} 50%{opacity:.8;} }
+
+  .firefly {
+    position:absolute; z-index:6; width:5px; height:5px; border-radius:50%;
+    background:#fff3ae; box-shadow:0 0 10px 4px rgba(255,243,174,.65);
+    animation:fly ease-in-out infinite alternate;
+  }
+  @keyframes fly {
+    from { transform:translate(0,0); opacity:.2; }
+    50%  { opacity:1; }
+    to   { transform:translate(46px,-40px); opacity:.3; }
+  }
+
+  /* lamp post */
+  #lamp { position:absolute; right:7%; bottom:14.5%; z-index:6; width:10px; height:34vh;
+          background:linear-gradient(90deg,#54344a,#7b5270 45%,#54344a); border-radius:6px; }
+  #lamp:before {
+    content:''; position:absolute; top:-26px; left:50%; margin-left:-17px;
+    width:34px; height:30px; border-radius:10px 10px 4px 4px;
+    background:#54344a;
+  }
+  #lampGlow {
+    position:absolute; right:calc(7% - 26px); bottom:calc(14.5% + 34vh - 16px); z-index:5;
+    width:62px; height:44px; border-radius:50%;
+    background:radial-gradient(circle,#fff3ae 0%,rgba(255,243,174,0) 70%);
+    opacity:.75; transition:opacity 1.5s ease, transform 1.5s ease;
+  }
+  body.warm #lampGlow { opacity:1; transform:scale(1.7); }
+
+  .ground {
+    position:absolute; bottom:0; left:0; right:0; height:15%; z-index:5;
+    background:linear-gradient(180deg,#6e4560 0%,#54344a 100%);
+    border-radius:50% 50% 0 0 / 26px 26px 0 0;
+  }
+
+  .title {
+    position:absolute; top:7%; left:0; right:0; text-align:center; z-index:7;
+    color:#fff0e6; padding:0 24px; text-shadow:0 3px 14px rgba(70,25,60,.6);
+  }
+  .title h1 { font-size:clamp(24px,6.8vw,35px); font-weight:800; }
+  .title p  { font-size:15px; opacity:.85; font-weight:500; margin-top:2px; }
+
+  /* ---------- bench + couple ---------- */
+  #stage {
+    position:absolute; bottom:12%; left:50%; z-index:10;
+    width:min(88vw,400px); transform:translateX(-50%);
+  }
+  #scene { width:100%; display:block; overflow:visible;
+           filter:drop-shadow(0 10px 12px rgba(60,20,50,.4)); }
+
+  .breathA { animation:breath 3.2s ease-in-out infinite; transform-box:fill-box; transform-origin:center 85%; }
+  .breathB { animation:breath 3.6s ease-in-out .6s infinite; transform-box:fill-box; transform-origin:center 85%; }
+  @keyframes breath { 0%,100%{transform:scale(1,1);} 50%{transform:scale(1.015,.99);} }
+
+  .eyesOpen { transform-box:fill-box; transform-origin:center; animation:blink 4.8s infinite; }
+  .eyesOpenB{ transform-box:fill-box; transform-origin:center; animation:blink 5.6s 1.2s infinite; }
+  @keyframes blink { 0%,93%,100%{transform:scaleY(1);} 96%{transform:scaleY(.08);} }
+
+  /* boy scoots via translate on group */
+  #boyG { transition:transform 1.1s cubic-bezier(.5,.05,.4,1.3); }
+  #boyG.s1 { transform:translateX(48px); }
+  #boyG.s2 { transform:translateX(96px); }
+  #boyG.s3 { transform:translateX(142px); }
+  #boyG.fell { transform:translateX(96px) translateY(90px) rotate(-70deg); transition:transform .7s ease-in; }
+
+  /* girl head states */
+  #girlHead { transform-box:fill-box; transform-origin:50% 85%; transition:transform .9s ease; }
+  svg.away  #girlHead { transform:rotate(16deg) translateX(6px); }
+  svg.peek  #girlHead { transform:rotate(7deg); }
+  svg.facing #girlHead { transform:rotate(0); }
+  /* girl pupils side-eye */
+  .gPupils { transition:transform .6s ease; }
+  svg.away .gPupils { transform:translateX(-4px); }
+  svg.happy .gEyesOpen { display:none; }
+  .gEyesHappy { display:none; }
+  svg.happy .gEyesHappy { display:block; }
+
+  /* lean-in cuddle */
+  #boyHead  { transform-box:fill-box; transform-origin:50% 90%; transition:transform 1.2s ease; }
+  svg.cuddle #boyHead  { transform:rotate(10deg) translateX(5px); }
+  svg.cuddle #girlHead { transform:rotate(-10deg) translateX(-5px); }
+
+  .blush { opacity:0; transition:opacity .8s ease; }
+  svg.blushing .blush { opacity:.65; }
+
+  /* tails: normal pair vs heart */
+  #tailsNormal { transition:opacity .9s ease; }
+  #tailHeart   { opacity:0; transition:opacity 1.4s ease .4s;
+                 transform-box:fill-box; transform-origin:center bottom; }
+  svg.cuddle #tailsNormal { opacity:0; }
+  svg.cuddle #tailHeart   { opacity:1; animation:heartbeat 1.6s ease-in-out 1.8s infinite; }
+  @keyframes heartbeat { 0%,100%{transform:scale(1);} 12%{transform:scale(1.09);} 24%{transform:scale(1);} 36%{transform:scale(1.06);} }
+
+  .boyTail  { transform-box:fill-box; transform-origin:15% 85%; animation:sway 3s ease-in-out infinite; }
+  .girlTail { transform-box:fill-box; transform-origin:85% 85%; animation:sway 3.4s .8s ease-in-out infinite reverse; }
+  @keyframes sway { 0%,100%{transform:rotate(0);} 50%{transform:rotate(-9deg);} }
+
+  /* flower */
+  #flower { opacity:0; transition:opacity .6s ease; transform-box:fill-box; transform-origin:bottom center; }
+  #flower.show { opacity:1; animation:offer 1.6s ease-in-out infinite; }
+  @keyframes offer { 0%,100%{transform:rotate(-4deg);} 50%{transform:rotate(6deg);} }
+
+  /* floating heart above couple */
+  #loveFloat {
+    position:absolute; top:-38px; left:50%; margin-left:-14px; font-size:28px; z-index:11;
+    opacity:0; transition:opacity 1s ease;
+    animation:lovebob 2.2s ease-in-out infinite;
+  }
+  @keyframes lovebob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+  #loveFloat.show { opacity:1; }
+
+  /* ---------- bubble / hint / buttons / fall / finale ---------- */
+  #bubble {
+    position:absolute; z-index:20; left:50%; bottom:46%;
+    transform:translateX(-50%) scale(0); transform-origin:50% 100%;
+    max-width:80vw; background:#fffdf7; color:#5a3350;
+    border-radius:20px; padding:13px 17px;
+    font-size:17px; font-weight:700; line-height:1.35; text-align:center;
+    box-shadow:0 10px 26px rgba(60,20,50,.4);
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  #bubble.show { transform:translateX(-50%) scale(1); }
+  #bubble:after {
+    content:''; position:absolute; bottom:-11px; left:50%; margin-left:-11px;
+    border-left:11px solid transparent; border-right:11px solid transparent;
+    border-top:13px solid #fffdf7;
+  }
+  #hint {
+    position:absolute; bottom:4%; left:0; right:0; text-align:center; z-index:7;
+    color:#ffe4d6; opacity:.75; font-size:13px; font-weight:600;
+    animation:hintpulse 1.6s ease-in-out infinite;
+  }
+  @keyframes hintpulse { 0%,100%{opacity:.3;} 50%{opacity:.85;} }
+
+  #btns {
+    position:absolute; bottom:5%; left:0; right:0; z-index:30;
+    display:none; flex-direction:column; gap:12px; align-items:center; padding:0 30px;
+  }
+  #btns.show { display:flex; }
+  .btn {
+    width:100%; max-width:320px; border:none; border-radius:50px;
+    font-family:inherit; font-size:18px; font-weight:800; padding:15px 20px;
+    cursor:pointer; box-shadow:0 8px 20px rgba(60,20,50,.45);
+    transition:transform .12s ease;
+  }
+  .btn:active { transform:scale(.95); }
+  #btnCuddle { background:linear-gradient(135deg,#ff9db6,#f0608a); color:#4d0f28; }
+  #btnHmph   { background:rgba(255,255,255,.16); color:#ffe4ef; border:2px solid rgba(255,228,239,.5);
+               font-size:15px; padding:12px 20px; max-width:260px;
+               transition:transform .3s ease, opacity .3s ease; }
+
+  .fall {
+    position:absolute; top:-60px; z-index:8; font-size:28px;
+    animation:falldown linear 1 forwards; pointer-events:none;
+  }
+  @keyframes falldown {
+    0%{transform:translateY(0) rotate(0);opacity:1;} 90%{opacity:1;}
+    100%{transform:translateY(110vh) rotate(340deg);opacity:0;}
+  }
+
+  #finale {
+    position:absolute; inset:0; z-index:40; display:none;
+    align-items:center; justify-content:center; padding:26px;
+    background:rgba(60,20,50,.5); backdrop-filter:blur(3px);
+  }
+  #finale.show { display:flex; }
+  .card {
+    background:#fffdf7; border-radius:26px; padding:30px 24px; text-align:center;
+    max-width:340px; width:100%; color:#5a3350;
+    box-shadow:0 20px 50px rgba(40,10,35,.55);
+    animation:cardpop .5s cubic-bezier(.34,1.56,.64,1) 1;
+  }
+  @keyframes cardpop { 0%{transform:scale(.6);opacity:0;} 100%{transform:scale(1);opacity:1;} }
+  .card .big { font-size:52px; line-height:1; }
+  .card h2 { font-size:22px; font-weight:800; margin:10px 0 6px; color:#f0608a; }
+  .card p  { font-size:16px; font-weight:600; line-height:1.45; }
+  .card small { display:block; margin-top:14px; font-size:13px; opacity:.6; font-weight:600; }
+  .replay { margin-top:18px; background:#ff9db6; border:none; border-radius:40px;
+            font-family:inherit; font-weight:800; font-size:15px; padding:11px 26px;
+            color:#4d0f28; cursor:pointer; box-shadow:0 6px 14px rgba(77,15,40,.4); }
+</style>
+</head>
+<body>
+
+  <div id="skyStars"></div>
+  <div id="lampGlow"></div>
+  <div id="lamp"></div>
+  <div class="firefly" style="left:14%; bottom:26%; animation-duration:4s;"></div>
+  <div class="firefly" style="left:30%; bottom:20%; animation-duration:5.4s;"></div>
+  <div class="firefly" style="left:70%; bottom:30%; animation-duration:4.6s;"></div>
+  <div class="firefly" style="left:52%; bottom:36%; animation-duration:6s;"></div>
+  <div class="ground"></div>
+
+  <div class="title">
+    <h1 id="titleText">Us, after every fight 💞</h1>
+    <p id="subText">based on a very true story</p>
+  </div>
+
+  <div id="stage">
+    <div id="loveFloat">💗</div>
+    <svg id="scene" class="away" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- bench -->
+      <g>
+        <rect x="18" y="176" width="364" height="15" rx="7" fill="#8a5a3b" stroke="#5b3a24" stroke-width="4"/>
+        <rect x="18" y="197" width="364" height="12" rx="6" fill="#8a5a3b" stroke="#5b3a24" stroke-width="4"/>
+        <rect x="42"  y="205" width="10" height="48" rx="4" fill="#5b3a24"/>
+        <rect x="348" y="205" width="10" height="48" rx="4" fill="#5b3a24"/>
+      </g>
+
+      <!-- normal tails -->
+      <g id="tailsNormal">
+        <path class="boyTail"  d="M96 176 q-30 -12 -26 -44"  fill="none" stroke="#6b4a5e" stroke-width="7" stroke-linecap="round"/>
+        <path class="girlTail" d="M304 176 q30 -12 26 -44" fill="none" stroke="#6b4a5e" stroke-width="7" stroke-linecap="round"/>
+      </g>
+      <!-- heart tails (cuddle) -->
+      <path id="tailHeart" d="M200 168 q-4 -26 -26 -26 q-20 0 -20 20 q0 24 46 44 q46 -20 46 -44 q0 -20 -20 -20 q-22 0 -26 26"
+            fill="none" stroke="#f0608a" stroke-width="7" stroke-linecap="round" transform="translate(0,-64)"/>
+
+      <!-- BOY CAT (left, scoots right) -->
+      <g id="boyG">
+        <g class="breathA">
+          <ellipse cx="70" cy="146" rx="40" ry="34" fill="#fff6f0" stroke="#6b4a5e" stroke-width="5"/>
+          <ellipse cx="54" cy="176" rx="11" ry="7" fill="#fff6f0" stroke="#6b4a5e" stroke-width="4"/>
+          <ellipse cx="86" cy="176" rx="11" ry="7" fill="#fff6f0" stroke="#6b4a5e" stroke-width="4"/>
+          <g id="boyHead">
+            <path d="M42 74 l-5 -22 l21 11 z" fill="#fff6f0" stroke="#6b4a5e" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M98 74 l5 -22 l-21 11 z"  fill="#fff6f0" stroke="#6b4a5e" stroke-width="5" stroke-linejoin="round"/>
+            <circle cx="70" cy="96" r="36" fill="#fff6f0" stroke="#6b4a5e" stroke-width="5"/>
+            <g class="eyesOpen">
+              <circle cx="57" cy="92" r="4.6" fill="#43293a"/>
+              <circle cx="83" cy="92" r="4.6" fill="#43293a"/>
+              <circle cx="58.5" cy="90.5" r="1.5" fill="#fff"/>
+              <circle cx="84.5" cy="90.5" r="1.5" fill="#fff"/>
+            </g>
+            <path d="M66 104 l4 4 l4 -4 z" fill="#e8899e" stroke="#6b4a5e" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M70 109 q0 5 -5 6 M70 109 q0 5 5 6" stroke="#6b4a5e" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+            <path d="M32 96 l-15 -3 M32 102 l-15 3 M108 96 l15 -3 M108 102 l15 3" stroke="#6b4a5e" stroke-width="2.6" stroke-linecap="round" opacity=".8"/>
+            <circle class="blush" cx="44" cy="106" r="6.5" fill="#f2a0b4" opacity="0"/>
+            <circle class="blush" cx="96" cy="106" r="6.5" fill="#f2a0b4" opacity="0"/>
+          </g>
+          <!-- flower offering -->
+          <g id="flower">
+            <line x1="104" y1="132" x2="118" y2="102" stroke="#4e8f5a" stroke-width="4" stroke-linecap="round"/>
+            <path d="M118 102 q-8 -4 -6 -13 q8 0 10 7 q2 -7 10 -7 q2 9 -6 13 q4 6 -4 9 q-8 -3 -4 -9 z" fill="#ff87a8" stroke="#c74d72" stroke-width="2.6" stroke-linejoin="round"/>
+            <circle cx="122" cy="98" r="3.4" fill="#ffe066"/>
+          </g>
+        </g>
+      </g>
+
+      <!-- GIRL CAT (right) -->
+      <g>
+        <g class="breathB">
+          <ellipse cx="330" cy="146" rx="40" ry="34" fill="#ffeef4" stroke="#6b4a5e" stroke-width="5"/>
+          <ellipse cx="314" cy="176" rx="11" ry="7" fill="#ffeef4" stroke="#6b4a5e" stroke-width="4"/>
+          <ellipse cx="346" cy="176" rx="11" ry="7" fill="#ffeef4" stroke="#6b4a5e" stroke-width="4"/>
+          <g id="girlHead">
+            <path d="M302 74 l-5 -22 l21 11 z" fill="#ffeef4" stroke="#6b4a5e" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M358 74 l5 -22 l-21 11 z" fill="#ffeef4" stroke="#6b4a5e" stroke-width="5" stroke-linejoin="round"/>
+            <!-- bow -->
+            <g>
+              <path d="M300 58 q-12 -10 -18 -2 q-2 8 10 10 z" fill="#f0608a" stroke="#c74d72" stroke-width="2.6" stroke-linejoin="round"/>
+              <path d="M300 58 q-2 -14 -14 -14 q-6 6 4 14 z" fill="#f0608a" stroke="#c74d72" stroke-width="2.6" stroke-linejoin="round"/>
+              <circle cx="299" cy="58" r="4.6" fill="#ffb3c9" stroke="#c74d72" stroke-width="2.2"/>
+            </g>
+            <circle cx="330" cy="96" r="36" fill="#ffeef4" stroke="#6b4a5e" stroke-width="5"/>
+            <g class="gEyesOpen">
+              <g class="eyesOpenB">
+                <circle cx="317" cy="92" r="4.6" fill="#43293a" class="gPupilA"/>
+                <circle cx="343" cy="92" r="4.6" fill="#43293a" class="gPupilB"/>
+              </g>
+              <g class="gPupils">
+                <circle cx="318.5" cy="90.5" r="1.5" fill="#fff"/>
+                <circle cx="344.5" cy="90.5" r="1.5" fill="#fff"/>
+              </g>
+              <!-- lashes -->
+              <path d="M309 84 l-6 -4 M312 81 l-4 -6 M351 84 l6 -4 M348 81 l4 -6" stroke="#43293a" stroke-width="2.4" stroke-linecap="round"/>
+            </g>
+            <g class="gEyesHappy">
+              <path d="M311 92 q6 -6 12 0" stroke="#43293a" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M337 92 q6 -6 12 0" stroke="#43293a" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </g>
+            <path d="M326 104 l4 4 l4 -4 z" fill="#e8899e" stroke="#6b4a5e" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M330 109 q0 5 -5 6 M330 109 q0 5 5 6" stroke="#6b4a5e" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+            <path d="M292 96 l-15 -3 M292 102 l-15 3 M368 96 l15 -3 M368 102 l15 3" stroke="#6b4a5e" stroke-width="2.6" stroke-linecap="round" opacity=".8"/>
+            <circle class="blush" cx="304" cy="106" r="6.5" fill="#f2a0b4" opacity="0"/>
+            <circle class="blush" cx="356" cy="106" r="6.5" fill="#f2a0b4" opacity="0"/>
+          </g>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div id="bubble"></div>
+  <div id="hint">tap anywhere to continue ▸</div>
+
+  <div id="btns">
+    <button class="btn" id="btnCuddle">okay fine, cuddle 🐾💞</button>
+    <button class="btn" id="btnHmph">hmph 😤</button>
+  </div>
+
+  <div id="finale">
+    <div class="card">
+      <div class="big">💞🐾</div>
+      <h2>FIGHT STATUS: RESOLVED</h2>
+      <p id="finaleMsg">Cuddle mode activated 🥰<br>Current distance: 0 cm. Forever.<br>(the tails did the paperwork 💗)</p>
+      <small>— every couple, every time 🐱🐱</small>
+      <button class="replay" id="replayBtn">Replay 🔁</button>
+    </div>
+  </div>
+
+<script>
+(function () {
+  var scene   = document.getElementById('scene');
+  var boyG    = document.getElementById('boyG');
+  var flower  = document.getElementById('flower');
+  var loveF   = document.getElementById('loveFloat');
+  var bubble  = document.getElementById('bubble');
+  var hint    = document.getElementById('hint');
+  var btns    = document.getElementById('btns');
+  var btnCud  = document.getElementById('btnCuddle');
+  var btnHmph = document.getElementById('btnHmph');
+  var finale  = document.getElementById('finale');
+  var titleT  = document.getElementById('titleText');
+  var subT    = document.getElementById('subText');
+  var skyStars= document.getElementById('skyStars');
+
+  for (var i = 0; i < 22; i++) {
+    var s = document.createElement('div');
+    s.className = 'star';
+    var sz = 1.5 + Math.random()*2;
+    s.style.width = sz+'px'; s.style.height = sz+'px';
+    s.style.left = (Math.random()*100)+'%';
+    s.style.top  = (Math.random()*38)+'%';
+    s.style.animationDelay = (Math.random()*3)+'s';
+    skyStars.appendChild(s);
+  }
+
+  function say(t) {
+    bubble.className = '';
+    setTimeout(function(){ bubble.innerHTML = t; bubble.className = 'show'; }, 220);
+  }
+  function hideBubble(){ bubble.className = ''; }
+  function drop(emoji, count, ms) {
+    var n = 0;
+    var t = setInterval(function(){
+      var e = document.createElement('div');
+      e.className = 'fall'; e.textContent = emoji;
+      e.style.left = (5 + Math.random()*90) + '%';
+      e.style.fontSize = (22 + Math.random()*16) + 'px';
+      e.style.animationDuration = (2.4 + Math.random()*1.6) + 's';
+      document.body.appendChild(e);
+      setTimeout(function(){ if (e.parentNode) e.parentNode.removeChild(e); }, 4400);
+      if (++n >= count) clearInterval(t);
+    }, ms);
+  }
+
+  var steps = [
+    function () {
+      say('after a tiny fight... 🥶<br>current distance: <b>one full bench</b><br>her mood: 📉  his hope: 📈');
+    },
+    function () { // scoot 1
+      boyG.setAttribute('class','s1');
+      setTimeout(function(){
+        say('*scoot*<br>"...what? there was a draft<br>over there" 🍃😗');
+      }, 1100);
+    },
+    function () { // she side-eyes, scoot 2
+      scene.setAttribute('class','peek');
+      setTimeout(function(){
+        boyG.setAttribute('class','s2');
+        setTimeout(function(){
+          say('*scoot scoot*<br>"the... uh... view is better here" 🌳<br>her: 👀');
+        }, 1100);
+      }, 500);
+    },
+    function () { // flower
+      flower.setAttribute('class','show');
+      say('"found this on the way.<br>it reminded me of you" 🌷<br>(smooth. very smooth.)');
+    },
+    function () { // tiny smile detected
+      scene.setAttribute('class','facing');
+      say('wait— was that a tiny smile?<br><b>I SAW THAT</b> 😏<br>no take-backs.');
+    },
+    function () { // final scoot + ASK
+      boyG.setAttribute('class','s3');
+      setTimeout(function(){
+        say('okay. serious question: 🥺<br><b style="font-size:20px">can we officially stop fighting?</b>');
+        titleT.textContent = 'The peace negotiation 🕊️';
+        subT.textContent = 'her terms: unknown. his hope: infinite';
+        hint.style.display = 'none';
+        btns.className = 'show';
+      }, 1200);
+    }
+  ];
+
+  var idx = 0, busy = false;
+  function next() {
+    if (idx >= steps.length) return;
+    busy = true;
+    steps[idx++]();
+    setTimeout(function(){ busy = false; }, 800);
+  }
+  document.body.addEventListener('click', function () {
+    if (btns.className === 'show' || finale.className === 'show') return;
+    if (busy) return;
+    next();
+  });
+
+  /* hmph escalation */
+  var hm = 0;
+  btnHmph.addEventListener('click', function (e) {
+    e.stopPropagation();
+    hm++;
+    if (hm === 1) { // he falls off the bench
+      boyG.setAttribute('class','fell');
+      say('"HMPH?!" *falls off bench* 🙀<br>"...I\'m okay. worth a shot."');
+      setTimeout(function(){ boyG.setAttribute('class','s3'); }, 1800);
+    } else if (hm === 2) {
+      drop('🍦', 8, 200);
+      say('"okay okay — truce ice cream? 🍦<br>double scoop. your flavour.<br>I\'ll even hold it."');
+    } else {
+      scene.setAttribute('class','facing blushing');
+      loveF.className = 'show';
+      say('her tail just made a heart shape 💗<br><b>THE TAIL HAS SPOKEN.</b><br>resistance is over 😌');
+      btnHmph.textContent = 'fine... cuddle 🙄💗';
+      btnHmph.style.background = 'linear-gradient(135deg,#ff9db6,#f0608a)';
+      btnHmph.style.color = '#4d0f28';
+      btnHmph.style.border = 'none';
+      hm = 99;
+    }
+  });
+  // after surrender, hmph acts as cuddle
+  btnHmph.addEventListener('click', function (e) {
+    if (hm === 99 && btnHmph.textContent.indexOf('cuddle') > -1) {
+      // second tap after transform
+      if (btnHmph.getAttribute('data-armed')) { e.stopPropagation(); win(); }
+      else btnHmph.setAttribute('data-armed','1');
+    }
+  });
+
+  function win() {
+    btns.className = '';
+    hideBubble();
+    scene.setAttribute('class','facing happy blushing cuddle');
+    loveF.className = 'show';
+    document.body.className = 'warm';
+    drop('💗', 16, 120); drop('✨', 10, 180); drop('🌷', 6, 300);
+    say('*heads lean* 🥰<br>*tails officially sign the treaty* 💗');
+    titleT.textContent = 'And that\'s how it always ends 💞';
+    subT.textContent = 'every single time';
+    setTimeout(function(){ finale.className = 'show'; }, 3600);
+  }
+  btnCud.addEventListener('click', function (e) { e.stopPropagation(); win(); });
+
+  document.getElementById('replayBtn').addEventListener('click', function(){ location.reload(); });
+
+  setTimeout(next, 1000);
+})();
+</script>
+</body>
+</html> 

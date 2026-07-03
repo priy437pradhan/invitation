@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Same moon, different cities 🌙</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { height:100%; overflow:hidden; }
+  body {
+    font-family:'Baloo 2','Segoe UI',system-ui,sans-serif;
+    position:fixed; width:100%;
+    background:linear-gradient(180deg,#0c2b36 0%,#10404e 45%,#1a5c66 78%,#2a7576 100%);
+    -webkit-user-select:none; user-select:none;
+  }
+
+  .star { position:absolute; background:#d9f4f2; border-radius:50%; z-index:1;
+          animation:twinkle 2.8s ease-in-out infinite; }
+  @keyframes twinkle { 0%,100%{opacity:.15;} 50%{opacity:.85;} }
+
+  /* ---------- shared moon (crossfades to heart) ---------- */
+  #moonWrap {
+    position:absolute; top:11%; left:50%; margin-left:-38px; z-index:2;
+    width:76px; height:76px;
+    animation:moonbob 7s ease-in-out infinite;
+  }
+  @keyframes moonbob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+  #moonBall {
+    position:absolute; inset:0; border-radius:50%;
+    background:radial-gradient(circle at 40% 36%,#fdf7de,#f0e0a2 75%);
+    box-shadow:0 0 44px 16px rgba(240,224,162,.35);
+    transition:box-shadow 1.6s ease, opacity 1.4s ease, transform 1.4s ease;
+  }
+  body.moonglow #moonBall { box-shadow:0 0 70px 30px rgba(240,224,162,.6); }
+  #moonHeart {
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:64px; opacity:0; transform:scale(.5);
+    transition:opacity 1.4s ease, transform 1.4s cubic-bezier(.34,1.56,.64,1);
+    filter:drop-shadow(0 0 26px rgba(255,130,170,.9));
+  }
+  body.moonheart #moonBall  { opacity:0; transform:scale(.5); }
+  body.moonheart #moonHeart { opacity:1; transform:scale(1); animation:heartbeat 1.5s ease-in-out .8s infinite; }
+  @keyframes heartbeat { 0%,100%{transform:scale(1);} 12%{transform:scale(1.12);} 24%{transform:scale(1);} }
+
+  /* distance label under moon */
+  #distLabel {
+    position:absolute; top:calc(11% + 84px); left:0; right:0; text-align:center; z-index:2;
+    color:#bfe8e2; font-size:13px; font-weight:700; letter-spacing:1px; opacity:.85;
+  }
+
+  /* ---------- buildings ---------- */
+  .building {
+    position:absolute; bottom:0; z-index:5; width:44vw; max-width:230px; height:52%;
+    background:linear-gradient(180deg,#123241 0%,#0d2531 100%);
+    border-radius:14px 14px 0 0;
+    box-shadow:inset 0 0 0 4px rgba(180,230,225,.15);
+  }
+  #bldL { left:0;  border-radius:0 14px 0 0; }
+  #bldR { right:0; border-radius:14px 0 0 0; }
+  .miniwin {
+    position:absolute; width:14%; height:6%;
+    background:#0a1c25; border-radius:3px;
+    box-shadow:inset 0 0 0 2px rgba(180,230,225,.12);
+  }
+  .miniwin.lit { background:#f4c96b; opacity:.35; box-shadow:0 0 8px rgba(244,201,107,.3); }
+
+  /* main lit windows */
+  .bigwin {
+    position:absolute; top:14%; width:62%; height:34%;
+    background:linear-gradient(180deg,#ffd98c 0%,#f2b45c 100%);
+    border-radius:10px;
+    box-shadow:0 0 26px 6px rgba(244,201,107,.4), inset 0 0 0 5px #0a1c25;
+    overflow:hidden;
+    transition:background 1.4s ease, box-shadow 1.4s ease;
+  }
+  #winL { right:12%; } #winR { left:12%; }
+  body.pinkglow .bigwin {
+    background:linear-gradient(180deg,#ffc4d6 0%,#f78bb0 100%);
+    box-shadow:0 0 34px 10px rgba(247,139,176,.55), inset 0 0 0 5px #0a1c25;
+  }
+  .sill {
+    position:absolute; bottom:0; left:0; right:0; height:16%;
+    background:#0a1c25;
+  }
+
+  /* ---------- bunnies ---------- */
+  .bunny { position:absolute; bottom:4%; left:50%; width:78%; transform:translateX(-50%); overflow:visible; }
+  .earL, .earR { transform-box:fill-box; transform-origin:bottom center; }
+  .earL { animation:earwig 4s ease-in-out infinite; }
+  .earR { animation:earwig 4.6s 1.2s ease-in-out infinite; }
+  @keyframes earwig { 0%,88%,100%{transform:rotate(0);} 93%{transform:rotate(-7deg);} }
+  .eyesOpen  { transform-box:fill-box; transform-origin:center; animation:blink 4.6s infinite; }
+  .eyesOpen2 { transform-box:fill-box; transform-origin:center; animation:blink 5.4s 1.4s infinite; }
+  @keyframes blink { 0%,93%,100%{transform:scaleY(1);} 96%{transform:scaleY(.08);} }
+  .pupils { transition:transform .9s ease; }
+  svg.lookup .pupils { transform:translateY(-4px); }
+  svg.lookup { transition:transform .9s ease; transform:translateX(-50%) rotate(-4deg) !important; }
+  #bunR.lookup { transform:translateX(-50%) rotate(4deg) !important; }
+  .blush { opacity:0; transition:opacity .8s ease; }
+  svg.blushing .blush { opacity:.65; }
+  .happyEyes { display:none; }
+  svg.happy .eyesOpen, svg.happy .eyesOpen2 { display:none; }
+  svg.happy .happyEyes { display:block; }
+
+  /* squish gag */
+  #bunL.squish { transform:translateX(-38%) scaleX(1.18) scaleY(.92) !important; transition:transform .5s ease; }
+
+  /* sign gag */
+  #sign {
+    position:absolute; top:6%; left:50%; transform:translateX(-50%) scale(0);
+    background:#fff6e6; color:#c0392b; border:3px solid #d96a4e; border-radius:8px;
+    font-weight:800; font-size:11px; padding:4px 8px; white-space:nowrap; z-index:3;
+    transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  #sign.show { transform:translateX(-50%) scale(1) rotate(-3deg); }
+
+  /* ---------- flying things ---------- */
+  .flying {
+    position:fixed; z-index:35; left:0; top:0; opacity:0; pointer-events:none;
+    will-change:transform;
+  }
+  .msgBubble {
+    background:#fffdf7; color:#134; border-radius:14px; padding:8px 12px;
+    font-size:14px; font-weight:700; box-shadow:0 8px 18px rgba(0,15,25,.5);
+    white-space:nowrap;
+  }
+  .bigHeart { font-size:44px; filter:drop-shadow(0 0 18px rgba(255,120,160,.9)); }
+  .planeFly { font-size:30px; }
+
+  /* ---------- bubble / hint / buttons / fall / finale ---------- */
+  #bubble {
+    position:absolute; z-index:20; left:50%; top:32%;
+    transform:translateX(-50%) scale(0); transform-origin:50% 100%;
+    max-width:80vw; background:#fffdf7; color:#134;
+    border-radius:20px; padding:13px 17px;
+    font-size:16.5px; font-weight:700; line-height:1.35; text-align:center;
+    box-shadow:0 10px 26px rgba(0,15,25,.55);
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  #bubble.show { transform:translateX(-50%) scale(1); }
+  #hint {
+    position:absolute; bottom:3.5%; left:0; right:0; text-align:center; z-index:7;
+    color:#bfe8e2; opacity:.75; font-size:13px; font-weight:600;
+    animation:hintpulse 1.6s ease-in-out infinite;
+  }
+  @keyframes hintpulse { 0%,100%{opacity:.3;} 50%{opacity:.85;} }
+
+  #btns {
+    position:absolute; bottom:4%; left:0; right:0; z-index:30;
+    display:none; flex-direction:column; gap:11px; align-items:center; padding:0 30px;
+  }
+  #btns.show { display:flex; }
+  .btn {
+    width:100%; max-width:310px; border:none; border-radius:50px;
+    font-family:inherit; font-size:17px; font-weight:800; padding:14px 20px;
+    cursor:pointer; box-shadow:0 8px 20px rgba(0,15,25,.55);
+    transition:transform .12s ease;
+  }
+  .btn:active { transform:scale(.95); }
+  #btnLaunch { background:linear-gradient(135deg,#ff9db6,#f0608a); color:#4d0f28; }
+  #btnFar    { background:rgba(255,255,255,.14); color:#cfeeea; border:2px solid rgba(207,238,234,.45);
+               font-size:14px; padding:11px 18px; max-width:250px;
+               transition:transform .3s ease, opacity .3s ease; }
+
+  .fall {
+    position:absolute; top:-60px; z-index:8; font-size:28px;
+    animation:falldown linear 1 forwards; pointer-events:none;
+  }
+  @keyframes falldown {
+    0%{transform:translateY(0) rotate(0);opacity:1;} 90%{opacity:1;}
+    100%{transform:translateY(110vh) rotate(340deg);opacity:0;}
+  }
+
+  #finale {
+    position:absolute; inset:0; z-index:40; display:none;
+    align-items:center; justify-content:center; padding:26px;
+    background:rgba(5,20,28,.55); backdrop-filter:blur(3px);
+  }
+  #finale.show { display:flex; }
+  .card {
+    background:#fffdf7; border-radius:26px; padding:30px 24px; text-align:center;
+    max-width:340px; width:100%; color:#134;
+    box-shadow:0 20px 50px rgba(0,10,18,.6);
+    animation:cardpop .5s cubic-bezier(.34,1.56,.64,1) 1;
+  }
+  @keyframes cardpop { 0%{transform:scale(.6);opacity:0;} 100%{transform:scale(1);opacity:1;} }
+  .card .big { font-size:52px; line-height:1; }
+  .card h2 { font-size:21px; font-weight:800; margin:10px 0 6px; color:#f0608a; }
+  .card p  { font-size:16px; font-weight:600; line-height:1.45; }
+  .card small { display:block; margin-top:14px; font-size:13px; opacity:.6; font-weight:600; }
+  .replay { margin-top:18px; background:#ff9db6; border:none; border-radius:40px;
+            font-family:inherit; font-weight:800; font-size:15px; padding:11px 26px;
+            color:#4d0f28; cursor:pointer; box-shadow:0 6px 14px rgba(77,15,40,.4); }
+
+  .title {
+    position:absolute; top:3.5%; left:0; right:0; text-align:center; z-index:7;
+    color:#e6f7f4; padding:0 24px; text-shadow:0 3px 14px rgba(0,15,25,.7);
+  }
+  .title h1 { font-size:clamp(22px,6.2vw,32px); font-weight:800; }
+  .title p  { font-size:14px; opacity:.8; font-weight:500; margin-top:1px; }
+</style>
+</head>
+<body>
+
+  <div id="skyStars"></div>
+  <div id="moonWrap">
+    <div id="moonBall"></div>
+    <div id="moonHeart">💗</div>
+  </div>
+  <div id="distLabel">HIS CITY&nbsp;&nbsp;·&nbsp;&nbsp;500 KM&nbsp;&nbsp;·&nbsp;&nbsp;HER CITY</div>
+
+  <div class="title">
+    <h1 id="titleText">Same moon, different cities 🌙</h1>
+    <p id="subText">a long-distance love story</p>
+  </div>
+
+  <!-- left building: HIM -->
+  <div class="building" id="bldL">
+    <div class="miniwin" style="top:8%; left:10%;"></div>
+    <div class="miniwin lit" style="top:8%; left:34%;"></div>
+    <div class="miniwin" style="top:8%; left:58%;"></div>
+    <div class="miniwin lit" style="top:58%; left:14%;"></div>
+    <div class="miniwin" style="top:58%; left:40%;"></div>
+    <div class="miniwin" style="top:70%; left:64%;"></div>
+    <div class="bigwin" id="winL">
+      <div id="sign">I MISS YOU 💘</div>
+      <svg class="bunny" id="bunL" viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg">
+        <path class="earL" d="M48 52 q-10 -46 6 -48 q12 2 8 48 z" fill="#fdf3ec" stroke="#4c3346" stroke-width="4.5" stroke-linejoin="round"/>
+        <path class="earR" d="M78 52 q-4 -46 12 -48 q14 4 2 48 z" fill="#fdf3ec" stroke="#4c3346" stroke-width="4.5" stroke-linejoin="round"/>
+        <path d="M55 22 q-4 -18 2 -18 M85 22 q0 -18 6 -16" stroke="#f2a0b4" stroke-width="7" stroke-linecap="round" opacity=".7"/>
+        <circle cx="70" cy="76" r="34" fill="#fdf3ec" stroke="#4c3346" stroke-width="4.5"/>
+        <g class="eyesOpen">
+          <g class="pupils">
+            <circle cx="58" cy="72" r="4.4" fill="#33202e"/>
+            <circle cx="82" cy="72" r="4.4" fill="#33202e"/>
+            <circle cx="59.4" cy="70.6" r="1.4" fill="#fff"/>
+            <circle cx="83.4" cy="70.6" r="1.4" fill="#fff"/>
+          </g>
+        </g>
+        <g class="happyEyes">
+          <path d="M52 72 q6 -6 12 0" stroke="#33202e" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M76 72 q6 -6 12 0" stroke="#33202e" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </g>
+        <path d="M66 84 l4 4 l4 -4 z" fill="#e8899e" stroke="#4c3346" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M70 89 q0 5 -5 6 M70 89 q0 5 5 6" stroke="#4c3346" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <circle class="blush" cx="46" cy="86" r="6" fill="#f2a0b4" opacity="0"/>
+        <circle class="blush" cx="94" cy="86" r="6" fill="#f2a0b4" opacity="0"/>
+        <ellipse cx="52" cy="112" rx="10" ry="6" fill="#fdf3ec" stroke="#4c3346" stroke-width="4"/>
+        <ellipse cx="88" cy="112" rx="10" ry="6" fill="#fdf3ec" stroke="#4c3346" stroke-width="4"/>
+      </svg>
+    </div>
+    <div class="sill" style="top:44%; height:3%;"></div>
+  </div>
+
+  <!-- right building: HER -->
+  <div class="building" id="bldR">
+    <div class="miniwin lit" style="top:8%; left:16%;"></div>
+    <div class="miniwin" style="top:8%; left:44%;"></div>
+    <div class="miniwin" style="top:8%; left:68%;"></div>
+    <div class="miniwin" style="top:58%; left:22%;"></div>
+    <div class="miniwin lit" style="top:70%; left:52%;"></div>
+    <div class="bigwin" id="winR">
+      <svg class="bunny" id="bunR" viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg">
+        <path class="earL" d="M48 52 q-10 -46 6 -48 q12 2 8 48 z" fill="#fdeef4" stroke="#4c3346" stroke-width="4.5" stroke-linejoin="round"/>
+        <path class="earR" d="M78 52 q-4 -46 12 -48 q14 4 2 48 z" fill="#fdeef4" stroke="#4c3346" stroke-width="4.5" stroke-linejoin="round"/>
+        <path d="M55 22 q-4 -18 2 -18 M85 22 q0 -18 6 -16" stroke="#f2a0b4" stroke-width="7" stroke-linecap="round" opacity=".7"/>
+        <!-- flower on ear -->
+        <g>
+          <circle cx="50" cy="14" r="5" fill="#ffd166"/>
+          <circle cx="43" cy="10" r="4.6" fill="#ff87a8"/><circle cx="57" cy="10" r="4.6" fill="#ff87a8"/>
+          <circle cx="45" cy="20" r="4.6" fill="#ff87a8"/><circle cx="55" cy="20" r="4.6" fill="#ff87a8"/>
+        </g>
+        <circle cx="70" cy="76" r="34" fill="#fdeef4" stroke="#4c3346" stroke-width="4.5"/>
+        <g class="eyesOpen2">
+          <g class="pupils">
+            <circle cx="58" cy="72" r="4.4" fill="#33202e"/>
+            <circle cx="82" cy="72" r="4.4" fill="#33202e"/>
+            <circle cx="59.4" cy="70.6" r="1.4" fill="#fff"/>
+            <circle cx="83.4" cy="70.6" r="1.4" fill="#fff"/>
+          </g>
+        </g>
+        <path d="M50 64 l-5 -4 M53 61 l-3 -5 M90 64 l5 -4 M87 61 l3 -5" stroke="#33202e" stroke-width="2.2" stroke-linecap="round"/>
+        <g class="happyEyes">
+          <path d="M52 72 q6 -6 12 0" stroke="#33202e" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M76 72 q6 -6 12 0" stroke="#33202e" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </g>
+        <path d="M66 84 l4 4 l4 -4 z" fill="#e8899e" stroke="#4c3346" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M70 89 q0 5 -5 6 M70 89 q0 5 5 6" stroke="#4c3346" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <circle class="blush" cx="46" cy="86" r="6" fill="#f2a0b4" opacity="0"/>
+        <circle class="blush" cx="94" cy="86" r="6" fill="#f2a0b4" opacity="0"/>
+        <ellipse cx="52" cy="112" rx="10" ry="6" fill="#fdeef4" stroke="#4c3346" stroke-width="4"/>
+        <ellipse cx="88" cy="112" rx="10" ry="6" fill="#fdeef4" stroke="#4c3346" stroke-width="4"/>
+      </svg>
+    </div>
+    <div class="sill" style="top:44%; height:3%;"></div>
+  </div>
+
+  <div id="bubble"></div>
+  <div id="hint">tap anywhere to continue ▸</div>
+
+  <div id="btns">
+    <button class="btn" id="btnLaunch">launch my heart across 🚀💗</button>
+    <button class="btn" id="btnFar">500 km is too far 😔</button>
+  </div>
+
+  <div id="finale">
+    <div class="card">
+      <div class="big">💗🌙</div>
+      <h2>DELIVERED ACROSS 500 KM</h2>
+      <p id="finaleMsg">Same moon. Same heart. Different pillows — for now 😌<br>Distance is just a number, Priya. Love doesn't need GPS 💗</p>
+      <small>— your long-distance bunny 🐰</small>
+      <button class="replay" id="replayBtn">Replay 🔁</button>
+    </div>
+  </div>
+
+<script>
+(function () {
+  var bunL   = document.getElementById('bunL');
+  var bunR   = document.getElementById('bunR');
+  var winL   = document.getElementById('winL');
+  var winR   = document.getElementById('winR');
+  var sign   = document.getElementById('sign');
+  var bubble = document.getElementById('bubble');
+  var hint   = document.getElementById('hint');
+  var btns   = document.getElementById('btns');
+  var btnGo  = document.getElementById('btnLaunch');
+  var btnFar = document.getElementById('btnFar');
+  var finale = document.getElementById('finale');
+  var titleT = document.getElementById('titleText');
+  var subT   = document.getElementById('subText');
+  var skyStars = document.getElementById('skyStars');
+
+  for (var i = 0; i < 30; i++) {
+    var s = document.createElement('div');
+    s.className = 'star';
+    var sz = 1.5 + Math.random()*2.2;
+    s.style.width = sz+'px'; s.style.height = sz+'px';
+    s.style.left = (Math.random()*100)+'%';
+    s.style.top  = (Math.random()*42)+'%';
+    s.style.animationDelay = (Math.random()*2.8)+'s';
+    skyStars.appendChild(s);
+  }
+
+  function say(t) {
+    bubble.className = '';
+    setTimeout(function(){ bubble.innerHTML = t; bubble.className = 'show'; }, 220);
+  }
+  function hideBubble(){ bubble.className = ''; }
+  function drop(emoji, count, ms) {
+    var n = 0;
+    var t = setInterval(function(){
+      var e = document.createElement('div');
+      e.className = 'fall'; e.textContent = emoji;
+      e.style.left = (5 + Math.random()*90) + '%';
+      e.style.fontSize = (22 + Math.random()*16) + 'px';
+      e.style.animationDuration = (2.4 + Math.random()*1.6) + 's';
+      document.body.appendChild(e);
+      setTimeout(function(){ if (e.parentNode) e.parentNode.removeChild(e); }, 4400);
+      if (++n >= count) clearInterval(t);
+    }, ms);
+  }
+
+  function winCenter(el) {
+    var r = el.getBoundingClientRect();
+    return { x: r.left + r.width/2, y: r.top + r.height*0.25 };
+  }
+
+  /* quadratic-bezier flight */
+  function flyArc(node, from, to, peakY, dur, cb) {
+    var t0 = null;
+    node.style.opacity = '1';
+    function frame(ts) {
+      if (!t0) t0 = ts;
+      var p = (ts - t0) / dur;
+      if (p > 1) p = 1;
+      var x = from.x + (to.x - from.x) * p;
+      var y = (1-p)*(1-p)*from.y + 2*(1-p)*p*peakY + p*p*to.y;
+      var rot = (to.x > from.x ? 1 : -1) * p * 20;
+      node.style.transform = 'translate(' + (x - 20) + 'px,' + (y - 20) + 'px) rotate(' + rot + 'deg)';
+      if (p < 1) requestAnimationFrame(frame);
+      else { node.style.opacity = '0'; cb && cb(); }
+    }
+    requestAnimationFrame(frame);
+  }
+  function makeFlyer(cls, html) {
+    var d = document.createElement('div');
+    d.className = 'flying ' + cls;
+    d.innerHTML = html;
+    document.body.appendChild(d);
+    return d;
+  }
+
+  var steps = [
+    function () {
+      say('two cities. 500 km apart.<br>one moon. one very dramatic bunny 🐰');
+    },
+    function () { // message exchange
+      hideBubble();
+      var m1 = makeFlyer('msgBubble', 'you awake? 👀');
+      flyArc(m1, winCenter(winL), winCenter(winR), window.innerHeight*0.24, 1600, function () {
+        setTimeout(function () {
+          var m2 = makeFlyer('msgBubble', 'obviously. can\'t sleep 🙄💗');
+          flyArc(m2, winCenter(winR), winCenter(winL), window.innerHeight*0.24, 1600, function () {
+            say('their wifi bill: high 📶<br>their hearts: higher 💗');
+          });
+        }, 500);
+      });
+    },
+    function () { // sign gag
+      sign.className = 'show';
+      say('he made a sign ✍️<br>(rewrote it 3 times.<br>spelling is hard when you\'re in love)');
+    },
+    function () { // squish gag
+      sign.className = '';
+      bunL.setAttribute('class','bunny squish');
+      say('*presses face on the glass* 🐰<br>"this is legally the closest<br>I can get right now" 😭');
+    },
+    function () { // look at moon
+      bunL.setAttribute('class','bunny lookup');
+      bunR.setAttribute('class','bunny lookup');
+      document.body.className = 'moonglow';
+      say('"okay, do the thing.<br>look at the moon. right now." 🌙');
+    },
+    function () {
+      say('"see? if we\'re both looking at it...<br>we\'re basically looking<br>at each other" 😌🌙');
+    },
+    function () { // THE ASK
+      say('"one more thing before we sleep..."<br><b style="font-size:19px">should I send my heart over? 💗</b>');
+      titleT.textContent = 'Air delivery request 🚀';
+      subT.textContent = 'weight: everything · destination: her';
+      hint.style.display = 'none';
+      btns.className = 'show';
+    }
+  ];
+
+  var idx = 0, busy = false;
+  function next() {
+    if (idx >= steps.length) return;
+    busy = true;
+    steps[idx++]();
+    setTimeout(function(){ busy = false; }, 900);
+  }
+  document.body.addEventListener('click', function () {
+    if (btns.className === 'show' || finale.className === 'show') return;
+    if (busy) return;
+    next();
+  });
+
+  /* "too far" escalation: failed delivery attempts */
+  var tries = 0;
+  btnFar.addEventListener('click', function (e) {
+    e.stopPropagation();
+    tries++;
+    if (tries === 1) { // paper plane flops
+      var pl = makeFlyer('planeFly', '✈️');
+      var from = winCenter(winL);
+      var mid = { x: window.innerWidth*0.5, y: window.innerHeight*0.62 };
+      flyArc(pl, from, mid, window.innerHeight*0.3, 1400, function(){});
+      say('"fine, paper plane then—" ✈️<br>*plane nosedives at halfway* 💀<br>"...aerodynamics has betrayed me"');
+    } else if (tries === 2) { // pigeon gets distracted
+      var pg2 = makeFlyer('planeFly', '🕊️');
+      var from2 = winCenter(winL);
+      var off = { x: window.innerWidth*0.6, y: -80 };
+      flyArc(pg2, from2, off, window.innerHeight*0.18, 1600, function(){});
+      say('"okay, delivery pigeon—" 🕊️<br>*pigeon sees a samosa and leaves* 🥲<br>"unbelievable."');
+    } else {
+      say('"there\'s only ONE courier<br>that never fails" 💗😤');
+      btnFar.textContent = 'fine... use the heart 💗';
+      btnFar.style.background = 'linear-gradient(135deg,#ff9db6,#f0608a)';
+      btnFar.style.color = '#4d0f28';
+      btnFar.style.border = 'none';
+      btnFar.onclick = function (ev) { ev.stopPropagation(); launch(); };
+    }
+  });
+
+  /* the heart launch */
+  function launch() {
+    btns.className = '';
+    hideBubble();
+    var h = makeFlyer('bigHeart', '💗');
+    flyArc(h, winCenter(winL), winCenter(winR), window.innerHeight*0.06, 2200, function () {
+      document.body.className = 'moonglow pinkglow moonheart';
+      bunL.setAttribute('class','bunny happy blushing');
+      bunR.setAttribute('class','bunny happy blushing');
+      drop('💗', 16, 120); drop('✨', 12, 170); drop('🌙', 5, 340);
+      say('*heart received* 💗<br>*even the moon is blushing now* 🌙<br>delivery time: instant. always.');
+      titleT.textContent = 'Distance: defeated 💗';
+      subT.textContent = 'love > kilometers';
+      setTimeout(function(){ finale.className = 'show'; }, 3600);
+    });
+  }
+  btnGo.addEventListener('click', function (e) { e.stopPropagation(); launch(); });
+
+  document.getElementById('replayBtn').addEventListener('click', function(){ location.reload(); });
+
+  setTimeout(next, 1000);
+})();
+</script>
+</body>
+</html>

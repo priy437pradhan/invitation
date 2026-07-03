@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ananya ♥ Arjun — Wedding Invitation</title>
+<meta property="og:title" content="Ananya ♥ Arjun — You're Invited!">
+<meta property="og:description" content="Join us as we tie the knot. Tap to open our invitation.">
+<meta property="og:image" content="couple-walk.png">
+
+<!-- ============================================================
+     EDIT HERE ✏️  — everything you need to change is in this page:
+     1. Names        → search "Ananya" and "Arjun"
+     2. Wedding date → search "DATA-WEDDING-DATE" (countdown) and the
+                       date text in the Save-the-Date section
+     3. Events       → search "EVENTS TIMELINE"
+     4. Venue + map  → search "VENUE"
+     5. RSVP number  → search "wa.me"
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Baloo+2:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --blush:#FFEDF2;        /* page background */
+  --blush-deep:#FFDCE7;
+  --rani:#D23B4E;         /* deep rani red */
+  --rani-dark:#A92238;
+  --gold:#DCA435;
+  --gold-soft:#F2D18B;
+  --cream:#FFFBF4;
+  --ink:#4A2B36;
+  --script:'Great Vibes',cursive;
+  --body:'Baloo 2',system-ui,sans-serif;
+  --serif:'Cormorant Garamond',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  color:var(--ink);
+  background:linear-gradient(180deg,var(--blush) 0%,#FFF3F0 35%,var(--blush-deep) 70%,var(--blush) 100%);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ---------- ambient layers (clouds / hearts / birds / petals) ---------- */
+.sky{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.cloud{position:absolute;opacity:.9;animation:drift linear infinite}
+@keyframes drift{
+  from{transform:translateX(-30vw)}
+  to{transform:translateX(130vw)}
+}
+.floatheart{position:absolute;bottom:-40px;font-size:18px;color:var(--rani);opacity:0;animation:rise linear infinite}
+@keyframes rise{
+  0%{transform:translateY(0) scale(.6) rotate(-8deg);opacity:0}
+  10%{opacity:.55}
+  90%{opacity:.35}
+  100%{transform:translateY(-110vh) scale(1.15) rotate(10deg);opacity:0}
+}
+.petal{position:absolute;top:-30px;width:14px;height:14px;border-radius:14px 0;background:linear-gradient(135deg,#FFB7C9,#F27D9B);opacity:.85;animation:fall linear infinite}
+@keyframes fall{
+  0%{transform:translateY(-5vh) translateX(0) rotate(0deg)}
+  50%{transform:translateY(50vh) translateX(6vw) rotate(200deg)}
+  100%{transform:translateY(110vh) translateX(-4vw) rotate(420deg)}
+}
+.bird{position:absolute;animation:fly linear infinite}
+.bird svg{animation:flap .5s ease-in-out infinite alternate;transform-origin:center}
+@keyframes fly{
+  from{transform:translateX(-15vw) translateY(0)}
+  50%{transform:translateX(55vw) translateY(-4vh)}
+  to{transform:translateX(120vw) translateY(1vh)}
+}
+@keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.75)}}
+
+/* tap burst hearts */
+.burst{position:fixed;pointer-events:none;z-index:60;font-size:20px;animation:burst .9s ease-out forwards}
+@keyframes burst{
+  0%{transform:translate(0,0) scale(.4);opacity:1}
+  100%{transform:translate(var(--dx),var(--dy)) scale(1.2);opacity:0}
+}
+
+/* ---------- layout ---------- */
+main{position:relative;z-index:1}
+section{
+  min-height:100svh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:64px 22px;text-align:center;position:relative;
+}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}
+
+.eyebrow{
+  font-size:13px;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--rani);font-weight:600;
+}
+.script{font-family:var(--script);color:var(--rani-dark);line-height:1.1}
+h1.script{font-size:clamp(52px,13vw,96px);font-weight:400}
+h2.script{font-size:clamp(40px,9vw,64px);font-weight:400;margin-bottom:8px}
+.amp{display:inline-block;color:var(--gold);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+
+.couple-img{
+  width:min(78vw,340px);height:auto;border-radius:28px;
+  filter:drop-shadow(0 18px 30px rgba(210,59,78,.22));
+}
+.bob{animation:bob 4.5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-14px) rotate(1.2deg)}}
+.frame{
+  position:relative;display:inline-block;padding:14px;border-radius:36px;
+  background:radial-gradient(circle at 30% 20%,#fff 0%,var(--cream) 60%,#FFE6D9 100%);
+  box-shadow:0 20px 44px rgba(169,34,56,.16),inset 0 0 0 3px var(--gold-soft);
+}
+.frame::after{
+  content:"❀";position:absolute;top:-14px;right:-6px;font-size:30px;color:var(--gold);
+  animation:spinflower 8s linear infinite;
+}
+@keyframes spinflower{to{transform:rotate(360deg)}}
+
+.lead{font-size:clamp(16px,4vw,19px);max-width:34ch;margin:14px auto 0;line-height:1.65;font-weight:500}
+.serif{font-family:var(--serif);font-size:clamp(18px,4.6vw,22px);font-style:italic;color:var(--rani-dark)}
+
+/* scalloped section divider */
+.scallop{width:100%;height:26px;margin-top:auto;
+  background:radial-gradient(circle at 12px -6px,transparent 16px,var(--gold-soft) 17px,var(--gold-soft) 19px,transparent 20px) repeat-x;
+  background-size:24px 26px;opacity:.55}
+
+/* scroll hint */
+.hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:26px;color:var(--rani);animation:hintbob 1.6s ease-in-out infinite;text-decoration:none}
+@keyframes hintbob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
+
+/* countdown */
+.count{display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.count div{
+  background:var(--cream);border:2px dashed var(--gold);border-radius:18px;
+  min-width:72px;padding:12px 10px;box-shadow:0 8px 18px rgba(220,164,53,.18);
+}
+.count b{display:block;font-size:30px;color:var(--rani);line-height:1}
+.count span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--ink)}
+
+/* date card */
+.datecard{
+  margin-top:22px;background:var(--cream);border-radius:26px;padding:26px 34px;
+  box-shadow:0 16px 36px rgba(169,34,56,.14),inset 0 0 0 3px var(--blush-deep);
+  position:relative;
+}
+.datecard::before,.datecard::after{content:"💍";position:absolute;top:-16px;font-size:26px}
+.datecard::before{left:-10px;transform:rotate(-20deg)}
+.datecard::after{right:-10px;transform:rotate(20deg)}
+.datecard .big{font-size:clamp(30px,8vw,44px);font-weight:700;color:var(--rani)}
+.datecard .sub{font-family:var(--serif);font-style:italic;font-size:18px;margin-top:4px}
+
+/* events timeline */
+.timeline{margin-top:34px;display:flex;flex-direction:column;gap:0;width:min(92vw,420px);text-align:left}
+.event{display:flex;gap:16px;position:relative;padding-bottom:30px}
+.event:last-child{padding-bottom:0}
+.event::before{content:"";position:absolute;left:23px;top:50px;bottom:2px;width:3px;border-left:3px dotted var(--gold)}
+.event:last-child::before{display:none}
+.emoji{
+  width:48px;height:48px;flex:0 0 48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--cream);box-shadow:0 6px 14px rgba(210,59,78,.18),inset 0 0 0 2px var(--gold-soft);
+  font-size:22px;
+}
+.event .txt b{display:block;font-size:18px;color:var(--rani-dark)}
+.event .txt span{font-size:14.5px;line-height:1.5;display:block;color:#6B4450}
+
+/* venue + rsvp buttons */
+.btnrow{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.btn{
+  font-family:var(--body);font-weight:600;font-size:16px;text-decoration:none;
+  padding:14px 26px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.btn:active{transform:scale(.95)}
+.btn-red{background:linear-gradient(135deg,var(--rani),var(--rani-dark));color:#fff;box-shadow:0 12px 26px rgba(169,34,56,.32)}
+.btn-gold{background:var(--cream);color:var(--rani-dark);box-shadow:inset 0 0 0 2px var(--gold),0 10px 22px rgba(220,164,53,.2)}
+
+/* footer */
+footer{position:relative;z-index:1;text-align:center;padding:34px 20px 46px;font-size:14px;color:#8A5A68}
+footer .script{font-size:34px;display:block;margin-bottom:6px}
+
+@media (prefers-reduced-motion:reduce){
+  .cloud,.floatheart,.petal,.bird,.bird svg,.bob,.amp,.hint,.frame::after{animation:none!important}
+  .reveal{transition:none;opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ambient sky layer (filled by JS) -->
+<div class="sky" id="sky"></div>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section id="hero">
+    <p class="eyebrow reveal">Together with our families</p>
+    <h1 class="script reveal d1">Ananya <span class="amp">&</span> Arjun</h1>
+    <div class="frame reveal d2" style="margin-top:22px">
+      <img class="couple-img bob" src="images/couple-walk.png" alt="Bride leading the groom, both smiling">
+    </div>
+    <p class="lead reveal d3">are tying the knot — and the celebration wouldn't be complete without <b>you</b> 💕</p>
+    <a class="hint" href="#save" aria-label="Scroll down">⌄</a>
+  </section>
+
+  <!-- ================= SAVE THE DATE ================= -->
+  <section id="save">
+    <p class="eyebrow reveal">Save the date</p>
+    <h2 class="script reveal d1">We're getting married!</h2>
+    <div class="datecard reveal d2">
+      <div class="big">Sunday · 22 Nov 2026</div>
+      <div class="sub">Muhurat at 7:45 PM</div>
+    </div>
+    <!-- DATA-WEDDING-DATE: change the date below (YYYY-MM-DDTHH:MM) -->
+    <div class="count reveal d3" id="count" data-date="2026-11-22T19:45:00">
+      <div><b id="cd">0</b><span>days</span></div>
+      <div><b id="ch">0</b><span>hours</span></div>
+      <div><b id="cm">0</b><span>mins</span></div>
+      <div><b id="cs">0</b><span>secs</span></div>
+    </div>
+    <div class="frame reveal d3" style="margin-top:34px">
+      <img class="couple-img bob" src="images/couple-smile.png" alt="Couple smiling together" style="animation-delay:1.2s">
+    </div>
+  </section>
+
+  <!-- ================= EVENTS TIMELINE ================= -->
+  <section id="events">
+    <p class="eyebrow reveal">The celebrations</p>
+    <h2 class="script reveal d1">Four days of love</h2>
+    <div class="timeline">
+      <div class="event reveal"><div class="emoji">💛</div><div class="txt"><b>Haldi</b><span>Thu, 19 Nov · 10:00 AM<br>At the bride's residence</span></div></div>
+      <div class="event reveal d1"><div class="emoji">🌿</div><div class="txt"><b>Mehendi</b><span>Fri, 20 Nov · 4:00 PM<br>Garden Lawn, Hotel Grand</span></div></div>
+      <div class="event reveal d2"><div class="emoji">🎶</div><div class="txt"><b>Sangeet</b><span>Sat, 21 Nov · 7:00 PM<br>Banquet Hall, Hotel Grand</span></div></div>
+      <div class="event reveal d3"><div class="emoji">💍</div><div class="txt"><b>Wedding & Reception</b><span>Sun, 22 Nov · 7:45 PM onwards<br>Bhubaneswar Convention Centre</span></div></div>
+    </div>
+    <div class="frame reveal d3" style="margin-top:38px">
+      <img class="couple-img bob" src="images/couple-lift.png" alt="Groom lifting the bride joyfully" style="animation-delay:.6s">
+    </div>
+  </section>
+
+  <!-- ================= VENUE + RSVP ================= -->
+  <section id="venue">
+    <p class="eyebrow reveal">Venue</p>
+    <h2 class="script reveal d1">Meet us here</h2>
+    <p class="serif reveal d1" style="margin-top:6px">Bhubaneswar Convention Centre<br>Nayapalli, Bhubaneswar, Odisha</p>
+    <div class="btnrow reveal d2">
+      <a class="btn btn-red" href="https://maps.google.com/?q=Bhubaneswar+Convention+Centre" target="_blank" rel="noopener">📍 Open in Maps</a>
+      <a class="btn btn-gold" href="https://wa.me/919999999999?text=We%20would%20love%20to%20attend%20your%20wedding!%20%F0%9F%92%95" target="_blank" rel="noopener">💌 RSVP on WhatsApp</a>
+    </div>
+    <div class="frame reveal d3" style="margin-top:38px">
+      <img class="couple-img bob" src="images/couple-sit.png" alt="Couple seated in wedding attire" style="animation-delay:2s">
+    </div>
+    <p class="lead reveal d3">Your presence is the greatest gift.<br>With love & blessings from both families 🙏</p>
+    <div class="scallop"></div>
+  </section>
+
+</main>
+
+<footer>
+  <span class="script">Ananya &amp; Arjun</span>
+  #AnnuWedsArjun · 22.11.2026<br>
+  <small style="opacity:.75">psst… tap anywhere to send us some love 💗</small>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var sky = document.getElementById("sky");
+
+  /* ---------- clouds ---------- */
+  function cloudSVG(w){
+    return '<svg width="'+w+'" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+      '<ellipse cx="40" cy="42" rx="34" ry="16" fill="#FFFFFF"/>'+
+      '<ellipse cx="70" cy="34" rx="30" ry="18" fill="#FFF7FA"/>'+
+      '<ellipse cx="92" cy="44" rx="24" ry="13" fill="#FFFFFF"/></svg>';
+  }
+  /* ---------- little bird ---------- */
+  function birdSVG(){
+    return '<svg width="34" height="26" viewBox="0 0 34 26"><path d="M2 14 Q10 2 17 12 Q24 2 32 14" stroke="#A92238" stroke-width="3" fill="none" stroke-linecap="round"/></svg>';
+  }
+
+  if(!reduce){
+    var i, el;
+    for(i=0;i<4;i++){
+      el=document.createElement("div"); el.className="cloud";
+      el.style.top=(5+i*18)+"%";
+      el.style.animationDuration=(50+i*22)+"s";
+      el.style.animationDelay=(-i*17)+"s";
+      el.innerHTML=cloudSVG(90+i*40);
+      sky.appendChild(el);
+    }
+    var heartChars=["💗","💕","♥","💖","🩷"];
+    for(i=0;i<10;i++){
+      el=document.createElement("div"); el.className="floatheart";
+      el.style.left=(4+Math.random()*92)+"%";
+      el.style.fontSize=(13+Math.random()*14)+"px";
+      el.style.animationDuration=(9+Math.random()*9)+"s";
+      el.style.animationDelay=(Math.random()*12)+"s";
+      el.textContent=heartChars[i%heartChars.length];
+      sky.appendChild(el);
+    }
+    for(i=0;i<12;i++){
+      el=document.createElement("div"); el.className="petal";
+      el.style.left=(Math.random()*100)+"%";
+      el.style.animationDuration=(8+Math.random()*8)+"s";
+      el.style.animationDelay=(Math.random()*10)+"s";
+      el.style.transform="scale("+(0.6+Math.random()*0.8)+")";
+      sky.appendChild(el);
+    }
+    for(i=0;i<2;i++){
+      el=document.createElement("div"); el.className="bird";
+      el.style.top=(8+i*10)+"%";
+      el.style.animationDuration=(26+i*14)+"s";
+      el.style.animationDelay=(-i*11)+"s";
+      el.innerHTML=birdSVG();
+      sky.appendChild(el);
+    }
+  }
+
+  /* ---------- scroll reveal ---------- */
+  var reveals=document.querySelectorAll(".reveal");
+  if("IntersectionObserver" in window && !reduce){
+    var io=new IntersectionObserver(function(entries){
+      for(var j=0;j<entries.length;j++){
+        if(entries[j].isIntersecting){
+          entries[j].target.className+=" in";
+          io.unobserve(entries[j].target);
+        }
+      }
+    },{threshold:0.18});
+    for(var k=0;k<reveals.length;k++){ io.observe(reveals[k]); }
+  }else{
+    for(var m=0;m<reveals.length;m++){ reveals[m].className+=" in"; }
+  }
+
+  /* ---------- countdown ---------- */
+  var countEl=document.getElementById("count");
+  var target=new Date(countEl.getAttribute("data-date")).getTime();
+  function pad(n){ return n<10 ? "0"+n : ""+n; }
+  function tick(){
+    var diff=target-Date.now();
+    if(diff<0){ diff=0; }
+    var d=Math.floor(diff/86400000),
+        h=Math.floor(diff%86400000/3600000),
+        mi=Math.floor(diff%3600000/60000),
+        s=Math.floor(diff%60000/1000);
+    document.getElementById("cd").textContent=d;
+    document.getElementById("ch").textContent=pad(h);
+    document.getElementById("cm").textContent=pad(mi);
+    document.getElementById("cs").textContent=pad(s);
+  }
+  tick(); setInterval(tick,1000);
+
+  /* ---------- tap / touch heart burst ---------- */
+  function burst(x,y){
+    if(reduce){ return; }
+    var chars=["💗","💕","✨","🌸","♥"];
+    for(var j=0;j<6;j++){
+      var h=document.createElement("span");
+      h.className="burst";
+      h.textContent=chars[j%chars.length];
+      var ang=(Math.PI*2/6)*j + Math.random();
+      h.style.left=x+"px"; h.style.top=y+"px";
+      h.style.setProperty("--dx",(Math.cos(ang)*(50+Math.random()*40))+"px");
+      h.style.setProperty("--dy",(Math.sin(ang)*(50+Math.random()*40)-30)+"px");
+      document.body.appendChild(h);
+      (function(node){ setTimeout(function(){ if(node.parentNode){node.parentNode.removeChild(node);} },950); })(h);
+    }
+  }
+  document.addEventListener("click",function(e){
+    if(e.target.closest && e.target.closest("a")){ return; }
+    burst(e.clientX,e.clientY);
+  });
+})();
+</script>
+</body>
+</html>

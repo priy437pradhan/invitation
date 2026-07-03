@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ananya ♥ Arjun — A Royal Night</title>
+<meta property="og:title" content="Ananya ♥ Arjun — The Royal Wedding 👑">
+<meta property="og:image" content="couple-smile.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Great+Vibes&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B1130; --navy2:#161F4A; --gold:#E3B94E; --gold2:#F6DE9C; --rose:#E8798F; --mist:#C9D3F5;
+  --disp:'Cinzel',serif; --script:'Great Vibes',cursive; --body:'Jost',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--mist);overflow-x:hidden;
+  background:radial-gradient(140% 70% at 50% 0%,var(--navy2) 0%,var(--navy) 60%,#060A20 100%) fixed}
+
+.sky{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;animation:twk ease-in-out infinite}
+@keyframes twk{0%,100%{opacity:.15}50%{opacity:1}}
+canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:2}
+
+/* rising sky lanterns */
+.lantern{position:absolute;bottom:-70px;width:26px;height:36px;border-radius:10px 10px 14px 14px;
+  background:linear-gradient(180deg,#FFD98A,#F49B45);box-shadow:0 0 26px 8px rgba(255,190,100,.4);
+  opacity:0;animation:lant linear infinite}
+.lantern::after{content:"";position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);width:10px;height:6px;background:#B45E1E;border-radius:0 0 4px 4px}
+@keyframes lant{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:.95}55%{transform:translateY(-55vh) translateX(4vw)}95%{opacity:.5}100%{transform:translateY(-115vh) translateX(-2vw);opacity:0}}
+.burst{position:fixed;pointer-events:none;z-index:60;font-size:20px;animation:bs .9s ease-out forwards}
+@keyframes bs{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.2);opacity:0}}
+
+main{position:relative;z-index:3}
+section{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 22px;text-align:center}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}
+
+.eyebrow{font-size:11px;letter-spacing:.46em;text-transform:uppercase;font-weight:600;color:var(--gold)}
+h1,h2{font-family:var(--disp);font-weight:700;color:var(--gold2);letter-spacing:.06em}
+h1{font-size:clamp(26px,6.6vw,46px);margin-top:12px}
+h2{font-size:clamp(22px,5.8vw,36px);margin-top:10px}
+.script{font-family:var(--script);font-weight:400;font-size:clamp(52px,13vw,92px);color:#fff;line-height:1}
+.orn{color:var(--gold);letter-spacing:.5em;margin-top:14px;font-size:14px}
+.lead{font-size:clamp(15px,3.9vw,17px);max-width:36ch;margin:16px auto 0;line-height:1.8;color:var(--mist)}
+
+/* mandala arch hero */
+.arch{position:relative;margin-top:26px;width:min(80vw,330px)}
+.arch svg{position:absolute;left:50%;top:-8%;transform:translateX(-50%);width:118%;z-index:-1;opacity:.9}
+.arch img{width:100%;border-radius:200px 200px 26px 26px;border:2px solid var(--gold);
+  box-shadow:0 0 0 8px rgba(227,185,78,.12),0 26px 60px rgba(0,0,0,.6)}
+
+.card{margin-top:24px;border:1px solid rgba(227,185,78,.6);border-radius:6px;padding:28px 34px;position:relative;background:rgba(255,255,255,.03)}
+.card::before{content:"";position:absolute;inset:6px;border:1px solid rgba(227,185,78,.35);border-radius:3px;pointer-events:none}
+.card .big{font-family:var(--disp);font-size:clamp(24px,6.2vw,36px);color:var(--gold2);letter-spacing:.06em}
+.card .sub{font-size:13px;margin-top:8px;letter-spacing:.34em;text-transform:uppercase;color:var(--mist)}
+.count{display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+.count div{border:1px solid rgba(227,185,78,.55);border-radius:4px;min-width:70px;padding:12px 8px;background:rgba(0,0,0,.3)}
+.count b{display:block;font-family:var(--disp);font-size:26px;color:var(--gold2);line-height:1}
+.count span{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#9AA7D8}
+
+.timeline{margin-top:30px;width:min(92vw,420px);text-align:left}
+.event{display:flex;gap:16px;position:relative;padding-bottom:28px}
+.event:last-child{padding-bottom:0}
+.event::before{content:"";position:absolute;left:22px;top:52px;bottom:2px;border-left:1px solid rgba(227,185,78,.45)}
+.event:last-child::before{display:none}
+.emoji{width:46px;height:46px;flex:0 0 46px;border-radius:4px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--gold);background:rgba(0,0,0,.35);margin-top:2px}
+.emoji span{transform:rotate(-45deg);font-size:19px}
+.event b{display:block;font-family:var(--disp);font-size:15px;color:var(--gold2);letter-spacing:.14em}
+.event .txt span{font-size:13.5px;line-height:1.6;color:#B9C4EE}
+
+.couple-img{width:min(70vw,290px);border-radius:18px;border:1px solid rgba(227,185,78,.7);box-shadow:0 22px 50px rgba(0,0,0,.6)}
+.bob{animation:bob 5.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+.btnrow{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.btn{font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:15px 28px;border-radius:4px;display:inline-flex;gap:8px;transition:transform .18s}
+.btn:active{transform:scale(.95)}
+.btn-g{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#0B1130;box-shadow:0 16px 34px rgba(227,185,78,.3)}
+.btn-o{border:1px solid var(--gold);color:var(--gold2)}
+.hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-size:26px;color:var(--gold);animation:hint 1.6s ease-in-out infinite;text-decoration:none}
+@keyframes hint{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
+footer{position:relative;z-index:3;text-align:center;padding:36px 20px 50px;color:#8B98CC;font-size:12px;letter-spacing:.2em}
+footer .script{font-size:52px;display:block;color:#fff}
+@media (prefers-reduced-motion:reduce){.star,.lantern,.bob,.hint{animation:none!important}canvas#fx{display:none}.reveal{transition:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="sky" id="sky"></div>
+<canvas id="fx"></canvas>
+<main>
+
+<section id="hero" data-stop>
+  <p class="eyebrow reveal">By the grace of the almighty</p>
+  <div class="script reveal d1" style="margin-top:14px">Ananya &amp; Arjun</div>
+  <h1 class="reveal d1">REQUEST THE HONOUR<br>OF YOUR PRESENCE</h1>
+  <div class="orn reveal d1">✦ ✦ ✦</div>
+  <div class="arch reveal d2">
+    <svg viewBox="0 0 200 130"><g fill="none" stroke="#E3B94E" stroke-width="1" opacity=".8">
+      <path d="M14 130 A86 86 0 0 1 186 130"/><path d="M24 130 A76 76 0 0 1 176 130" stroke-dasharray="3 4"/>
+      <path d="M34 130 A66 66 0 0 1 166 130"/>
+      <circle cx="100" cy="34" r="5"/><circle cx="52" cy="58" r="3.4"/><circle cx="148" cy="58" r="3.4"/>
+      <circle cx="26" cy="96" r="3.4"/><circle cx="174" cy="96" r="3.4"/>
+    </g></svg>
+    <img src="couple-smile.png" alt="The royal couple">
+  </div>
+  <p class="lead reveal d3">at the wedding of their beloved children — a night of lanterns, lights &amp; a lifetime of love 🏮</p>
+  <a class="hint" href="#save">⌄</a>
+</section>
+
+<section id="save" data-stop>
+  <p class="eyebrow reveal">Save the date</p>
+  <h2 class="reveal d1">THE AUSPICIOUS EVENING</h2>
+  <div class="card reveal d2">
+    <div class="big">SUNDAY · 22 NOV 2026</div>
+    <div class="sub">Muhurat · 7:45 PM</div>
+  </div>
+  <div class="count reveal d3" id="count" data-date="2026-11-22T19:45:00">
+    <div><b id="cd">0</b><span>days</span></div>
+    <div><b id="ch">0</b><span>hrs</span></div>
+    <div><b id="cm">0</b><span>min</span></div>
+    <div><b id="cs">0</b><span>sec</span></div>
+  </div>
+  <img class="couple-img bob reveal d3" style="margin-top:34px" src="couple-sit.png" alt="Couple seated in finery">
+</section>
+
+<section id="events" data-stop>
+  <p class="eyebrow reveal">The celebrations</p>
+  <h2 class="reveal d1">FOUR ROYAL NIGHTS</h2>
+  <div class="timeline">
+    <div class="event reveal"><div class="emoji"><span>💛</span></div><div class="txt"><b>HALDI</b><span>Thu, 19 Nov · 10:00 AM<br>Bride's residence</span></div></div>
+    <div class="event reveal d1"><div class="emoji"><span>🌿</span></div><div class="txt"><b>MEHENDI</b><span>Fri, 20 Nov · 4:00 PM<br>Garden Lawn, Hotel Grand</span></div></div>
+    <div class="event reveal d2"><div class="emoji"><span>🎶</span></div><div class="txt"><b>SANGEET</b><span>Sat, 21 Nov · 7:00 PM<br>Banquet Hall, Hotel Grand</span></div></div>
+    <div class="event reveal d3"><div class="emoji"><span>👑</span></div><div class="txt"><b>WEDDING</b><span>Sun, 22 Nov · 7:45 PM<br>Bhubaneswar Convention Centre</span></div></div>
+  </div>
+</section>
+
+<section id="venue" data-stop>
+  <p class="eyebrow reveal">Venue</p>
+  <h2 class="reveal d1">JOIN THE ROYAL PROCESSION</h2>
+  <p class="lead reveal d1">Bhubaneswar Convention Centre<br>Nayapalli, Bhubaneswar, Odisha</p>
+  <div class="btnrow reveal d2">
+    <a class="btn btn-g" href="https://maps.google.com/?q=Bhubaneswar+Convention+Centre" target="_blank" rel="noopener">📍 Maps</a>
+    <a class="btn btn-o" href="https://wa.me/919999999999?text=We%20shall%20attend!%20%F0%9F%91%91" target="_blank" rel="noopener">💌 RSVP</a>
+  </div>
+  <img class="couple-img bob reveal d3" style="margin-top:34px;animation-delay:1s" src="couple-walk.png" alt="Couple walking">
+  <p class="lead reveal d3">Your presence will make our night truly royal 🙏</p>
+</section>
+
+</main>
+<footer data-stop><span class="script">Ananya &amp; Arjun</span>#ANNUWEDSARJUN · 22.11.2026<br><small style="opacity:.7">tap the night sky for fireworks 🎆</small></footer>
+
+<script>
+(function(){
+"use strict";
+var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var sky=document.getElementById("sky"),i,el;
+for(i=0;i<70;i++){el=document.createElement("div");el.className="star";
+  el.style.left=(Math.random()*100)+"%";el.style.top=(Math.random()*100)+"%";
+  el.style.animationDuration=(1.4+Math.random()*3)+"s";el.style.animationDelay=(Math.random()*3)+"s";
+  el.style.transform="scale("+(0.5+Math.random()*1.4)+")";sky.appendChild(el);}
+if(!reduce){
+  for(i=0;i<5;i++){el=document.createElement("div");el.className="lantern";
+    el.style.left=(8+Math.random()*84)+"%";
+    el.style.animationDuration=(14+Math.random()*10)+"s";el.style.animationDelay=(Math.random()*14)+"s";
+    el.style.transform="scale("+(0.7+Math.random()*0.7)+")";sky.appendChild(el);}
+}
+/* fireworks canvas */
+var cv=document.getElementById("fx"),ctx=cv.getContext("2d"),parts=[];
+function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
+resize();window.addEventListener("resize",resize);
+function boom(x,y){
+  var colors=["#F6DE9C","#E3B94E","#E8798F","#9FB4FF","#FFFFFF"];
+  var n=26+Math.floor(Math.random()*14);
+  for(var j=0;j<n;j++){var a=Math.PI*2*j/n+Math.random()*.2,s=2+Math.random()*3.4;
+    parts.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:1,c:colors[j%colors.length]});}
+}
+function loop(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  for(var j=parts.length-1;j>=0;j--){var p=parts[j];
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.045;p.vx*=.985;p.life-=.016;
+    if(p.life<=0){parts.splice(j,1);continue;}
+    ctx.globalAlpha=Math.max(p.life,0);ctx.fillStyle=p.c;
+    ctx.beginPath();ctx.arc(p.x,p.y,2.1,0,Math.PI*2);ctx.fill();}
+  ctx.globalAlpha=1;requestAnimationFrame(loop);
+}
+if(!reduce){
+  loop();
+  setInterval(function(){boom(cv.width*(0.15+Math.random()*0.7),cv.height*(0.08+Math.random()*0.3));},2600);
+  setTimeout(function(){boom(cv.width*0.3,cv.height*0.18);boom(cv.width*0.72,cv.height*0.14);},900);
+}
+/* reveal */
+var rs=document.querySelectorAll(".reveal");
+if("IntersectionObserver" in window&&!reduce){
+  var io=new IntersectionObserver(function(es){for(var j=0;j<es.length;j++){if(es[j].isIntersecting){es[j].target.className+=" in";io.unobserve(es[j].target);}}},{threshold:0.18});
+  for(i=0;i<rs.length;i++){io.observe(rs[i]);}
+}else{for(i=0;i<rs.length;i++){rs[i].className+=" in";}}
+/* countdown */
+var target=new Date(document.getElementById("count").getAttribute("data-date")).getTime();
+function pad(n){return n<10?"0"+n:""+n;}
+function tick(){var d=target-Date.now();if(d<0)d=0;
+  document.getElementById("cd").textContent=Math.floor(d/86400000);
+  document.getElementById("ch").textContent=pad(Math.floor(d%86400000/3600000));
+  document.getElementById("cm").textContent=pad(Math.floor(d%3600000/60000));
+  document.getElementById("cs").textContent=pad(Math.floor(d%60000/1000));}
+tick();setInterval(tick,1000);
+/* tap = firework */
+document.addEventListener("click",function(e){if(e.target.closest&&e.target.closest("a"))return;if(!reduce)boom(e.clientX,e.clientY);});
+window.reelIntro=function(){
+  boom(cv.width*0.3,cv.height*0.2);
+  setTimeout(function(){boom(cv.width*0.7,cv.height*0.16);},420);
+  setTimeout(function(){boom(cv.width*0.5,cv.height*0.28);},840);
+  return new Promise(function(r){setTimeout(r,1500);});
+};
+})();
+</script>
+</body>
+</html>

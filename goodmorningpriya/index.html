@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Good morning, Priya ☀️</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { height:100%; overflow:hidden; }
+  body {
+    font-family:'Baloo 2','Segoe UI',system-ui,sans-serif;
+    position:fixed; width:100%;
+    background:linear-gradient(180deg,#9fd3ea 0%,#ffd9a8 48%,#ffb987 78%,#ff9e7d 100%);
+    -webkit-user-select:none; user-select:none;
+  }
+
+  #sun {
+    position:absolute; left:50%; top:34%; z-index:1;
+    width:86px; height:86px; margin-left:-43px; border-radius:50%;
+    background:radial-gradient(circle at 42% 38%,#fff6cf,#ffce56 75%);
+    box-shadow:0 0 0 16px rgba(255,206,86,.18), 0 0 70px 30px rgba(255,206,86,.45);
+    transform:translateY(120px);
+    transition:transform 8s ease-out;
+  }
+  body.risen #sun { transform:translateY(-40px); }
+
+  .cloudline {
+    position:absolute; z-index:2; font-size:52px; opacity:.85;
+    animation:drift linear infinite;
+  }
+  @keyframes drift { from{transform:translateX(-120px);} to{transform:translateX(110vw);} }
+
+  .bird { position:absolute; z-index:2; font-size:20px; animation:drift 26s linear infinite; }
+
+  .ground {
+    position:absolute; bottom:0; left:0; right:0; height:15%; z-index:5;
+    background:linear-gradient(180deg,#f7c489 0%,#e8a768 100%);
+    border-radius:50% 50% 0 0 / 26px 26px 0 0;
+  }
+
+  .title {
+    position:absolute; top:7%; left:0; right:0; text-align:center; z-index:7;
+    color:#6b4423; padding:0 24px; text-shadow:0 2px 10px rgba(255,240,200,.8);
+  }
+  .title h1 { font-size:clamp(25px,7vw,36px); font-weight:800; }
+  .title p  { font-size:15px; opacity:.85; font-weight:500; margin-top:2px; }
+
+  /* ---------- puppy ---------- */
+  #petBox {
+    position:absolute; bottom:10.5%; left:0; width:170px; z-index:10;
+    transform:translateX(0);
+    transition:transform 2.6s cubic-bezier(.45,.05,.45,1);
+    will-change:transform;
+  }
+  #petInner { width:100%; transform-origin:50% 94%; }
+  #pet { width:100%; display:block; overflow:visible; filter:drop-shadow(0 8px 8px rgba(120,60,20,.3)); }
+
+  /* character-internal life */
+  .breath { animation:breath 3.2s ease-in-out infinite; transform-origin:110px 150px; }
+  @keyframes breath { 0%,100%{transform:scale(1,1);} 50%{transform:scale(1.02,.985);} }
+  .tail { transform-box:fill-box; transform-origin:8% 90%; animation:wagslow 1.6s ease-in-out infinite; }
+  @keyframes wagslow { 0%,100%{transform:rotate(0);} 50%{transform:rotate(14deg);} }
+  #pet.wagfast .tail { animation:wagfast .22s ease-in-out infinite; }
+  @keyframes wagfast { 0%,100%{transform:rotate(-10deg);} 50%{transform:rotate(26deg);} }
+  .eyesOpen { transform-box:fill-box; transform-origin:center; animation:blink 4.5s infinite; }
+  @keyframes blink { 0%,93%,100%{transform:scaleY(1);} 96%{transform:scaleY(.08);} }
+  .eyesClosed { display:none; }
+  #pet.asleep .eyesOpen { display:none; }
+  #pet.asleep .eyesClosed { display:block; }
+  #pet.asleep .tail { animation:none; }
+  .zzz { opacity:0; font-weight:800; font-family:'Baloo 2',sans-serif; }
+  #pet.asleep .zzz { animation:zfloat 2.4s ease-in-out infinite; }
+  @keyframes zfloat {
+    0%{opacity:0; transform:translateY(6px);} 30%{opacity:1;}
+    100%{opacity:0; transform:translateY(-16px);}
+  }
+  #pet.blushing .blush { opacity:.65; }
+  .tongue { transform-box:fill-box; transform-origin:top; animation:pant 1s ease-in-out infinite; }
+  @keyframes pant { 0%,100%{transform:scaleY(.85);} 50%{transform:scaleY(1.1);} }
+
+  /* container states */
+  .stretchy  { animation:stretchy 1.5s ease-in-out 1; }
+  @keyframes stretchy {
+    0%,100%{transform:scale(1,1);} 35%{transform:scale(1.18,.82) translateY(10px);}
+    70%{transform:scale(.94,1.1) translateY(-8px);}
+  }
+  .excited   { animation:excited .5s ease-in-out infinite; }
+  @keyframes excited {
+    0%,100%{transform:translateY(0) rotate(-2deg);}
+    50%{transform:translateY(-22px) rotate(3deg);}
+  }
+  .walking   { animation:trot .4s ease-in-out infinite; }
+  @keyframes trot { 0%,100%{transform:translateY(0) rotate(-2deg);} 50%{transform:translateY(-8px) rotate(2deg);} }
+  .spin      { animation:spin 1s linear 2; }
+  @keyframes spin { to{transform:rotate(360deg);} }
+  .flop      { animation:flop .8s ease-in 1 forwards; }
+  @keyframes flop {
+    0%{transform:rotate(0);} 60%{transform:rotate(84deg) translateY(6px);}
+    75%{transform:rotate(78deg);} 100%{transform:rotate(82deg) translateY(8px);}
+  }
+  .popup     { animation:popup .5s cubic-bezier(.34,1.56,.64,1) 1; }
+  @keyframes popup { 0%{transform:rotate(82deg);} 100%{transform:rotate(0);} }
+  .happyjump { animation:hjump .55s ease-in-out infinite; }
+  @keyframes hjump {
+    0%,100%{transform:translateY(0) scale(1,1);} 30%{transform:translateY(0) scale(1.08,.9);}
+    60%{transform:translateY(-30px) scale(.94,1.08) rotate(4deg);}
+  }
+  .faceleft #pet { transform:scaleX(-1); }
+
+  /* ---------- bubble / hint / buttons / fall / finale ---------- */
+  #bubble {
+    position:absolute; z-index:20; left:50%; bottom:44%;
+    transform:translateX(-50%) scale(0); transform-origin:50% 100%;
+    max-width:78vw; background:#fffdf7; color:#6b4423;
+    border-radius:20px; padding:13px 17px;
+    font-size:17px; font-weight:700; line-height:1.35; text-align:center;
+    box-shadow:0 10px 26px rgba(120,60,20,.35);
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  #bubble.show { transform:translateX(-50%) scale(1); }
+  #bubble:after {
+    content:''; position:absolute; bottom:-11px; left:50%; margin-left:-11px;
+    border-left:11px solid transparent; border-right:11px solid transparent;
+    border-top:13px solid #fffdf7;
+  }
+  #hint {
+    position:absolute; bottom:4%; left:0; right:0; text-align:center; z-index:7;
+    color:#7a4a20; opacity:.75; font-size:13px; font-weight:600;
+    animation:hintpulse 1.6s ease-in-out infinite;
+  }
+  @keyframes hintpulse { 0%,100%{opacity:.35;} 50%{opacity:.85;} }
+
+  #btns {
+    position:absolute; bottom:5%; left:0; right:0; z-index:30;
+    display:none; flex-direction:column; gap:12px; align-items:center; padding:0 30px;
+  }
+  #btns.show { display:flex; }
+  .btn {
+    width:100%; max-width:320px; border:none; border-radius:50px;
+    font-family:inherit; font-size:18px; font-weight:800; padding:15px 20px;
+    cursor:pointer; box-shadow:0 8px 20px rgba(120,60,20,.4);
+    transition:transform .12s ease;
+  }
+  .btn:active { transform:scale(.95); }
+  #btnHug   { background:linear-gradient(135deg,#ffb84d,#ff8558); color:#5a2c10; }
+  #btnSnooze{ background:rgba(255,255,255,.5); color:#7a4a20; border:2px solid rgba(122,74,32,.4);
+              font-size:15px; padding:12px 20px; max-width:260px;
+              transition:transform .3s ease, opacity .3s ease; }
+
+  .fall {
+    position:absolute; top:-60px; z-index:8; font-size:28px;
+    animation:falldown linear 1 forwards; pointer-events:none;
+  }
+  @keyframes falldown {
+    0%{transform:translateY(0) rotate(0);opacity:1;} 90%{opacity:1;}
+    100%{transform:translateY(110vh) rotate(340deg);opacity:0;}
+  }
+
+  #finale {
+    position:absolute; inset:0; z-index:40; display:none;
+    align-items:center; justify-content:center; padding:26px;
+    background:rgba(120,70,20,.35); backdrop-filter:blur(3px);
+  }
+  #finale.show { display:flex; }
+  .card {
+    background:#fffdf7; border-radius:26px; padding:30px 24px; text-align:center;
+    max-width:340px; width:100%; color:#6b4423;
+    box-shadow:0 20px 50px rgba(90,44,16,.5);
+    animation:cardpop .5s cubic-bezier(.34,1.56,.64,1) 1;
+  }
+  @keyframes cardpop { 0%{transform:scale(.6);opacity:0;} 100%{transform:scale(1);opacity:1;} }
+  .card .big { font-size:52px; line-height:1; }
+  .card h2 { font-size:23px; font-weight:800; margin:10px 0 6px; color:#e07b39; }
+  .card p  { font-size:16px; font-weight:600; line-height:1.45; }
+  .card small { display:block; margin-top:14px; font-size:13px; opacity:.6; font-weight:600; }
+  .replay { margin-top:18px; background:#ffb84d; border:none; border-radius:40px;
+            font-family:inherit; font-weight:800; font-size:15px; padding:11px 26px;
+            color:#5a2c10; cursor:pointer; box-shadow:0 6px 14px rgba(90,44,16,.35); }
+</style>
+</head>
+<body>
+
+  <div id="sun"></div>
+  <div class="cloudline" style="top:10%; animation-duration:46s; animation-delay:-8s;">☁️</div>
+  <div class="cloudline" style="top:20%; font-size:40px; animation-duration:60s; animation-delay:-30s;">☁️</div>
+  <div class="bird" style="top:14%; animation-delay:-4s;">🕊️</div>
+  <div class="bird" style="top:18%; animation-delay:-16s; font-size:16px;">🕊️</div>
+  <div class="ground"></div>
+
+  <div class="title">
+    <h1 id="titleText">Good morning, Priya ☀️</h1>
+    <p id="subText">shhh... someone is still sleeping</p>
+  </div>
+
+  <div id="petBox">
+    <div id="petInner">
+      <svg id="pet" class="asleep" viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
+        <g class="breath">
+          <path class="tail" d="M166 140 q30 -6 32 -36" fill="none" stroke="#5b4636" stroke-width="8" stroke-linecap="round"/>
+          <ellipse cx="112" cy="142" rx="58" ry="42" fill="#fffaf3" stroke="#5b4636" stroke-width="5"/>
+          <ellipse cx="88"  cy="180" rx="15" ry="9" fill="#fffaf3" stroke="#5b4636" stroke-width="4.5"/>
+          <ellipse cx="138" cy="180" rx="15" ry="9" fill="#fffaf3" stroke="#5b4636" stroke-width="4.5"/>
+          <g class="headG">
+            <path d="M68 36 q-26 4 -20 46 q2 16 17 11 q11 -4 11 -19" fill="#eccfa9" stroke="#5b4636" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M152 36 q26 4 20 46 q-2 16 -17 11 q-11 -4 -11 -19" fill="#eccfa9" stroke="#5b4636" stroke-width="5" stroke-linejoin="round"/>
+            <circle cx="110" cy="72" r="48" fill="#fffaf3" stroke="#5b4636" stroke-width="5"/>
+            <circle cx="129" cy="62" r="15" fill="#eccfa9" opacity=".85"/>
+            <g class="eyesOpen">
+              <circle cx="93"  cy="66" r="5.5" fill="#3a2b20"/>
+              <circle cx="128" cy="66" r="5.5" fill="#3a2b20"/>
+              <circle cx="95"  cy="64" r="1.8" fill="#fff"/>
+              <circle cx="130" cy="64" r="1.8" fill="#fff"/>
+            </g>
+            <g class="eyesClosed">
+              <path d="M87 67 q6 5 12 0"  stroke="#3a2b20" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M122 67 q6 5 12 0" stroke="#3a2b20" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </g>
+            <ellipse cx="111" cy="85" rx="8" ry="6" fill="#3a2b20"/>
+            <path d="M111 91 q0 8 -8 9 M111 91 q0 8 8 9" stroke="#3a2b20" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <path class="tongue" d="M104 100 q7 13 14 0 z" fill="#f28b94" stroke="#5b4636" stroke-width="3" stroke-linejoin="round"/>
+            <circle class="blush" cx="74"  cy="84" r="8" fill="#f6a8a0" opacity="0"/>
+            <circle class="blush" cx="148" cy="84" r="8" fill="#f6a8a0" opacity="0"/>
+          </g>
+        </g>
+        <text class="zzz" x="168" y="34" font-size="24" fill="#5b4636">z z Z</text>
+      </svg>
+    </div>
+  </div>
+
+  <div id="bubble"></div>
+  <div id="hint">tap anywhere to continue ▸</div>
+
+  <div id="btns">
+    <button class="btn" id="btnHug">One morning hug 🤗</button>
+    <button class="btn" id="btnSnooze">5 more minutes 😴</button>
+  </div>
+
+  <div id="finale">
+    <div class="card">
+      <div class="big">🤗💛</div>
+      <h2>HUG RECEIVED!</h2>
+      <p id="finaleMsg">Day officially started ☀️<br>Go be amazing, Priya — I'll be right here wagging till you're back 🐶💛</p>
+      <small>— your morning alarm puppy 🐾</small>
+      <button class="replay" id="replayBtn">Replay 🔁</button>
+    </div>
+  </div>
+
+<script>
+(function () {
+  var petBox   = document.getElementById('petBox');
+  var petInner = document.getElementById('petInner');
+  var pet      = document.getElementById('pet');
+  var bubble   = document.getElementById('bubble');
+  var hint     = document.getElementById('hint');
+  var btns     = document.getElementById('btns');
+  var btnHug   = document.getElementById('btnHug');
+  var btnSnooze= document.getElementById('btnSnooze');
+  var finale   = document.getElementById('finale');
+  var titleT   = document.getElementById('titleText');
+  var subT     = document.getElementById('subText');
+
+  var W = function(){ return window.innerWidth; };
+  var petW = 170;
+
+  function setAnim(cls) {
+    petInner.className = '';
+    void petInner.offsetWidth;
+    if (cls) petInner.className = cls;
+  }
+  function movePet(xPercent, secs) {
+    var x = (W()*xPercent/100) - petW/2;
+    petBox.style.transitionDuration = secs + 's';
+    petBox.style.transform = 'translateX(' + x + 'px)';
+  }
+  function say(t) {
+    bubble.className = '';
+    setTimeout(function(){ bubble.innerHTML = t; bubble.className = 'show'; }, 220);
+  }
+  function hideBubble(){ bubble.className = ''; }
+  function drop(emoji, count, ms) {
+    var n = 0;
+    var t = setInterval(function(){
+      var e = document.createElement('div');
+      e.className = 'fall'; e.textContent = emoji;
+      e.style.left = (5 + Math.random()*90) + '%';
+      e.style.fontSize = (22 + Math.random()*16) + 'px';
+      e.style.animationDuration = (2.2 + Math.random()*1.6) + 's';
+      document.body.appendChild(e);
+      setTimeout(function(){ if (e.parentNode) e.parentNode.removeChild(e); }, 4200);
+      if (++n >= count) clearInterval(t);
+    }, ms);
+  }
+
+  // start: puppy asleep center
+  movePet(50, 0.01);
+
+  var steps = [
+    function () {
+      document.body.className = 'risen';
+      say('shhh... someone set an alarm for<br><b>"whenever Priya wakes up"</b> ⏰');
+    },
+    function () { // wake up
+      pet.setAttribute('class','');
+      setAnim('stretchy');
+      say('*YAAAWN* 🥱 ...wait.<br>WAIT. IS IT MORNING?! 🌞');
+    },
+    function () {
+      pet.setAttribute('class','wagfast');
+      setAnim('excited');
+      say('PRIYA!! IT\'S MORNING AND<br>YOU EXIST!! BEST DAY EVER!! 🐶💛');
+    },
+    function () { // fetch run
+      setAnim('walking');
+      hideBubble();
+      movePet(88, 1.3);
+      setTimeout(function(){
+        petBox.className = 'faceleft';
+        movePet(50, 1.3);
+        setTimeout(function(){
+          petBox.className = '';
+          setAnim('');
+          drop('☕', 6, 200); drop('🥐', 6, 260);
+          say('I fetched you breakfast! ☕🥐<br>(okay... emoji breakfast. budget issue 😅)');
+        }, 1400);
+      }, 1400);
+    },
+    function () { // tail chase
+      setAnim('spin');
+      say('sorry— one sec— the tail was<br><b>RIGHT THERE</b> 😤🌀');
+    },
+    function () { // THE ASK
+      pet.setAttribute('class','wagfast');
+      setAnim('');
+      say('Before you start your busy day...<br><b style="font-size:20px">can I have ONE morning hug? 🤗</b>');
+      titleT.textContent = 'Hug o\'clock 🤗';
+      subT.textContent = 'warning: snoozing has consequences';
+      hint.style.display = 'none';
+      btns.className = 'show';
+    }
+  ];
+
+  var idx = 0, busy = false;
+  function next() {
+    if (idx >= steps.length) return;
+    busy = true;
+    steps[idx++]();
+    setTimeout(function(){ busy = false; }, 700);
+  }
+  document.body.addEventListener('click', function () {
+    if (btns.className === 'show' || finale.className === 'show') return;
+    if (busy) return;
+    next();
+  });
+
+  /* snooze escalation */
+  var snoozes = 0;
+  var snoozeLines = [
+    'fine, 5 minutes... 😴<br>⏰ <b>DING!</b> that was 5 minutes. Hug time 🐶',
+    'okay 2 more minutes... 😴<br>⏰ <b>DING DING!</b> puppy patience: 3% 🐶',
+    'THE SNOOZE MACHINE IS BROKEN 🐾<br>hug is now mandatory 😤'
+  ];
+  btnSnooze.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (snoozes >= snoozeLines.length) return;
+    pet.setAttribute('class','asleep');
+    setAnim('flop');
+    hideBubble();
+    setTimeout(function(){
+      pet.setAttribute('class','wagfast');
+      setAnim('popup');
+      say(snoozeLines[snoozes]);
+      snoozes++;
+      var sc = 1 - snoozes*0.18;
+      btnSnooze.style.transform = 'scale(' + sc + ')';
+      if (snoozes === snoozeLines.length) {
+        btnSnooze.textContent = 'snooze denied by puppy 🐾';
+        btnSnooze.disabled = true;
+        btnSnooze.style.opacity = '.45';
+      }
+    }, 1400);
+  });
+
+  /* hug! */
+  btnHug.addEventListener('click', function (e) {
+    e.stopPropagation();
+    btns.className = '';
+    hideBubble();
+    pet.setAttribute('class','wagfast blushing');
+    setAnim('happyjump');
+    drop('💛', 18, 110); drop('🧡', 10, 170); drop('☀️', 6, 280);
+    say('HUG DETECTED!! 🤗💥<br>tail speed: MAXIMUM 🐶');
+    titleT.textContent = 'Best. Morning. Ever. 💛';
+    subT.textContent = 'powered by one Priya hug';
+    setTimeout(function(){ finale.className = 'show'; }, 3200);
+  });
+
+  document.getElementById('replayBtn').addEventListener('click', function(){ location.reload(); });
+
+  setTimeout(next, 1200);
+})();
+</script>
+</body>
+</html>

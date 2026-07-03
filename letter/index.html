@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ananya ♥ Arjun — A Letter For You</title>
+<meta property="og:title" content="You've received a love letter 💌">
+<meta property="og:image" content="couple-walk.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --kraft:#EFE2CB; --paper:#FDF8EE; --paper2:#F6EDDA; --rose:#B94A5E; --rose2:#8E3040;
+  --ink:#4B3A2F; --sepia:#7A6450; --wax:#A32638;
+  --script:'Dancing Script',cursive; --body:'EB Garamond',serif; --hand:'Caveat',cursive;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--ink);overflow-x:hidden;
+  background:
+    radial-gradient(circle at 18% 12%,rgba(185,74,94,.07),transparent 40%),
+    radial-gradient(circle at 84% 70%,rgba(185,74,94,.06),transparent 40%),
+    repeating-linear-gradient(0deg,rgba(122,100,80,.035) 0 1px,transparent 1px 26px),
+    var(--kraft)}
+
+/* petals */
+.sky{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.petal{position:absolute;top:-30px;width:13px;height:13px;border-radius:13px 0;background:linear-gradient(135deg,#E7A2AF,#B94A5E);opacity:.8;animation:fall linear infinite}
+@keyframes fall{0%{transform:translateY(-5vh) translateX(0) rotate(0)}50%{transform:translateY(50vh) translateX(6vw) rotate(200deg)}100%{transform:translateY(110vh) translateX(-4vw) rotate(420deg)}}
+.burst{position:fixed;pointer-events:none;z-index:60;font-size:20px;animation:bs .9s ease-out forwards}
+@keyframes bs{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.2);opacity:0}}
+
+main{position:relative;z-index:1}
+section{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 22px;text-align:center}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}
+
+.eyebrow{font-size:12px;letter-spacing:.36em;text-transform:uppercase;color:var(--rose);font-weight:500}
+h1.script,h2.script{font-family:var(--script);color:var(--rose2);line-height:1.15;font-weight:700}
+h1.script{font-size:clamp(44px,11vw,76px)}
+h2.script{font-size:clamp(36px,9vw,58px);margin-top:6px}
+.lead{font-size:clamp(16px,4.2vw,19px);max-width:36ch;margin:14px auto 0;line-height:1.75}
+.hand{font-family:var(--hand);font-size:clamp(21px,5.4vw,27px);color:var(--sepia);line-height:1.5}
+
+/* ============ ENVELOPE ============ */
+.envwrap{margin-top:26px;perspective:1200px;position:relative}
+.envelope{position:relative;width:min(86vw,360px);height:min(60vw,250px)}
+.env-back,.env-front{position:absolute;inset:0;border-radius:10px}
+.env-back{background:linear-gradient(180deg,#D9C6A3,#CBB58D);box-shadow:0 26px 60px rgba(75,58,47,.35)}
+.env-front{background:linear-gradient(180deg,#E5D2AE 0%,#D9C6A3 100%);z-index:3;
+  clip-path:polygon(0 100%,100% 100%,100% 22%,50% 62%,0 22%);border-radius:0 0 10px 10px}
+.flap{position:absolute;left:0;right:0;top:0;height:62%;z-index:4;transform-origin:top center;
+  background:linear-gradient(180deg,#CDB98F,#C0AA7E);
+  clip-path:polygon(0 0,100% 0,50% 100%);border-radius:10px 10px 0 0;
+  transition:transform 1s cubic-bezier(.6,0,.3,1),z-index 0s .5s}
+.open .flap{transform:rotateX(180deg);z-index:1}
+.seal{position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);z-index:6;width:74px;height:74px;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#C94B5E,var(--wax) 55%,#7E1B2B 100%);
+  box-shadow:0 8px 20px rgba(126,27,43,.5),inset 0 -4px 8px rgba(0,0,0,.28);
+  display:flex;align-items:center;justify-content:center;color:#F3D9B8;font-family:var(--script);font-size:27px;font-weight:700;
+  transition:opacity .5s,transform .5s}
+.open .seal{opacity:0;transform:translate(-50%,-50%) scale(1.5)}
+.letter{position:absolute;left:5%;right:5%;top:6%;bottom:8%;z-index:2;border-radius:8px;background:var(--paper);
+  box-shadow:0 10px 26px rgba(75,58,47,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  transition:transform 1.1s .55s cubic-bezier(.2,.8,.2,1)}
+.open .letter{transform:translateY(-72%)}
+.letter img{width:56%;border-radius:12px}
+.letter .lnames{font-family:var(--script);font-size:clamp(26px,7vw,36px);color:var(--rose2);font-weight:700}
+.tapopen{margin-top:28px;font-family:var(--hand);font-size:22px;color:var(--rose2);background:none;border:none;cursor:pointer;
+  animation:pulse 1.8s ease-in-out infinite;transition:opacity .5s}
+.open ~ .tapopen,.envwrap.open .tapopen{opacity:0;pointer-events:none}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.stamp{position:absolute;top:-16px;right:-10px;z-index:7;width:58px;height:68px;background:var(--paper);padding:5px;transform:rotate(6deg);
+  box-shadow:0 6px 14px rgba(75,58,47,.3);
+  -webkit-mask:radial-gradient(circle 5px,transparent 96%,#000) -5px -5px/16px 16px}
+.stamp .in{width:100%;height:100%;background:linear-gradient(160deg,#E7A2AF,#B94A5E);display:flex;align-items:center;justify-content:center;font-size:24px}
+.postmark{position:absolute;top:-6px;right:44px;z-index:8;width:74px;height:74px;border:2px solid rgba(75,58,47,.5);border-radius:50%;
+  transform:rotate(-14deg);display:flex;align-items:center;justify-content:center;text-align:center;
+  font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(75,58,47,.65);line-height:1.5}
+
+/* paper cards */
+.paper{margin-top:24px;background:var(--paper);border-radius:6px;padding:30px 34px;position:relative;
+  box-shadow:0 3px 0 var(--paper2),0 20px 40px rgba(75,58,47,.22)}
+.paper::before{content:"";position:absolute;inset:8px;border:1px dashed rgba(185,74,94,.45);border-radius:3px;pointer-events:none}
+.paper .big{font-size:clamp(26px,7vw,40px);font-weight:500;color:var(--rose2);letter-spacing:.02em}
+.paper .sub{font-style:italic;font-size:17px;margin-top:6px;color:var(--sepia)}
+.count{display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+.count div{background:var(--paper);border-radius:6px;min-width:70px;padding:12px 8px;box-shadow:0 2px 0 var(--paper2),0 10px 22px rgba(75,58,47,.18)}
+.count b{display:block;font-size:28px;color:var(--rose);line-height:1}
+.count span{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--sepia)}
+
+.timeline{margin-top:30px;width:min(92vw,420px);text-align:left}
+.event{display:flex;gap:16px;position:relative;padding-bottom:28px}
+.event:last-child{padding-bottom:0}
+.event::before{content:"";position:absolute;left:22px;top:50px;bottom:2px;border-left:2px dotted rgba(185,74,94,.55)}
+.event:last-child::before{display:none}
+.emoji{width:46px;height:46px;flex:0 0 46px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--paper);box-shadow:0 6px 14px rgba(75,58,47,.22);font-size:20px}
+.event b{display:block;font-size:18px;color:var(--rose2)}
+.event span{font-size:14.5px;line-height:1.55;color:var(--sepia)}
+
+.photo{padding:12px 12px 40px;background:var(--paper);display:inline-block;transform:rotate(-2.4deg);
+  box-shadow:0 18px 40px rgba(75,58,47,.28);position:relative}
+.photo.r{transform:rotate(2deg)}
+.photo img{width:min(66vw,270px);display:block}
+.photo .cap{position:absolute;left:0;right:0;bottom:8px;font-family:var(--hand);font-size:20px;color:var(--sepia)}
+.tape{position:absolute;top:-12px;left:50%;transform:translateX(-50%) rotate(-3deg);width:92px;height:26px;
+  background:rgba(233,214,167,.85);box-shadow:0 2px 5px rgba(75,58,47,.2)}
+.bob{animation:bob 5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2.4deg)}50%{transform:translateY(-11px) rotate(-1.4deg)}}
+.bob.r{animation-name:bobr}
+@keyframes bobr{0%,100%{transform:translateY(0) rotate(2deg)}50%{transform:translateY(-11px) rotate(1.2deg)}}
+
+.btnrow{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.btn{font-family:var(--body);font-weight:500;font-size:16px;text-decoration:none;padding:14px 28px;border-radius:999px;display:inline-flex;gap:8px;transition:transform .18s}
+.btn:active{transform:scale(.95)}
+.btn-r{background:linear-gradient(135deg,#C95C70,var(--rose2));color:#FDF8EE;box-shadow:0 14px 30px rgba(142,48,64,.35)}
+.btn-o{border:1.5px solid var(--rose);color:var(--rose2)}
+.hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-size:26px;color:var(--rose);animation:hint 1.6s ease-in-out infinite;text-decoration:none}
+@keyframes hint{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
+footer{position:relative;z-index:1;text-align:center;padding:36px 20px 50px;color:var(--sepia);font-size:14px}
+footer .script{font-family:var(--script);font-size:44px;display:block;color:var(--rose2);font-weight:700}
+@media (prefers-reduced-motion:reduce){.petal,.bob,.tapopen,.hint{animation:none!important}.reveal{transition:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="sky" id="sky"></div>
+<main>
+
+<section id="hero" data-stop>
+  <p class="eyebrow reveal">You've got mail</p>
+  <h1 class="script reveal d1">A letter, sealed<br>with love</h1>
+  <div class="envwrap reveal d2" id="envwrap">
+    <div class="envelope" id="envelope">
+      <div class="env-back"></div>
+      <div class="letter">
+        <img src="couple-walk.png" alt="The couple">
+        <div class="lnames">Ananya &amp; Arjun</div>
+        <div class="hand" style="font-size:19px">22 · 11 · 2026</div>
+      </div>
+      <div class="env-front"></div>
+      <div class="flap"></div>
+      <div class="seal">A&amp;A</div>
+      <div class="stamp"><div class="in">💌</div></div>
+      <div class="postmark">Bhubaneswar · 2026 ·</div>
+    </div>
+    <button class="tapopen" id="tapopen">~ tap the seal to open ~</button>
+  </div>
+  <a class="hint" href="#note">⌄</a>
+</section>
+
+<section id="note" data-stop>
+  <p class="eyebrow reveal">From our hearts</p>
+  <h2 class="script reveal d1">Dearest you,</h2>
+  <div class="paper reveal d2" style="max-width:420px;text-align:left">
+    <p class="hand" id="note-text">Some stories are written by the stars — ours was written over cutting chai, shared playlists &amp; a hundred little moments. Now we're writing the biggest chapter yet, and it simply cannot begin without you. ♥</p>
+    <p class="hand" style="text-align:right;margin-top:14px">— Annu &amp; Arjun</p>
+  </div>
+  <div class="photo bob reveal d3" style="margin-top:36px"><div class="tape"></div><img src="couple-smile.png" alt="Couple smiling"><div class="cap">us, ridiculously happy ♥</div></div>
+</section>
+
+<section id="save" data-stop>
+  <p class="eyebrow reveal">Save the date</p>
+  <h2 class="script reveal d1">Mark your calendar</h2>
+  <div class="paper reveal d2">
+    <div class="big">Sunday · 22 Nov 2026</div>
+    <div class="sub">muhurat at 7:45 in the evening</div>
+  </div>
+  <div class="count reveal d3" id="count" data-date="2026-11-22T19:45:00">
+    <div><b id="cd">0</b><span>days</span></div>
+    <div><b id="ch">0</b><span>hrs</span></div>
+    <div><b id="cm">0</b><span>min</span></div>
+    <div><b id="cs">0</b><span>sec</span></div>
+  </div>
+</section>
+
+<section id="events" data-stop>
+  <p class="eyebrow reveal">The celebrations</p>
+  <h2 class="script reveal d1">Chapter by chapter</h2>
+  <div class="timeline">
+    <div class="event reveal"><div class="emoji">💛</div><div><b>Haldi</b><span>Thu, 19 Nov · 10:00 AM — Bride's residence</span></div></div>
+    <div class="event reveal d1"><div class="emoji">🌿</div><div><b>Mehendi</b><span>Fri, 20 Nov · 4:00 PM — Garden Lawn, Hotel Grand</span></div></div>
+    <div class="event reveal d2"><div class="emoji">🎶</div><div><b>Sangeet</b><span>Sat, 21 Nov · 7:00 PM — Banquet Hall, Hotel Grand</span></div></div>
+    <div class="event reveal d3"><div class="emoji">💍</div><div><b>Wedding</b><span>Sun, 22 Nov · 7:45 PM — Bhubaneswar Convention Centre</span></div></div>
+  </div>
+  <div class="photo r bob r reveal d3" style="margin-top:36px"><div class="tape"></div><img src="couple-lift.png" alt="Groom lifting bride"><div class="cap">he still can't believe it 😄</div></div>
+</section>
+
+<section id="venue" data-stop>
+  <p class="eyebrow reveal">Venue</p>
+  <h2 class="script reveal d1">Address on the envelope</h2>
+  <p class="lead reveal d1">Bhubaneswar Convention Centre<br>Nayapalli, Bhubaneswar, Odisha</p>
+  <div class="btnrow reveal d2">
+    <a class="btn btn-r" href="https://maps.google.com/?q=Bhubaneswar+Convention+Centre" target="_blank" rel="noopener">📍 Open in Maps</a>
+    <a class="btn btn-o" href="https://wa.me/919999999999?text=Replying%20to%20your%20lovely%20letter%20%E2%80%94%20we're%20coming!%20%F0%9F%92%8C" target="_blank" rel="noopener">💌 RSVP</a>
+  </div>
+  <div class="photo bob reveal d3" style="margin-top:36px"><div class="tape"></div><img src="couple-sit.png" alt="Couple seated"><div class="cap">forever starts 22.11.26 ♥</div></div>
+  <p class="lead reveal d3">P.S. — your presence is the only gift we're wishing for 🙏</p>
+</section>
+
+</main>
+<footer data-stop><span class="script">Ananya &amp; Arjun</span>#AnnuWedsArjun · 22.11.2026<br><small style="opacity:.75">tap anywhere to send petals 🌸</small></footer>
+
+<script>
+(function(){
+"use strict";
+var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var sky=document.getElementById("sky"),i,el;
+if(!reduce){
+  for(i=0;i<12;i++){el=document.createElement("div");el.className="petal";
+    el.style.left=(Math.random()*100)+"%";
+    el.style.animationDuration=(9+Math.random()*8)+"s";el.style.animationDelay=(Math.random()*10)+"s";
+    el.style.transform="scale("+(0.6+Math.random()*0.8)+")";sky.appendChild(el);}
+}
+/* envelope open */
+var env=document.getElementById("envelope"),wrapEl=document.getElementById("envwrap");
+function openEnv(){if(env.className.indexOf("open")<0){env.className+=" open";wrapEl.className+=" open";}}
+document.getElementById("tapopen").addEventListener("click",function(e){e.stopPropagation();openEnv();});
+env.addEventListener("click",function(e){e.stopPropagation();openEnv();});
+/* reveal */
+var rs=document.querySelectorAll(".reveal");
+if("IntersectionObserver" in window&&!reduce){
+  var io=new IntersectionObserver(function(es){for(var j=0;j<es.length;j++){if(es[j].isIntersecting){es[j].target.className+=" in";io.unobserve(es[j].target);}}},{threshold:0.18});
+  for(i=0;i<rs.length;i++){io.observe(rs[i]);}
+}else{for(i=0;i<rs.length;i++){rs[i].className+=" in";}}
+/* countdown */
+var target=new Date(document.getElementById("count").getAttribute("data-date")).getTime();
+function pad(n){return n<10?"0"+n:""+n;}
+function tick(){var d=target-Date.now();if(d<0)d=0;
+  document.getElementById("cd").textContent=Math.floor(d/86400000);
+  document.getElementById("ch").textContent=pad(Math.floor(d%86400000/3600000));
+  document.getElementById("cm").textContent=pad(Math.floor(d%3600000/60000));
+  document.getElementById("cs").textContent=pad(Math.floor(d%60000/1000));}
+tick();setInterval(tick,1000);
+/* tap petals burst */
+function burst(x,y){if(reduce)return;var cs=["🌸","💌","🌹","✨","💗"];
+  for(var j=0;j<6;j++){var h=document.createElement("span");h.className="burst";h.textContent=cs[j%cs.length];
+    var a=Math.PI*2/6*j+Math.random();h.style.left=x+"px";h.style.top=y+"px";
+    h.style.setProperty("--dx",(Math.cos(a)*(50+Math.random()*40))+"px");
+    h.style.setProperty("--dy",(Math.sin(a)*(50+Math.random()*40)-30)+"px");
+    document.body.appendChild(h);
+    (function(n){setTimeout(function(){if(n.parentNode)n.parentNode.removeChild(n);},950);})(h);}}
+document.addEventListener("click",function(e){if(e.target.closest&&e.target.closest("a"))return;burst(e.clientX,e.clientY);});
+/* reel: auto open the envelope */
+window.reelIntro=function(){
+  return new Promise(function(r){
+    setTimeout(openEnv,900);
+    setTimeout(r,3100);
+  });
+};
+})();
+</script>
+</body>
+</html>

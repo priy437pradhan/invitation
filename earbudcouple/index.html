@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>One earbud each 🎧</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { height:100%; overflow:hidden; }
+  body {
+    font-family:'Baloo 2','Segoe UI',system-ui,sans-serif;
+    position:fixed; width:100%;
+    background:linear-gradient(180deg,#1c0f30 0%,#33194d 42%,#5c2b5c 72%,#8a4459 100%);
+    -webkit-user-select:none; user-select:none;
+  }
+
+  .star { position:absolute; background:#f0e6ff; border-radius:50%; z-index:1;
+          animation:twinkle 3s ease-in-out infinite; }
+  @keyframes twinkle { 0%,100%{opacity:.15;} 50%{opacity:.9;} }
+
+  /* skyline behind the ledge */
+  .tower {
+    position:absolute; bottom:13%; z-index:3;
+    background:linear-gradient(180deg,#191029 0%,#120a1f 100%);
+    border-radius:5px 5px 0 0;
+  }
+  .lit { position:absolute; width:16%; height:5%;
+         background:#f4c96b; opacity:.4; border-radius:2px;
+         box-shadow:0 0 6px rgba(244,201,107,.5); }
+
+  /* ---------- rooftop scene ---------- */
+  #stage {
+    position:absolute; bottom:6.5%; left:50%; z-index:10;
+    width:min(94vw,430px); transform:translateX(-50%);
+  }
+  #scene { width:100%; display:block; overflow:visible;
+           filter:drop-shadow(0 8px 14px rgba(8,2,20,.55)); }
+
+  /* string lights */
+  .bulb { transform-box:fill-box; transform-origin:top center; animation:bulbglow 2.4s ease-in-out infinite; }
+  @keyframes bulbglow { 0%,100%{opacity:.55;} 50%{opacity:1;} }
+
+  /* leg swings */
+  .legB1 { transform-box:fill-box; transform-origin:top center; animation:swing 2.2s ease-in-out infinite; }
+  .legB2 { transform-box:fill-box; transform-origin:top center; animation:swing 2.2s ease-in-out -1.1s infinite; }
+  .legG1 { transform-box:fill-box; transform-origin:top center; animation:swing 2.6s ease-in-out -0.7s infinite; }
+  .legG2 { transform-box:fill-box; transform-origin:top center; animation:swing 2.6s ease-in-out -2s infinite; }
+  @keyframes swing { 0%,100%{transform:rotate(5deg);} 50%{transform:rotate(-6deg);} }
+  svg.sync .legB1, svg.sync .legG1 { animation:swing 2.2s ease-in-out infinite; }
+  svg.sync .legB2, svg.sync .legG2 { animation:swing 2.2s ease-in-out -1.1s infinite; }
+
+  /* blinking */
+  .eyesB { transform-box:fill-box; transform-origin:center; animation:blink 4.6s infinite; }
+  .eyesG { transform-box:fill-box; transform-origin:center; animation:blink 5.4s 1.3s infinite; }
+  @keyframes blink { 0%,93%,100%{transform:scaleY(1);} 96%{transform:scaleY(.1);} }
+  .happyB, .happyG { display:none; }
+  svg.happy .eyesB, svg.happy .eyesG { display:none; }
+  svg.happy .happyB, svg.happy .happyG { display:block; }
+
+  /* boy arm offering earbud */
+  #boyArm { transform-box:fill-box; transform-origin:8% 20%; transition:transform 1.1s ease; }
+  svg.offer #boyArm { transform:rotate(-58deg); }
+
+  /* girl wire + earbud appear after accepting */
+  #wireG, #budG { opacity:0; transition:opacity .8s ease; }
+  svg.connected #wireG, svg.connected #budG { opacity:1; }
+
+  /* head states */
+  #headB { transform-box:fill-box; transform-origin:50% 95%; transition:transform 1s ease; }
+  #headG { transform-box:fill-box; transform-origin:50% 95%; transition:transform 1s ease; }
+  svg.headbang #headB { animation:bang .3s ease-in-out 6; }
+  @keyframes bang { 0%,100%{transform:rotate(0);} 50%{transform:rotate(-14deg) translateY(3px);} }
+  svg.lean #headG { transform:rotate(-12deg) translate(-7px,3px); }
+  svg.cuddle #headG { transform:rotate(-14deg) translate(-9px,4px); }
+  svg.cuddle #headB { transform:rotate(9deg) translate(5px,1px); }
+
+  /* sway together when playing */
+  .bodyB { transform-box:fill-box; transform-origin:center 90%; }
+  .bodyG { transform-box:fill-box; transform-origin:center 90%; }
+  svg.playing .bodyB { animation:swayb 2.4s ease-in-out infinite; }
+  svg.playing .bodyG { animation:swayb 2.4s ease-in-out infinite; }
+  @keyframes swayb { 0%,100%{transform:rotate(-2.4deg);} 50%{transform:rotate(2.4deg);} }
+
+  .blushEl { opacity:0; transition:opacity .9s ease; }
+  svg.blushing .blushEl { opacity:.7; }
+
+  /* wire heart at finale */
+  #wireHeart { opacity:0; transition:opacity 1.4s ease .4s;
+               transform-box:fill-box; transform-origin:center;
+               filter:drop-shadow(0 0 8px rgba(255,127,168,.9)); }
+  svg.cuddle #wireHeart { opacity:1; animation:heartpulse 1.6s ease-in-out 1.6s infinite; }
+  @keyframes heartpulse { 0%,100%{transform:scale(1);} 12%{transform:scale(1.12);} 24%{transform:scale(1);} }
+
+  /* floating music notes */
+  .note {
+    position:absolute; z-index:12; font-size:22px; opacity:0; pointer-events:none;
+    animation:noteup ease-out 1 forwards;
+    color:#ffb3cf; text-shadow:0 0 10px rgba(255,127,168,.7);
+  }
+  @keyframes noteup {
+    0%   { transform:translateY(0) rotate(0) scale(.7); opacity:0; }
+    15%  { opacity:1; }
+    100% { transform:translateY(-46vh) rotate(24deg) scale(1.15); opacity:0; }
+  }
+
+  .title {
+    position:absolute; top:5%; left:0; right:0; text-align:center; z-index:7;
+    color:#f2e8ff; padding:0 24px; text-shadow:0 3px 14px rgba(10,2,25,.7);
+  }
+  .title h1 { font-size:clamp(23px,6.5vw,34px); font-weight:800; }
+  .title p  { font-size:14.5px; opacity:.82; font-weight:500; margin-top:2px; }
+
+  /* ---------- bubble / hint / buttons / fall / finale ---------- */
+  #bubble {
+    position:absolute; z-index:20; left:50%; top:22%;
+    transform:translateX(-50%) scale(0); transform-origin:50% 100%;
+    max-width:80vw; background:#fffdf7; color:#3b2450;
+    border-radius:20px; padding:13px 17px;
+    font-size:16.5px; font-weight:700; line-height:1.35; text-align:center;
+    box-shadow:0 10px 26px rgba(10,2,25,.55);
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  #bubble.show { transform:translateX(-50%) scale(1); }
+  #hint {
+    position:absolute; bottom:2.5%; left:0; right:0; text-align:center; z-index:7;
+    color:#e0cffa; opacity:.7; font-size:13px; font-weight:600;
+    animation:hintpulse 1.6s ease-in-out infinite;
+  }
+  @keyframes hintpulse { 0%,100%{opacity:.3;} 50%{opacity:.85;} }
+
+  #btns {
+    position:absolute; top:36%; left:0; right:0; z-index:30;
+    display:none; flex-direction:column; gap:11px; align-items:center; padding:0 30px;
+  }
+  #btns.show { display:flex; }
+  .btn {
+    width:100%; max-width:310px; border:none; border-radius:50px;
+    font-family:inherit; font-size:17px; font-weight:800; padding:14px 20px;
+    cursor:pointer; box-shadow:0 8px 20px rgba(10,2,25,.55);
+    transition:transform .12s ease;
+  }
+  .btn:active { transform:scale(.95); }
+  #btnPlay { background:linear-gradient(135deg,#ff9db6,#f0608a); color:#4d0f28; }
+  #btnBatt { background:rgba(255,255,255,.13); color:#e0cffa; border:2px solid rgba(224,207,250,.4);
+             font-size:14px; padding:11px 18px; max-width:250px;
+             transition:transform .3s ease, opacity .3s ease; }
+
+  .fall {
+    position:absolute; top:-60px; z-index:8; font-size:28px;
+    animation:falldown linear 1 forwards; pointer-events:none;
+  }
+  @keyframes falldown {
+    0%{transform:translateY(0) rotate(0);opacity:1;} 90%{opacity:1;}
+    100%{transform:translateY(110vh) rotate(340deg);opacity:0;}
+  }
+
+  #finale {
+    position:absolute; inset:0; z-index:40; display:none;
+    align-items:center; justify-content:center; padding:26px;
+    background:rgba(15,5,30,.55); backdrop-filter:blur(3px);
+  }
+  #finale.show { display:flex; }
+  .card {
+    background:#fffdf7; border-radius:26px; padding:30px 24px; text-align:center;
+    max-width:340px; width:100%; color:#3b2450;
+    box-shadow:0 20px 50px rgba(8,2,20,.6);
+    animation:cardpop .5s cubic-bezier(.34,1.56,.64,1) 1;
+  }
+  @keyframes cardpop { 0%{transform:scale(.6);opacity:0;} 100%{transform:scale(1);opacity:1;} }
+  .card .big { font-size:52px; line-height:1; }
+  .card h2 { font-size:22px; font-weight:800; margin:10px 0 6px; color:#f0608a; }
+  .card p  { font-size:16px; font-weight:600; line-height:1.45; }
+  .card small { display:block; margin-top:14px; font-size:13px; opacity:.6; font-weight:600; }
+  .replay { margin-top:18px; background:#ff9db6; border:none; border-radius:40px;
+            font-family:inherit; font-weight:800; font-size:15px; padding:11px 26px;
+            color:#4d0f28; cursor:pointer; box-shadow:0 6px 14px rgba(77,15,40,.4); }
+</style>
+</head>
+<body>
+
+  <div id="skyStars"></div>
+
+  <div class="tower" style="left:2%;  width:16%; height:22%;"><div class="lit" style="top:14%; left:18%;"></div><div class="lit" style="top:40%; left:56%;"></div></div>
+  <div class="tower" style="left:20%; width:13%; height:16%;"><div class="lit" style="top:22%; left:30%;"></div></div>
+  <div class="tower" style="right:18%; width:15%; height:19%;"><div class="lit" style="top:16%; left:50%;"></div><div class="lit" style="top:52%; left:20%;"></div></div>
+  <div class="tower" style="right:2%;  width:14%; height:25%;"><div class="lit" style="top:12%; left:24%;"></div><div class="lit" style="top:38%; left:60%;"></div></div>
+
+  <div class="title">
+    <h1 id="titleText">One earbud each 🎧</h1>
+    <p id="subText">rooftop · 11:47 pm · one playlist</p>
+  </div>
+
+  <div id="stage">
+    <svg id="scene" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- string lights -->
+      <path d="M0 26 q110 34 220 26 q110 -8 220 10" fill="none" stroke="#6b5387" stroke-width="3"/>
+      <g>
+        <circle class="bulb" cx="60"  cy="40" r="5" fill="#ffd98c" style="animation-delay:0s"/>
+        <circle class="bulb" cx="140" cy="49" r="5" fill="#ff9db6" style="animation-delay:.5s"/>
+        <circle class="bulb" cx="220" cy="52" r="5" fill="#ffd98c" style="animation-delay:1s"/>
+        <circle class="bulb" cx="300" cy="46" r="5" fill="#ff9db6" style="animation-delay:1.5s"/>
+        <circle class="bulb" cx="380" cy="42" r="5" fill="#ffd98c" style="animation-delay:2s"/>
+      </g>
+
+      <!-- ledge -->
+      <rect x="0" y="212" width="440" height="34" rx="6" fill="#3a2f52" stroke="#241a3d" stroke-width="4"/>
+      <rect x="0" y="246" width="440" height="54" fill="#2b2142"/>
+
+      <!-- phone on ledge between them -->
+      <rect id="phone" x="208" y="196" width="26" height="15" rx="3" fill="#120a1f" stroke="#e8def0" stroke-width="3"/>
+      <rect x="213" y="200" width="16" height="7" rx="1.5" fill="#ff9db6" opacity=".85"/>
+
+      <!-- wires from phone -->
+      <path id="wireB" d="M212 200 q-24 -18 -42 -68" fill="none" stroke="#e8def0" stroke-width="2.6"/>
+      <path id="wireG" d="M230 200 q26 -18 44 -66" fill="none" stroke="#e8def0" stroke-width="2.6"/>
+
+      <!-- wire heart between heads (finale) -->
+      <path id="wireHeart" d="M221 118 q-3 -16 -16 -16 q-12 0 -12 12 q0 15 28 27 q28 -12 28 -27 q0 -12 -12 -12 q-13 0 -16 16"
+            fill="none" stroke="#ff7fa8" stroke-width="4.5" stroke-linecap="round"/>
+
+      <!-- ============ BOY (left) ============ -->
+      <g class="bodyB">
+        <!-- legs over ledge -->
+        <path class="legB1" d="M138 224 q-2 30 -6 46" fill="none" stroke="#e8def0" stroke-width="6" stroke-linecap="round"/>
+        <path class="legB2" d="M158 224 q2 30 -2 46"  fill="none" stroke="#e8def0" stroke-width="6" stroke-linecap="round"/>
+        <path class="legB1" d="M132 270 l-10 4" stroke="#e8def0" stroke-width="6" stroke-linecap="round"/>
+        <!-- torso -->
+        <path d="M132 222 q-4 -44 16 -46 q22 0 18 46 z" fill="#2b1a40" stroke="#e8def0" stroke-width="5" stroke-linejoin="round"/>
+        <!-- left arm resting -->
+        <path d="M134 188 q-14 18 -8 34" fill="none" stroke="#e8def0" stroke-width="5.5" stroke-linecap="round"/>
+        <!-- right arm: offers earbud -->
+        <g id="boyArm">
+          <path d="M162 190 q16 16 12 32" fill="none" stroke="#e8def0" stroke-width="5.5" stroke-linecap="round"/>
+          <circle id="budOffer" cx="176" cy="222" r="4.5" fill="#ff9db6" stroke="#e8def0" stroke-width="2"/>
+        </g>
+        <!-- head -->
+        <g id="headB">
+          <circle cx="150" cy="152" r="26" fill="#2b1a40" stroke="#e8def0" stroke-width="5"/>
+          <!-- messy hair -->
+          <path d="M128 142 q4 -18 22 -18 q16 0 21 14 M132 134 l-6 -8 M144 127 l-2 -9 M158 128 l4 -8" stroke="#e8def0" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- earbud in his ear -->
+          <circle id="budB" cx="130" cy="156" r="4.5" fill="#ff9db6" stroke="#e8def0" stroke-width="2"/>
+          <g class="eyesB">
+            <circle cx="143" cy="152" r="3.4" fill="#f2e8ff"/>
+            <circle cx="159" cy="152" r="3.4" fill="#f2e8ff"/>
+          </g>
+          <g class="happyB">
+            <path d="M139 152 q4 -5 9 0" stroke="#f2e8ff" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+            <path d="M155 152 q4 -5 9 0" stroke="#f2e8ff" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+          </g>
+          <path d="M146 164 q5 4 10 0" stroke="#f2e8ff" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle class="blushEl" cx="134" cy="162" r="5" fill="#ff7fa8" opacity="0"/>
+          <circle class="blushEl" cx="167" cy="162" r="5" fill="#ff7fa8" opacity="0"/>
+        </g>
+      </g>
+
+      <!-- ============ GIRL (right) ============ -->
+      <g class="bodyG">
+        <path class="legG1" d="M282 224 q-2 30 -6 46" fill="none" stroke="#e8def0" stroke-width="6" stroke-linecap="round"/>
+        <path class="legG2" d="M302 224 q2 30 -2 46"  fill="none" stroke="#e8def0" stroke-width="6" stroke-linecap="round"/>
+        <!-- skirt torso -->
+        <path d="M274 222 q-6 -42 18 -44 q24 2 18 44 z" fill="#41224d" stroke="#e8def0" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M270 222 l52 0" stroke="#e8def0" stroke-width="5" stroke-linecap="round"/>
+        <!-- arms -->
+        <path d="M278 188 q-12 18 -6 32" fill="none" stroke="#e8def0" stroke-width="5.5" stroke-linecap="round"/>
+        <path d="M306 188 q12 18 6 32"  fill="none" stroke="#e8def0" stroke-width="5.5" stroke-linecap="round"/>
+        <!-- head -->
+        <g id="headG">
+          <circle cx="292" cy="152" r="26" fill="#41224d" stroke="#e8def0" stroke-width="5"/>
+          <!-- hair: side part + bun -->
+          <path d="M268 148 q2 -22 24 -22 q20 0 23 18 q-12 -8 -24 -6 q-14 2 -23 10" fill="#e8def0" opacity=".25" stroke="#e8def0" stroke-width="4" stroke-linejoin="round"/>
+          <circle cx="314" cy="132" r="8" fill="#41224d" stroke="#e8def0" stroke-width="4"/>
+          <!-- earbud in her ear (appears when connected) -->
+          <circle id="budG" cx="312" cy="156" r="4.5" fill="#ff9db6" stroke="#e8def0" stroke-width="2"/>
+          <g class="eyesG">
+            <circle cx="284" cy="152" r="3.4" fill="#f2e8ff"/>
+            <circle cx="300" cy="152" r="3.4" fill="#f2e8ff"/>
+          </g>
+          <!-- lashes -->
+          <path d="M280 146 l-4 -3 M288 145 l-2 -4 M296 145 l2 -4 M304 146 l4 -3" stroke="#f2e8ff" stroke-width="2.2" stroke-linecap="round"/>
+          <g class="happyG">
+            <path d="M280 152 q4 -5 9 0" stroke="#f2e8ff" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+            <path d="M296 152 q4 -5 9 0" stroke="#f2e8ff" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+          </g>
+          <path d="M287 164 q5 4 10 0" stroke="#f2e8ff" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle class="blushEl" cx="276" cy="162" r="5" fill="#ff7fa8" opacity="0"/>
+          <circle class="blushEl" cx="308" cy="162" r="5" fill="#ff7fa8" opacity="0"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div id="bubble"></div>
+  <div id="hint">tap anywhere to continue ▸</div>
+
+  <div id="btns">
+    <button class="btn" id="btnPlay">play our song 🎵💗</button>
+    <button class="btn" id="btnBatt">battery at 2% 🔋😬</button>
+  </div>
+
+  <div id="finale">
+    <div class="card">
+      <div class="big">🎧💗</div>
+      <h2>NOW PLAYING: US</h2>
+      <p id="finaleMsg">One earbud each — the oldest love language 🎵<br>Same song, same rooftop, same heartbeat. On loop, forever 💗</p>
+      <small>— track 1 of ∞ 🎶</small>
+      <button class="replay" id="replayBtn">Replay 🔁</button>
+    </div>
+  </div>
+
+<script>
+(function () {
+  var scene  = document.getElementById('scene');
+  var stage  = document.getElementById('stage');
+  var bubble = document.getElementById('bubble');
+  var hint   = document.getElementById('hint');
+  var btns   = document.getElementById('btns');
+  var btnPlay= document.getElementById('btnPlay');
+  var btnBatt= document.getElementById('btnBatt');
+  var finale = document.getElementById('finale');
+  var titleT = document.getElementById('titleText');
+  var subT   = document.getElementById('subText');
+  var skyStars = document.getElementById('skyStars');
+  var budOffer = document.getElementById('budOffer');
+
+  for (var i = 0; i < 30; i++) {
+    var s = document.createElement('div');
+    s.className = 'star';
+    var sz = 1.5 + Math.random()*2.2;
+    s.style.width = sz+'px'; s.style.height = sz+'px';
+    s.style.left = (Math.random()*100)+'%';
+    s.style.top  = (Math.random()*46)+'%';
+    s.style.animationDelay = (Math.random()*3)+'s';
+    skyStars.appendChild(s);
+  }
+
+  var sceneStates = [];
+  function addState(st){ if (sceneStates.indexOf(st)<0) sceneStates.push(st); scene.setAttribute('class', sceneStates.join(' ')); }
+  function rmState(st){ var i=sceneStates.indexOf(st); if(i>-1){sceneStates.splice(i,1); scene.setAttribute('class', sceneStates.join(' '));} }
+
+  function say(t) {
+    bubble.className = '';
+    setTimeout(function(){ bubble.innerHTML = t; bubble.className = 'show'; }, 220);
+  }
+  function hideBubble(){ bubble.className = ''; }
+  function drop(emoji, count, ms) {
+    var n = 0;
+    var t = setInterval(function(){
+      var e = document.createElement('div');
+      e.className = 'fall'; e.textContent = emoji;
+      e.style.left = (5 + Math.random()*90) + '%';
+      e.style.fontSize = (22 + Math.random()*16) + 'px';
+      e.style.animationDuration = (2.4 + Math.random()*1.6) + 's';
+      document.body.appendChild(e);
+      setTimeout(function(){ if (e.parentNode) e.parentNode.removeChild(e); }, 4400);
+      if (++n >= count) clearInterval(t);
+    }, ms);
+  }
+
+  /* music notes rising from the phone */
+  var notesOn = false, noteTimer = null;
+  var noteChars = ['♪','♫','♬','♩'];
+  function startNotes(fast) {
+    if (noteTimer) clearInterval(noteTimer);
+    notesOn = true;
+    noteTimer = setInterval(function () {
+      var r = stage.getBoundingClientRect();
+      var n = document.createElement('div');
+      n.className = 'note';
+      n.textContent = noteChars[Math.floor(Math.random()*noteChars.length)];
+      n.style.left = (r.left + r.width*0.5 + (Math.random()*70-35)) + 'px';
+      n.style.top  = (r.top + r.height*0.62) + 'px';
+      n.style.animationDuration = (2.6 + Math.random()*1.4) + 's';
+      n.style.fontSize = (18 + Math.random()*12) + 'px';
+      document.body.appendChild(n);
+      setTimeout(function(){ if (n.parentNode) n.parentNode.removeChild(n); }, 4200);
+    }, fast ? 260 : 620);
+  }
+
+  var steps = [
+    function () {
+      say('rooftop. 11:47 pm.<br>two people. one phone.<br>zero conversation needed 🎧');
+    },
+    function () { // offer the earbud
+      addState('offer');
+      say('*offers the sacred left earbud* 🎧<br>(this is basically a proposal,<br>if you know, you know)');
+    },
+    function () { // she accepts
+      rmState('offer');
+      budOffer.style.opacity = '0';
+      addState('connected');
+      startNotes(false);
+      say('she took it. 🥹<br>and just like that — connected.<br><b>literally. by wire.</b>');
+    },
+    function () { // queue war
+      say('her queue: 47 sad songs 🥲<br>his queue: the same 5 songs<br>since 2019 🔁');
+    },
+    function () { // headbang gag
+      addState('headbang');
+      say('*sad song playing*<br>him: 🤘🎸<br>her: "that\'s... not the vibe" 😑');
+      setTimeout(function(){ rmState('headbang'); }, 2200);
+    },
+    function () { // she leans
+      addState('lean');
+      say('...then THE song came on 🎵<br>*head, meet shoulder* 🥹<br>*shoulder: honored*');
+    },
+    function () { // THE ASK
+      say('phone: "1 song left before bed"<br><b style="font-size:19px">make it count. play our song? 💿</b>');
+      titleT.textContent = 'Last song request 💿';
+      subT.textContent = 'DJ: him · VIP: her';
+      hint.style.display = 'none';
+      btns.className = 'show';
+    }
+  ];
+
+  var idx = 0, busy = false;
+  function next() {
+    if (idx >= steps.length) return;
+    busy = true;
+    steps[idx++]();
+    setTimeout(function(){ busy = false; }, 800);
+  }
+  document.body.addEventListener('click', function () {
+    if (btns.className === 'show' || finale.className === 'show') return;
+    if (busy) return;
+    next();
+  });
+
+  /* battery excuse escalation */
+  var tries = 0;
+  btnBatt.addEventListener('click', function (e) {
+    e.stopPropagation();
+    tries++;
+    if (tries === 1) {
+      say('"relax." *pulls out a powerbank* 🔌<br>"I carry it only for<br>rooftop emergencies" 😌');
+    } else if (tries === 2) {
+      say('"also—" *shows his phone* 😳<br>"I downloaded your sad songs.<br><b>all 47.</b> for offline. just in case."');
+    } else {
+      say('her: "okay that\'s actually<br>really sweet" 🥹<br>*resistance = 0%*');
+      btnBatt.textContent = 'fine, play it 🥹🎵';
+      btnBatt.style.background = 'linear-gradient(135deg,#ff9db6,#f0608a)';
+      btnBatt.style.color = '#4d0f28';
+      btnBatt.style.border = 'none';
+      btnBatt.onclick = function (ev) { ev.stopPropagation(); play(); };
+    }
+  });
+
+  /* play our song */
+  function play() {
+    btns.className = '';
+    hideBubble();
+    addState('playing'); addState('sync'); addState('cuddle');
+    addState('happy'); addState('blushing');
+    startNotes(true);
+    drop('💗', 14, 130); drop('🎵', 10, 190); drop('✨', 8, 260);
+    say('*our song plays* 🎵<br>*they sway in sync*<br>*even the legs synced. that\'s fate.*');
+    titleT.textContent = 'Now playing: forever 💗';
+    subT.textContent = 'volume: max · hearts: maxer';
+    setTimeout(function(){ finale.className = 'show'; }, 4000);
+  }
+  btnPlay.addEventListener('click', function (e) { e.stopPropagation(); play(); });
+
+  document.getElementById('replayBtn').addEventListener('click', function(){ location.reload(); });
+
+  setTimeout(next, 1000);
+})();
+</script>
+</body>
+</html>
