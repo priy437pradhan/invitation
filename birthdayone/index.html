@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aanya's Garden Party</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=Karla:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--rose:#e8a0b4;--deep:#8a4b5e;--leaf:#7ca982;--cream:#fdf6ee;--ink:#4a3b3f}
+*{margin:0;box-sizing:border-box}
+body{font-family:Karla,sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+h1,h2{font-family:'Cormorant Garamond',serif;font-style:italic}
+/* SECTION 1 — gate hero */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;background:linear-gradient(#fdf6ee,#f6e4e9)}
+.gate{width:min(84vw,420px);height:440px;position:relative;cursor:pointer;perspective:900px}
+.door{position:absolute;top:0;width:50%;height:100%;background:repeating-linear-gradient(90deg,#b8875f 0 12px,#a8764f 12px 16px);border:6px solid #7a5236;transition:transform 1.2s cubic-bezier(.6,0,.3,1);border-radius:120px 0 0 0}
+.door.r{right:0;transform-origin:right;border-radius:0 120px 0 0}
+.door.l{left:0;transform-origin:left}
+.gate.open .door.l{transform:rotateY(-105deg)}
+.gate.open .door.r{transform:rotateY(105deg)}
+.behind{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 30%,#fbe6ec,#f3cfd9);border-radius:120px 120px 0 0;opacity:0;transition:opacity .8s .6s;text-align:center;padding:24px}
+.gate.open .behind{opacity:1}
+.behind h1{font-size:2.6rem;color:var(--deep)}
+.behind p{letter-spacing:.2em;text-transform:uppercase;font-size:.75rem;margin-top:8px}
+.hint{position:absolute;bottom:8vh;left:0;right:0;text-align:center;letter-spacing:.25em;font-size:.7rem;text-transform:uppercase;color:var(--deep);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.4}}
+.petal{position:fixed;top:-30px;font-size:20px;animation:fall linear forwards;pointer-events:none;z-index:9}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+/* vines */
+.vine{position:absolute;font-size:34px;animation:sway 3s ease-in-out infinite alternate}
+@keyframes sway{to{transform:rotate(8deg)}}
+/* SECTION 2 — details */
+.details{padding:80px 24px;max-width:760px;margin:auto;text-align:center}
+.details h2{font-size:2.2rem;color:var(--deep);margin-bottom:36px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px}
+.card{background:#fff;border:1px solid #f0d7de;border-radius:18px;padding:26px 16px;transition:transform .3s}
+.card:hover{transform:translateY(-6px) rotate(-1deg)}
+.card .em{font-size:30px;display:block;margin-bottom:10px}
+.card b{display:block;color:var(--deep);margin-bottom:4px}
+/* SECTION 3 — rsvp */
+.rsvp{background:linear-gradient(#f6e4e9,#eed6dd);padding:80px 24px;text-align:center}
+.rsvp h2{font-size:2.2rem;color:var(--deep)}
+.rsvp p{margin:10px 0 26px}
+.btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{border:none;padding:14px 34px;border-radius:999px;font-family:Karla;font-weight:700;cursor:pointer;font-size:1rem;transition:transform .2s}
+.btn:hover{transform:scale(1.06)}
+.yes{background:var(--deep);color:#fff}.no{background:#fff;color:var(--deep)}
+#reply{margin-top:22px;font-family:'Cormorant Garamond';font-style:italic;font-size:1.4rem;color:var(--deep);min-height:1.6em}
+footer{text-align:center;padding:26px;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#a58a92}
+</style>
+</head>
+<body>
+
+<!-- Section 1: Gate -->
+<section class="hero">
+  <span class="vine" style="top:8%;left:6%">🌿</span>
+  <span class="vine" style="top:14%;right:8%;animation-delay:.6s">🌸</span>
+  <span class="vine" style="bottom:12%;left:10%;animation-delay:1s">🌷</span>
+  <div class="gate" id="gate" title="Open the gate">
+    <div class="behind">
+      <p>You are invited to</p>
+      <h1>Aanya's 7th<br>Birthday Garden</h1>
+      <p>Scroll down 🌸</p>
+    </div>
+    <div class="door l"></div>
+    <div class="door r"></div>
+  </div>
+  <div class="hint" id="hint">✿ tap the gate to enter ✿</div>
+</section>
+
+<!-- Section 2: Details -->
+<section class="details">
+  <h2>Inside the Garden</h2>
+  <div class="cards">
+    <div class="card"><span class="em">📅</span><b>Saturday</b>August 15, 2026</div>
+    <div class="card"><span class="em">⏰</span><b>4:00 PM</b>onwards</div>
+    <div class="card"><span class="em">📍</span><b>Rose Lawn</b>Bhubaneswar</div>
+    <div class="card"><span class="em">🎀</span><b>Dress code</b>Floral & pastels</div>
+  </div>
+</section>
+
+<!-- Section 3: RSVP -->
+<section class="rsvp">
+  <h2>Will you bloom with us?</h2>
+  <p>Tap below to let us know</p>
+  <div class="btns">
+    <button class="btn yes" onclick="rsvp(true)">Joyfully yes 🌷</button>
+    <button class="btn no" onclick="rsvp(false)">Sadly no 🥀</button>
+  </div>
+  <div id="reply"></div>
+</section>
+<footer>with love · the sharma family</footer>
+
+<script>
+var gate=document.getElementById('gate');
+gate.addEventListener('click',function(){
+  gate.classList.add('open');
+  document.getElementById('hint').style.display='none';
+  burst(24);
+});
+function burst(n){
+  var em=['🌸','🌷','💮','🌺','✿'];
+  for(var i=0;i<n;i++){
+    var p=document.createElement('div');p.className='petal';
+    p.textContent=em[Math.floor(Math.random()*em.length)];
+    p.style.left=Math.random()*100+'vw';
+    p.style.animationDuration=(4+Math.random()*4)+'s';
+    p.style.animationDelay=(Math.random()*1.5)+'s';
+    document.body.appendChild(p);
+    setTimeout(function(el){return function(){el.remove()}}(p),9000);
+  }
+}
+function rsvp(y){
+  document.getElementById('reply').textContent=y?'Yay! A flower has been saved for you 🌸':'We\u2019ll miss you — sending petals your way 💌';
+  if(y)burst(18);
+}
+setInterval(function(){burst(2)},3000);
+</script>
+</body>
+</html>
