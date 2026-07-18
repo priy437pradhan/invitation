@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fairy Tale Wedding Invitation</title>
+    
+    <!-- Premium Elegant Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030206;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px; /* Gives the text fly-in depth */
+        }
+
+        /* Video Container matching the vertical mobile/reel aspect ratio */
+        .invitation-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 450px; 
+            height: 100vh;
+            max-height: 900px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+            background: #000;
+        }
+
+        /* Background Video */
+        #bgVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* Screen 1: The Invisible Click Trigger Box */
+        .cover-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+
+        /* Large pulse effect overlay hinting where to click near the ribbon */
+        .click-hint {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(212, 175, 55, 0.6);
+            animation: pulse 2s infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        /* Screen 2: Marriage Content Layer overlaying the castle/sky area */
+        .content-layer {
+            position: absolute;
+            top: 10%; 
+            left: 8%;
+            width: 84%;
+            height: 52%; /* Keeps content perfectly framed in the upper open sky area above the balcony */
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            
+            /* Entry Animation Styles: Hidden deep back in 3D space initially */
+            opacity: 0;
+            transform: translateZ(-300px) translateY(-20px) scale(0.6);
+            transition: all 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            padding: 15px 5px;
+        }
+
+        /* Reveal state triggered by JS once gates open wide */
+        .content-layer.reveal {
+            opacity: 1;
+            transform: translateZ(0) translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        /* Typography Customization */
+        .wedding-quote {
+            font-size: 12px;
+            font-style: italic;
+            color: #f3e9dc;
+            line-height: 1.6;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+            font-weight: 400;
+        }
+
+        .couple-names {
+            font-family: 'Great Vibes', cursive;
+            font-size: 46px;
+            color: #fcd7a1; /* Soft glowing gold/champagne color */
+            margin: 5px 0;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(252, 215, 161, 0.3);
+        }
+
+        .details-box h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            color: #ffffff;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+        }
+
+        .details-box p {
+            font-size: 11px;
+            color: #e0d5c1;
+            line-height: 1.4;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+        }
+
+        /* The Scratch Card feature adapted for the Fairy Tale Theme */
+        .scratch-container {
+            position: relative;
+            width: 190px;
+            height: 75px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .scratch-secret {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(25, 18, 36, 0.95); /* Deep royal backdrop */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #e2ba6e;
+            border-radius: 6px;
+        }
+
+        .scratch-secret span {
+            font-size: 8px;
+            text-transform: uppercase;
+            color: #bfa37c;
+            letter-spacing: 1px;
+        }
+
+        .scratch-secret strong {
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            color: #ffffff;
+            margin-top: 2px;
+            letter-spacing: 1px;
+        }
+
+        #scratchCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            cursor: pointer;
+            touch-action: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="invitation-wrapper">
+        
+        <!-- Target Background Video File -->
+        <video id="bgVideo" playsinline muted>
+            <source src="video/castle-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Front Gate Overlay Trigger Layer -->
+        <div class="cover-layer" id="coverLayer" onclick="openInvitation()">
+            <div class="click-hint">OPEN GATES</div>
+        </div>
+
+        <!-- Flying 3D Script Overlay (Appears inside the opened scene background) -->
+        <div class="content-layer" id="contentLayer">
+            
+            <!-- 1. The Fairy Tale/Romantic Quote -->
+            <p class="wedding-quote">
+                "Once in a while, right in the middle of an ordinary life, <br>love gives us a fairy tale."
+            </p>
+
+            <!-- 2. Main Character/Couple Names -->
+            <div>
+                <p style="font-size: 9px; letter-spacing: 4px; color: #dcd1be; text-transform: uppercase;">The Wedding of</p>
+                <h1 class="couple-names">Veer & Zaara</h1>
+            </div>
+
+            <!-- 3. Celebration Matrix Details -->
+            <div class="details-box">
+                <h3>DECEMBER 12, 2026</h3>
+                <p style="font-size: 12px; margin-bottom: 2px;"><strong>The Royal Palace Grand Resort</strong></p>
+                <p>Under the Moonlit Skies, Mumbai</p>
+            </div>
+
+            <!-- 4. Interactive Magic Scratch Reveal Pass -->
+            <div>
+                <p style="font-size: 9px; color: #dfd5c6; margin-bottom: 5px; letter-spacing: 1px; text-shadow: 0 1px 3px #000;">✨ SCRATCH MAGICALLY FOR ACCESS CODE</p>
+                <div class="scratch-container">
+                    <div class="scratch-secret">
+                        <span>Royal Banquet Pass</span>
+                        <strong>#CASTLEWED2026</strong>
+                    </div>
+                    <canvas id="scratchCanvas" width="190" height="75"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const video = document.getElementById('bgVideo');
+        const coverLayer = document.getElementById('coverLayer');
+        const contentLayer = document.getElementById('contentLayer');
+
+        // Pin video timeline strictly to first frame instantly
+        video.currentTime = 0;
+
+        function openInvitation() {
+            // Dismiss target click entry frame wrapper
+            coverLayer.style.opacity = '0';
+            setTimeout(() => coverLayer.style.display = 'none', 600);
+
+            // Audio Activation + Play loop execution
+            video.muted = false; 
+            video.play();
+
+            // Fire off the 3D script overlay entry right as doors clear out (approx 3.5 seconds)
+            setTimeout(() => {
+                contentLayer.classList.add('reveal');
+                initScratchCard();
+            }, 3500);
+        }
+
+        // SCRATCH ENGINE MASK IMPLEMENTATION
+        function initScratchCard() {
+            const canvas = document.getElementById('scratchCanvas');
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+
+            // Paint a stunning starry midnight-gold masking layer to scratch off
+            ctx.fillStyle = '#221929'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Subtle gold border on mask itself
+            ctx.strokeStyle = '#d4af37';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(2, 2, canvas.width - 4, canvas.height - 4);
+
+            // Decorative context layout font styling
+            ctx.font = 'bold 9px Cinzel';
+            ctx.fillStyle = '#d4af37';
+            ctx.textAlign = 'center';
+            ctx.fillText('✨ SCRATCH HERE ✨', canvas.width / 2, canvas.height / 2 + 3);
+
+            function scratch(e) {
+                if (!isDrawing) return;
+                
+                const rect = canvas.getBoundingClientRect();
+                // Check if touch or mouse vector calculation is required
+                const x = (e.clientX || e.touches[0].clientX) - rect.left;
+                const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(x, y, 15, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Standard event mapping hooks for uniform Desktop/Mobile performance
+            canvas.addEventListener('mousedown', () => isDrawing = true);
+            canvas.addEventListener('mouseup', () => isDrawing = false);
+            canvas.addEventListener('mousemove', scratch);
+
+            canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
+            canvas.addEventListener('touchend', () => isDrawing = false);
+            canvas.addEventListener('touchmove', scratch);
+        }
+    </script>
+</body>
+</html>
