@@ -81,12 +81,15 @@
         .event-venue{font-size:10px;color:#f2e3cf;line-height:1.4;font-weight:400}
         .bottom-divider{width:40px;height:1px;background:#fbd692;margin:6px auto;opacity:.6}
 
-        .scroll-cue{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:8;
-            display:flex;flex-direction:column;align-items:center;gap:5px;color:#fff8ec;cursor:pointer;
-            opacity:0;pointer-events:none;transition:opacity .8s ease;text-shadow:0 2px 6px rgba(0,0,0,.8)}
-        .scroll-cue.show{opacity:.95;pointer-events:auto}
-        .scroll-cue span{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;text-transform:uppercase}
-        .scroll-cue .chev{font-size:20px;line-height:1;animation:bob 1.7s ease-in-out infinite}
+        .scroll-cue{position:absolute;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:8;
+            display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--gold-soft);cursor:pointer;
+            opacity:0;pointer-events:none;transition:opacity .8s ease;
+            background:rgba(18,11,16,.58);border:1px solid rgba(217,178,106,.75);
+            padding:10px 22px 8px;border-radius:40px;
+            backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);box-shadow:0 8px 22px rgba(0,0,0,.45)}
+        .scroll-cue.show{opacity:1;pointer-events:auto}
+        .scroll-cue span{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:3px;text-transform:uppercase}
+        .scroll-cue .chev{font-size:20px;line-height:.7;color:var(--gold-lt);animation:bob 1.7s ease-in-out infinite}
         @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
         /* ============== SCROLL CONTENT ============== */
