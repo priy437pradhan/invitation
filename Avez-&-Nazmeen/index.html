@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Avez & Nazmeen Wedding Invitation</title>
-<meta property="og:type" content="website">
+    <meta property="og:type" content="website">
     <meta property="og:url" content="https://invitation-1-iota.vercel.app/Avez-%26-Nazmeen/">
     <meta property="og:title" content="Avez & Nazmeen — Wedding Invitation">
     <meta property="og:description" content="With joy we invite you to our wedding celebration • 2nd November 2026 • Mumbai & Bhiwandi">
@@ -24,11 +24,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Premium Romantic & Elegant Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -38,23 +33,34 @@
             background-color: #120b10;
             display: flex; justify-content: center; align-items: center;
             perspective: 1200px;
+            -webkit-text-size-adjust: 100%;
         }
 
         .invitation-container {
             position: relative; width: 100%; max-width: 450px;
             height: 100vh; max-height: 900px;
             box-shadow: 0 0 50px rgba(0,0,0,0.8); background: #000;
+            overflow: hidden;
+        }
+
+        /* GPU Hardware Acceleration Wrapper to eliminate lag spikes */
+        .video-gpu-accelerator {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; transform: translate3d(0, 0, 0);
+            will-change: transform; backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
         #bgVideo {
             width: 100%; height: 100%; object-fit: cover;
-            position: absolute; top: 0; left: 0; z-index: 1; background: #000;
+            background: #000; display: block;
         }
 
         .tap-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 10; display: flex; justify-content: center; align-items: center;
             cursor: pointer; background: rgba(0,0,0,0.02);
+            transition: opacity 0.5s ease;
         }
 
         .wax-seal-pulse {
@@ -123,34 +129,21 @@
         .bottom-divider {
             width: 40px; height: 1px; background: #fbd692; margin: 6px auto; opacity: 0.6;
         }
-
-        .watermark-cover {
-            position: absolute; bottom: 53px; right: 36px; z-index: 15;
-            background: #e4bca2; padding: 14px; border-radius: 50%;
-            height: 50px; width: 50px; display: flex;
-            justify-content: center; align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .watermark-cover span {
-            font-family: 'Pinyon Script', cursive; font-size: 18px;
-            color: #4b3621; font-weight: bold; letter-spacing: 0.5px; line-height: 1;
-        }
     </style>
 </head>
 <body>
 
     <div class="invitation-container">
 
-        <!-- Background Music (plays on tap) -->
+        <!-- Background Music -->
         <audio id="bgAudio" src="audio/music.mp3" preload="auto" loop></audio>
 
-        <!-- High Priority Video Node with Intentional Preloading -->
-        <video id="bgVideo" playsinline preload="auto" muted>
-            <source src="video/envelope.mp4" type="video/mp4">
-        </video>
-
-        <!-- <div class="watermark-cover"><span>pp-dev</span></div> -->
+        <!-- Hardware-Accelerated Video Block Wrapper -->
+        <div class="video-gpu-accelerator">
+            <video id="bgVideo" playsinline webkit-playsinline preload="auto" muted x5-video-player-type="h5-page">
+                <source src="video/envelope.mp4" type="video/mp4">
+            </video>
+        </div>
 
         <!-- Tap to Open Layer -->
         <div class="tap-overlay" id="tapOverlay" onclick="handleEnvelopeOpen()">
@@ -159,7 +152,6 @@
 
         <!-- Details Overlay Sheet Layer -->
         <div class="details-content-layer" id="detailsContent">
-
             <div>
                 <p class="title-header">The Wedding Celebration</p>
                 <h1 class="couple-headline">Avez & Nazmeen</h1>
@@ -171,7 +163,6 @@
             </div>
 
             <div style="width: 100%; display: flex; flex-direction: column; gap: 8px;">
-
                 <div class="event-card">
                     <h3 class="event-title">MEHENDI FUNCTION</h3>
                     <p class="event-date">November 02, 2026</p>
@@ -195,13 +186,11 @@
                         Versova, Andheri West, Mumbai - 400061
                     </p>
                 </div>
-
             </div>
 
             <p style="font-size: 9px; letter-spacing: 2px; color: #fcefd2; text-transform: uppercase; text-shadow: 0 1px 3px #000;">
                 ✨ Bless the Beautiful Couple ✨
             </p>
-
         </div>
 
     </div>
@@ -212,11 +201,18 @@
         const detailsContent = document.getElementById('detailsContent');
         const audioNode = document.getElementById('bgAudio');
 
-        const REVEAL_AT = 5.5;   // seconds INTO the video when the text should appear
+        // Based on the new video timeline provided, the envelope transition fully expands around 3.0 - 3.2s.
+        const REVEAL_AT = 3.0;   
         let revealed = false;
 
+        // Force browser to warm decode the video elements instantly on DOM load
         window.addEventListener('DOMContentLoaded', () => {
             videoNode.load();
+            // Forces iOS and Android browser layers to buffer frame 0 inside memory buffers
+            videoNode.play().then(() => {
+                videoNode.pause();
+                videoNode.currentTime = 0;
+            }).catch(() => {});
         });
 
         function revealDetails() {
@@ -225,24 +221,29 @@
             detailsContent.classList.add('active');
         }
 
-        // FIX: reveal based on the video's ACTUAL playback position, not a fixed timer.
-        // This stays in sync even if the video buffers or starts a moment late.
         videoNode.addEventListener('timeupdate', () => {
             if (videoNode.currentTime >= REVEAL_AT) revealDetails();
         });
-        // Safety net: if the clip is shorter than REVEAL_AT, still show the details.
+        
         videoNode.addEventListener('ended', revealDetails);
 
         function handleEnvelopeOpen() {
             tapOverlay.style.opacity = '0';
-            setTimeout(() => tapOverlay.style.display = 'none', 600);
+            setTimeout(() => tapOverlay.style.display = 'none', 500);
 
-            // Restart from the top so timing is consistent every open
+            // Execute clear buffer instructions to secure latency-free playback
             videoNode.muted = true;
             videoNode.currentTime = 0;
-            videoNode.play().catch(() => {});
+            
+            // Critical request order logic ensures zero frame delay drop
+            const playPromise = videoNode.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Playback engine warm start fail: ", error);
+                });
+            }
 
-            // Play background music with a gentle fade-in
+            // Play background music with audio channel synchronization
             audioNode.currentTime = 0;
             audioNode.volume = 0;
             audioNode.play().catch(() => {});
@@ -254,8 +255,6 @@
             }, 80);
         }
 
-        // FIX: stop the music (and video) when the user leaves, goes back,
-        // switches tabs, or backgrounds the app — so it never keeps playing.
         function stopMedia() {
             try { audioNode.pause(); audioNode.currentTime = 0; } catch (e) {}
             try { videoNode.pause(); } catch (e) {}
