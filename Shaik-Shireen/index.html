@@ -77,7 +77,7 @@
             margin:2px 0;letter-spacing:1px;text-shadow:0 3px 12px rgba(0,0,0,.9),0 0 15px rgba(252,239,210,.2)}
         .parents-info{font-size:10px;color:#070400;line-height:1.5;text-shadow:0 1px 5px rgba(0,0,0,.95);font-weight:400}
         .event-card{background:rgba(18,11,16,.5);border-top:1px solid rgba(252,239,210,.2);
-            border-bottom:1px solid rgba(252,239,210,.2);padding:8px 12px;width:100%;   
+            border-bottom:1px solid rgba(252,239,210,.2);padding:8px 12px;width:100%;
             backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);border-radius:4px}
         .event-title{font-family:'Cinzel',serif;font-size:11px;color:#fbd692;letter-spacing:3px;font-weight:700;margin-bottom:3px}
         .event-date{font-size:11.5px;font-weight:600;color:#fff;letter-spacing:.5px;margin-bottom:2px}
@@ -221,7 +221,7 @@
 
         <!-- ================= HERO (envelope video) ================= -->
         <div class="hero">
-            <audio id="bgAudio" src="audio/music.mp3" preload="auto" loop></audio>
+            <audio id="bgAudio" src="audio/audio.mp3" preload="auto"></audio>
 
             <div class="video-gpu-accelerator">
                 <video id="bgVideo" playsinline webkit-playsinline preload="auto" muted x5-video-player-type="h5-page">
@@ -350,7 +350,8 @@
            Jumma in Hyderabad ~1:30 PM, so 14:00 IST is used. Adjust if needed. */
         nikah: '2026-08-14T14:00:00+05:30',
         revealAt: 2,                   /* seconds into the video before the overlay appears */
-        musicSrc: 'audio/music.mp3'
+        musicSrc: 'audio/audio.mp3',
+        audioStart: 45                 /* start & loop the song from this second */
     };
 
     /* Each function. Times for the .ics are LOCAL floating: YYYYMMDDThhmmss. */
@@ -399,6 +400,24 @@
         var scrollCue    = document.getElementById('scrollCue');
         var revealed = false;
 
+        /* ---- audio: start & loop from CONFIG.audioStart seconds ---- */
+        function seekAudioStart(){
+            var st = CONFIG.audioStart || 0;
+            try{
+                if(audioNode.readyState >= 1 && !isNaN(audioNode.duration) && st < audioNode.duration){
+                    audioNode.currentTime = st;
+                } else {
+                    audioNode.addEventListener('loadedmetadata', function onMeta(){
+                        audioNode.removeEventListener('loadedmetadata', onMeta);
+                        try{ if(st < audioNode.duration) audioNode.currentTime = st; }catch(e){}
+                    });
+                }
+            }catch(e){}
+        }
+        audioNode.addEventListener('ended', function(){   /* loop back to the 45s mark */
+            try{ audioNode.currentTime = CONFIG.audioStart || 0; audioNode.play().catch(function(){}); }catch(e){}
+        });
+
         /* ---- warm-decode the video so frame 0 is ready before tap ---- */
         window.addEventListener('DOMContentLoaded', function(){
             try{ videoNode.load(); }catch(e){}
@@ -432,7 +451,7 @@
             var pp = videoNode.play();
             if(pp && pp.catch){ pp.catch(function(err){ if(window.console) console.log('warm start:', err); }); }
 
-            audioNode.currentTime = 0;
+            seekAudioStart();
             audioNode.volume = 0;
             audioNode.play().catch(function(){});
             playing = true; setMusicIcon();
