@@ -127,7 +127,7 @@
             transition:background .25s ease,color .25s ease}
         .ics-btn:hover{background:var(--gold);color:#fff}
 
-        .scratch{position:absolute;inset:0;z-index:2;touch-action:none;cursor:grab;display:block}
+        .scratch{position:absolute;inset:0;z-index:2;touch-action:pan-y;cursor:grab;display:block}
         .f-hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:3;pointer-events:none;
             background:rgba(18,11,16,.55);color:#fff8ec;font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;
             text-transform:uppercase;padding:8px 15px;border-radius:40px;white-space:nowrap;transition:opacity .4s ease}
@@ -139,8 +139,9 @@
 
         /* Venue */
         .venue-block{background:linear-gradient(180deg,var(--cream),#f6ead2)}
-        .map-card{max-width:400px;margin:22px auto 0;border-radius:14px;overflow:hidden;border:1px solid var(--gold-lt);box-shadow:0 12px 28px rgba(122,47,58,.14);background:#fff}
+        .map-card{position:relative;max-width:400px;margin:22px auto 0;border-radius:14px;overflow:hidden;border:1px solid var(--gold-lt);box-shadow:0 12px 28px rgba(122,47,58,.14);background:#fff}
         .map-card iframe{display:block;width:100%;height:230px;border:0}
+        .map-shield{position:absolute;inset:0;z-index:2;background:transparent;touch-action:pan-y;cursor:pointer;display:block}
         .vrow{max-width:380px;margin:18px auto 0;padding:14px 16px;border:1px solid rgba(184,135,62,.3);border-radius:12px;background:#fff9ef}
         .vrow h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--rose-deep)}
         .vrow p{font-size:11.5px;color:#5a4650;line-height:1.5;margin-top:5px}
@@ -276,6 +277,7 @@
             <div class="map-card reveal">
                 <iframe title="Reception venue map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
                     src="https://maps.google.com/maps?q=Vesawa%20Mandir%20Hall%20Yari%20Road%20Versova%20Andheri%20West%20Mumbai%20400061&z=15&output=embed"></iframe>
+                <a class="map-shield" href="https://maps.google.com/?q=Vesawa+Mandir+Hall+Yari+Road+Versova+Andheri+West+Mumbai+400061" target="_blank" rel="noopener" aria-label="Open reception venue in Maps"></a>
             </div>
 
             <div class="vrow reveal">
@@ -492,7 +494,9 @@
             var ctx = canvas.getContext ? canvas.getContext('2d') : null;
             if(!ctx){ finish(); return; }
             var dpr = Math.min(window.devicePixelRatio||1, 2);
-            var done = false, drawing = false, coated = false, moves = 0;
+            var done=false, coated=false;
+            var NEED=3, strokes=0;
+            var active=false, committed=null, startCX=0, startCY=0, lastX=0, lastY=0, moved=0, sinceMark=0;
 
             function coat(){
                 var cw = card.clientWidth, ch = card.clientHeight;
@@ -522,32 +526,49 @@
             function point(e){
                 var r = canvas.getBoundingClientRect();
                 var t = (e.touches && e.touches[0]) ? e.touches[0] : e;
-                return { x:t.clientX - r.left, y:t.clientY - r.top };
+                return { x:t.clientX - r.left, y:t.clientY - r.top, cx:t.clientX, cy:t.clientY };
             }
-            function progress(){
-                try{
-                    var img = ctx.getImageData(0,0,canvas.width,canvas.height).data;
-                    var clear=0,total=0;
-                    for(var i=3;i<img.length;i+=4*24){ total++; if(img[i]===0) clear++; }
-                    return total ? clear/total : 0;
-                }catch(e){ return 0; }
-            }
-            function maybe(){
-                moves++; if(moves%6!==0) return;
-                var pct = progress();
-                hint.style.opacity = pct>0.1 ? '0' : '1';
-                if(pct > 0.5) finish();
-            }
-            function start(e){ if(done) return; if(!coated) coat(); drawing=true; var p=point(e); erase(p.x,p.y); }
-            function move(e){ if(done||!drawing) return; if(e.cancelable) e.preventDefault(); var p=point(e); erase(p.x,p.y); maybe(); }
-            function end(){ drawing=false; }
+            function addStroke(){ if(done) return; strokes++; if(strokes>=NEED) finish(); }
 
-            canvas.addEventListener('mousedown', start);
-            document.addEventListener('mousemove', move);
-            document.addEventListener('mouseup', end);
-            canvas.addEventListener('touchstart', function(e){ start(e); }, {passive:true});
-            canvas.addEventListener('touchmove', move, {passive:false});
-            canvas.addEventListener('touchend', end);
+            function down(e){
+                if(done) return;
+                if(!coated) coat();
+                active=true; moved=0; sinceMark=0;
+                /* mouse always scratches; touch waits to see scratch-vs-scroll intent */
+                committed = (e.type.indexOf('mouse')===0) ? 'scratch' : null;
+                var p=point(e); startCX=p.cx; startCY=p.cy; lastX=p.x; lastY=p.y;
+                if(committed==='scratch') erase(p.x,p.y);
+            }
+            function moveH(e){
+                if(done||!active) return;
+                var p=point(e);
+                if(committed===null){
+                    var dx=Math.abs(p.cx-startCX), dy=Math.abs(p.cy-startCY);
+                    if(dx>8 && dx>=dy){ committed='scratch'; }
+                    else if(dy>8 && dy>dx){ committed='scroll'; active=false; return; } /* let page scroll */
+                    else { return; }
+                }
+                if(committed==='scratch'){
+                    if(e.cancelable) e.preventDefault();
+                    erase(p.x,p.y);
+                    var seg=Math.abs(p.x-lastX)+Math.abs(p.y-lastY);
+                    moved+=seg; sinceMark+=seg; lastX=p.x; lastY=p.y;
+                    hint.style.opacity='0';
+                    if(sinceMark>=200){ sinceMark=0; addStroke(); } /* long continuous sweeps also count */
+                }
+            }
+            function up(){
+                if(committed==='scratch' && moved>25) addStroke();
+                active=false; committed=null; moved=0; sinceMark=0;
+            }
+
+            canvas.addEventListener('mousedown', down);
+            document.addEventListener('mousemove', moveH);
+            document.addEventListener('mouseup', up);
+            canvas.addEventListener('touchstart', function(e){ down(e); }, {passive:true});
+            canvas.addEventListener('touchmove', moveH, {passive:false});
+            canvas.addEventListener('touchend', up);
+            canvas.addEventListener('touchcancel', up);
             window.addEventListener('resize', function(){ if(!done) coat(); });
 
             /* coat once the card is laid out / in view */
