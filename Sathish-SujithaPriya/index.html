@@ -126,6 +126,7 @@
             animation:kenburns 16s ease-in-out infinite;
         }
         .photo-frame.tall{aspect-ratio:3/4}   /* taller portrait — bg-2 & bg-5 */
+        .photo-frame.wide{aspect-ratio:4/3;width:min(380px,94%)}   /* landscape — bg-6 (primary couple) */
         .photo-frame::after{
             content:"";position:absolute;inset:6px;border:1px solid rgba(252,239,210,.65);
             border-radius:11px;pointer-events:none;
@@ -315,6 +316,7 @@
             <div class="eyebrow reveal">Wedding Invitation</div>
             <h2 class="reveal">With Immense Joy</h2>
             <p class="invite-tagline reveal">"Two states. Two languages. One promise - forever together."</p>
+            <div class="photo-frame wide reveal"><img src="images/bg-6.jpeg" alt="Sathish and Sujitha Priya"></div>
             <p class="lead reveal">With immense joy, we invite you to celebrate the wedding of
                 Sathish &amp; Sujitha Priya. Your presence and blessings will make our celebration truly unforgettable.</p>
             <div class="photo-frame tall reveal"><img src="images/bg-2.jpeg" alt="Sathish and Sujitha Priya"></div>
@@ -474,9 +476,49 @@
                 }
             }catch(e){}
         }
-        audioNode.addEventListener('ended', function(){   /* loop back to the 45s mark */
-            try{ audioNode.currentTime = CONFIG.audioStart || 0; audioNode.play().catch(function(){}); }catch(e){}
+        audioNode.addEventListener('ended', function(){   /* loop back to the start mark, safely */
+            try{
+                var st = CONFIG.audioStart || 0;
+                if(isNaN(audioNode.duration) || st >= audioNode.duration) st = 0;
+                audioNode.currentTime = st; audioNode.play().catch(function(){});
+            }catch(e){}
         });
+
+        /* ---- robust music start (handles in-app browser autoplay quirks) ---- */
+        var wantMusic = false, unlockArmed = false;
+        function fadeIn(){
+            playing = true; setMusicIcon();
+            var vol = 0;
+            var fade = setInterval(function(){
+                vol += 0.05;
+                if(vol >= 0.6){ vol = 0.6; clearInterval(fade); }
+                try{ audioNode.volume = vol; }catch(e){}
+            }, 80);
+        }
+        function armAudioUnlock(){
+            if(unlockArmed) return; unlockArmed = true;
+            function unlock(){
+                if(!wantMusic) return;
+                var p = audioNode.play();
+                if(p && p.then){ p.then(function(){ fadeIn(); cleanup(); }).catch(function(){}); }
+                else { fadeIn(); cleanup(); }
+            }
+            function cleanup(){
+                unlockArmed = false;
+                document.removeEventListener('touchend', unlock);
+                document.removeEventListener('click', unlock);
+            }
+            document.addEventListener('touchend', unlock, {passive:true});
+            document.addEventListener('click', unlock);
+        }
+        function startMusic(){
+            wantMusic = true;
+            seekAudioStart();
+            try{ audioNode.volume = 0; }catch(e){}
+            var p = audioNode.play();
+            if(p && p.then){ p.then(fadeIn).catch(armAudioUnlock); }
+            else { fadeIn(); }
+        }
 
         /* ---- warm-decode the video so frame 0 is ready before tap ---- */
         window.addEventListener('DOMContentLoaded', function(){
@@ -512,15 +554,7 @@
             if(pp && pp.catch){ pp.catch(function(err){ if(window.console) console.log('warm start:', err); }); }
 
             seekAudioStart();
-            audioNode.volume = 0;
-            audioNode.play().catch(function(){});
-            playing = true; setMusicIcon();
-            var vol = 0;
-            var fade = setInterval(function(){
-                vol += 0.05;
-                if(vol >= 0.6){ vol = 0.6; clearInterval(fade); }
-                audioNode.volume = vol;
-            }, 80);
+            startMusic();
 
             /* safety: if timeupdate doesn't fire, reveal shortly after */
             setTimeout(revealDetails, (CONFIG.revealAt + 1.4) * 1000);
@@ -535,9 +569,16 @@
         function setMusicIcon(){ musicBtn.classList.toggle('playing', playing); }
         musicBtn.addEventListener('click', function(){
             if(playing){ audioNode.pause(); playing = false; }
-            else { audioNode.play().catch(function(){}); playing = true; }
+            else {
+                wantMusic = true;
+                try{ if(!audioNode.volume) audioNode.volume = 0.6; }catch(e){}
+                audioNode.play().catch(function(){});
+                playing = true;
+            }
             setMusicIcon();
         });
+        audioNode.addEventListener('play',  function(){ playing = true;  setMusicIcon(); });
+        audioNode.addEventListener('pause', function(){ playing = false; setMusicIcon(); });
 
         /* ---- pause media when hidden ---- */
         function stopMedia(){
