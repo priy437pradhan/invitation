@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sathish &amp; Sujitha Priya</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        html,body{width:100%;height:100%;background:#000;overflow:hidden}
+        .stage{position:relative;width:100%;height:100vh;height:100dvh;background:#000}
+        #bgVideo{width:100%;height:100%;object-fit:cover;background:#000;display:block}
+        .play-btn{position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;
+            display:flex;align-items:center;justify-content:center;cursor:pointer;
+            background:rgba(0,0,0,.25);border:0;transition:opacity .4s ease}
+        .play-btn .circle{width:84px;height:84px;border-radius:50%;background:#000;
+            display:flex;align-items:center;justify-content:center;
+            box-shadow:0 8px 24px rgba(0,0,0,.5)}
+        .play-btn .circle svg{width:34px;height:34px;margin-left:5px}
+    </style>
+</head>
+<body>
+    <div class="stage">
+        <video id="bgVideo" playsinline webkit-playsinline preload="auto" poster="images/bg-1.jpeg">
+            <source src="video/envolope.mp4" type="video/mp4">
+        </video>
+
+        <button class="play-btn" id="playBtn" aria-label="Play video">
+            <span class="circle">
+                <svg viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </span>
+        </button>
+    </div>
+
+    <script>
+    (function(){
+        'use strict';
+        var video = document.getElementById('bgVideo');
+        var btn   = document.getElementById('playBtn');
+
+        btn.addEventListener('click', function(){
+            btn.style.opacity = '0';
+            setTimeout(function(){ btn.style.display = 'none'; }, 400);
+            try{ video.currentTime = 0; }catch(e){}
+            var p = video.play();
+            if(p && p.catch){ p.catch(function(){}); }
+        });
+    })();
+    </script>
+</body>
+</html>
