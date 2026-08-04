@@ -207,6 +207,56 @@
   .save-btn:hover{ background: var(--ink-soft); }
   .save-btn:focus-visible{ outline: 2px solid var(--teal); outline-offset:2px; }
 
+  .grammar-btn{
+    background: transparent;
+    color: var(--teal-deep);
+    border: 1px solid var(--teal);
+    padding: 9px 16px;
+    border-radius: 4px;
+    font-family:'Inter';
+    font-weight:600;
+    font-size:0.85rem;
+    cursor:pointer;
+  }
+  .grammar-btn:hover{ background: rgba(79,124,130,0.1); }
+  .grammar-btn:disabled{ opacity:0.5; cursor:default; }
+  .grammar-btn:focus-visible{ outline: 2px solid var(--teal); outline-offset:2px; }
+
+  .suggestions{
+    margin-top: 14px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .suggestion-item{
+    background: rgba(79,124,130,0.08);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-family:'Inter';
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+  .suggestion-item .msg{ margin-bottom: 6px; }
+  .suggestion-item .bad{ font-family:'Newsreader', serif; font-style:italic; color:#8a3b3b; }
+  .suggestion-item .fixes{ display:flex; flex-wrap:wrap; gap:6px; }
+  .suggestion-item button{
+    background: var(--teal);
+    color:#fff;
+    border:none;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 0.78rem;
+    cursor:pointer;
+  }
+  .suggestion-item button:hover{ background: var(--teal-deep); }
+  .suggestion-empty{
+    font-family:'Newsreader', serif;
+    font-style:italic;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
   .ribbon{
     position:absolute;
     top:0; right: 40px;
@@ -325,13 +375,15 @@
         <div class="date-display" id="dateDisplay">—</div>
         <div class="on-this-day" id="onThisDay"></div>
       </div>
-      <textarea id="entryText" placeholder="Start writing..."></textarea>
+      <textarea id="entryText" placeholder="Start writing..." spellcheck="true" lang="en"></textarea>
       <div class="page-footer">
         <div class="status" id="status"></div>
         <div class="footer-actions">
+          <button class="grammar-btn" id="grammarBtn">Check grammar</button>
           <button class="save-btn" id="saveBtn">Save entry</button>
         </div>
       </div>
+      <div class="suggestions" id="suggestions"></div>
     </main>
   </div>
 
@@ -460,6 +512,78 @@
   }
 
   document.getElementById('saveBtn').addEventListener('click', () => saveCurrent(true));
+
+  const grammarBtn = document.getElementById('grammarBtn');
+  const suggestionsEl = document.getElementById('suggestions');
+
+  async function checkGrammar(){
+    const text = entryText.value;
+    suggestionsEl.innerHTML = '';
+    if(text.trim() === ''){
+      suggestionsEl.innerHTML = '<div class="suggestion-empty">Nothing to check yet.</div>';
+      return;
+    }
+    grammarBtn.disabled = true;
+    grammarBtn.textContent = 'Checking...';
+    try{
+      const res = await fetch('https://api.languagetool.org/v2/check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ text, language: 'en-US' })
+      });
+      if(!res.ok) throw new Error('bad response');
+      const json = await res.json();
+      renderSuggestions(json.matches || [], text);
+    }catch(e){
+      suggestionsEl.innerHTML = '<div class="suggestion-empty">Couldn\'t reach the grammar checker just now — your browser may be blocking the request, or you\'re offline. Your writing is safe either way.</div>';
+    }finally{
+      grammarBtn.disabled = false;
+      grammarBtn.textContent = 'Check grammar';
+    }
+  }
+
+  function renderSuggestions(matches, text){
+    if(matches.length === 0){
+      suggestionsEl.innerHTML = '<div class="suggestion-empty">No issues found — reads clean.</div>';
+      return;
+    }
+    suggestionsEl.innerHTML = '';
+    matches.slice(0, 20).forEach(m => {
+      const bad = text.substring(m.offset, m.offset + m.length);
+      const item = document.createElement('div');
+      item.className = 'suggestion-item';
+
+      const msg = document.createElement('div');
+      msg.className = 'msg';
+      msg.innerHTML = m.message + ' — <span class="bad"></span>';
+      msg.querySelector('.bad').textContent = '"' + bad + '"';
+      item.appendChild(msg);
+
+      const fixes = document.createElement('div');
+      fixes.className = 'fixes';
+      (m.replacements || []).slice(0, 4).forEach(r => {
+        const btn = document.createElement('button');
+        btn.textContent = 'Use "' + r.value + '"';
+        btn.addEventListener('click', () => {
+          const current = entryText.value;
+          entryText.value = current.substring(0, m.offset) + r.value + current.substring(m.offset + m.length);
+          suggestionsEl.innerHTML = '<div class="suggestion-empty">Applied. Re-check for anything else.</div>';
+          saveCurrent(true);
+        });
+        fixes.appendChild(btn);
+      });
+      if((m.replacements || []).length === 0){
+        const none = document.createElement('span');
+        none.className = 'suggestion-empty';
+        none.textContent = 'No direct fix suggested.';
+        fixes.appendChild(none);
+      }
+      item.appendChild(fixes);
+      suggestionsEl.appendChild(item);
+    });
+  }
+
+  grammarBtn.addEventListener('click', checkGrammar);
 
   document.getElementById('newEntryBtn').addEventListener('click', () => {
     openEntry(todayKey());
