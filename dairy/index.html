@@ -207,56 +207,6 @@
   .save-btn:hover{ background: var(--ink-soft); }
   .save-btn:focus-visible{ outline: 2px solid var(--teal); outline-offset:2px; }
 
-  .grammar-btn{
-    background: transparent;
-    color: var(--teal-deep);
-    border: 1px solid var(--teal);
-    padding: 9px 16px;
-    border-radius: 4px;
-    font-family:'Inter';
-    font-weight:600;
-    font-size:0.85rem;
-    cursor:pointer;
-  }
-  .grammar-btn:hover{ background: rgba(79,124,130,0.1); }
-  .grammar-btn:disabled{ opacity:0.5; cursor:default; }
-  .grammar-btn:focus-visible{ outline: 2px solid var(--teal); outline-offset:2px; }
-
-  .suggestions{
-    margin-top: 14px;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-  }
-  .suggestion-item{
-    background: rgba(79,124,130,0.08);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 10px 12px;
-    font-family:'Inter';
-    font-size: 0.82rem;
-    color: var(--ink-soft);
-  }
-  .suggestion-item .msg{ margin-bottom: 6px; }
-  .suggestion-item .bad{ font-family:'Newsreader', serif; font-style:italic; color:#8a3b3b; }
-  .suggestion-item .fixes{ display:flex; flex-wrap:wrap; gap:6px; }
-  .suggestion-item button{
-    background: var(--teal);
-    color:#fff;
-    border:none;
-    padding: 4px 10px;
-    border-radius: 3px;
-    font-size: 0.78rem;
-    cursor:pointer;
-  }
-  .suggestion-item button:hover{ background: var(--teal-deep); }
-  .suggestion-empty{
-    font-family:'Newsreader', serif;
-    font-style:italic;
-    color: var(--text-dim);
-    font-size: 0.85rem;
-  }
-
   .ribbon{
     position:absolute;
     top:0; right: 40px;
@@ -278,12 +228,89 @@
     .on-this-day{ text-align:left; max-width:none; }
   }
 
+  .cover{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      radial-gradient(1200px 600px at 85% 110%, #34304a 0%, transparent 60%),
+      linear-gradient(180deg, var(--ink) 0%, #262138 100%);
+    z-index: 10;
+    transition: opacity 0.5s ease, visibility 0.5s;
+  }
+  .cover.hidden{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .cover-card{
+    width: min(380px, 86vw);
+    aspect-ratio: 3/4;
+    background: linear-gradient(160deg, #2E2848, #221F2E);
+    border-radius: 6px;
+    box-shadow: 0 40px 90px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding: 40px 28px;
+    text-align:center;
+    position:relative;
+  }
+  .cover-card::before{
+    content:"";
+    position:absolute;
+    inset: 14px;
+    border: 1px solid rgba(233,227,245,0.18);
+    border-radius: 3px;
+    pointer-events:none;
+  }
+  .cover-title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-style:italic;
+    font-size: 2rem;
+    color: #EFE9F8;
+    margin: 0 0 10px;
+  }
+  .cover-sub{
+    font-family:'Newsreader', serif;
+    font-style:italic;
+    color: var(--blush);
+    font-size: 0.95rem;
+    margin: 0 0 34px;
+  }
+  .open-btn{
+    background: var(--teal);
+    color: #fff;
+    border:none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    font-family:'Inter';
+    font-weight:600;
+    font-size: 0.88rem;
+    cursor:pointer;
+    letter-spacing: 0.02em;
+  }
+  .open-btn:hover{ background: var(--teal-deep); }
+  .open-btn:focus-visible{ outline: 2px solid var(--blush); outline-offset:3px; }
+
   @media (prefers-reduced-motion: reduce){
-    .new-entry-btn, .save-btn{ transition:none; }
+    .cover{ transition:none; }
   }
 </style>
 </head>
 <body>
+  <div class="cover" id="cover">
+    <div class="cover-card">
+      <div class="cover-title">Dear Journal</div>
+      <div class="cover-sub">a page for every day</div>
+      <button class="open-btn" id="openBtn">Open the diary</button>
+    </div>
+  </div>
+
   <div class="book">
     <nav class="spine">
       <h1>Dear Journal</h1>
@@ -302,11 +329,9 @@
       <div class="page-footer">
         <div class="status" id="status"></div>
         <div class="footer-actions">
-          <button class="grammar-btn" id="grammarBtn">Check grammar</button>
           <button class="save-btn" id="saveBtn">Save entry</button>
         </div>
       </div>
-      <div class="suggestions" id="suggestions"></div>
     </main>
   </div>
 
@@ -436,78 +461,6 @@
 
   document.getElementById('saveBtn').addEventListener('click', () => saveCurrent(true));
 
-  const grammarBtn = document.getElementById('grammarBtn');
-  const suggestionsEl = document.getElementById('suggestions');
-
-  async function checkGrammar(){
-    const text = entryText.value;
-    suggestionsEl.innerHTML = '';
-    if(text.trim() === ''){
-      suggestionsEl.innerHTML = '<div class="suggestion-empty">Nothing to check yet.</div>';
-      return;
-    }
-    grammarBtn.disabled = true;
-    grammarBtn.textContent = 'Checking...';
-    try{
-      const res = await fetch('https://api.languagetool.org/v2/check', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ text, language: 'en-US' })
-      });
-      if(!res.ok) throw new Error('bad response');
-      const json = await res.json();
-      renderSuggestions(json.matches || [], text);
-    }catch(e){
-      suggestionsEl.innerHTML = '<div class="suggestion-empty">Couldn\'t reach the grammar checker just now — your browser may be blocking the request, or you\'re offline. Your writing is safe either way.</div>';
-    }finally{
-      grammarBtn.disabled = false;
-      grammarBtn.textContent = 'Check grammar';
-    }
-  }
-
-  function renderSuggestions(matches, text){
-    if(matches.length === 0){
-      suggestionsEl.innerHTML = '<div class="suggestion-empty">No issues found — reads clean.</div>';
-      return;
-    }
-    suggestionsEl.innerHTML = '';
-    matches.slice(0, 20).forEach(m => {
-      const bad = text.substring(m.offset, m.offset + m.length);
-      const item = document.createElement('div');
-      item.className = 'suggestion-item';
-
-      const msg = document.createElement('div');
-      msg.className = 'msg';
-      msg.innerHTML = m.message + ' — <span class="bad"></span>';
-      msg.querySelector('.bad').textContent = '"' + bad + '"';
-      item.appendChild(msg);
-
-      const fixes = document.createElement('div');
-      fixes.className = 'fixes';
-      (m.replacements || []).slice(0, 4).forEach(r => {
-        const btn = document.createElement('button');
-        btn.textContent = 'Use "' + r.value + '"';
-        btn.addEventListener('click', () => {
-          const current = entryText.value;
-          entryText.value = current.substring(0, m.offset) + r.value + current.substring(m.offset + m.length);
-          suggestionsEl.innerHTML = '<div class="suggestion-empty">Applied. Re-check for anything else.</div>';
-          saveCurrent(true);
-        });
-        fixes.appendChild(btn);
-      });
-      if((m.replacements || []).length === 0){
-        const none = document.createElement('span');
-        none.className = 'suggestion-empty';
-        none.textContent = 'No direct fix suggested.';
-        fixes.appendChild(none);
-      }
-      item.appendChild(fixes);
-      suggestionsEl.appendChild(item);
-    });
-  }
-
-  grammarBtn.addEventListener('click', checkGrammar);
-
   document.getElementById('newEntryBtn').addEventListener('click', () => {
     openEntry(todayKey());
   });
@@ -522,6 +475,11 @@
     data.addressee = addresseeInput.value;
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => persist(), 800);
+  });
+
+  document.getElementById('openBtn').addEventListener('click', () => {
+    document.getElementById('cover').classList.add('hidden');
+    entryText.focus();
   });
 
   load();
