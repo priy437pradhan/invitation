@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sameer & Shireen — Walima Reception</title>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://invitation-1-iota.vercel.app/Sameer%26Shireen/">
+    <meta property="og:title" content="Sameer & Shireen — Walima Reception">
+    <meta property="og:description" content="With joy we invite you to our Walima reception celebration • 15th August 2026 • Hyderabad">
+    <meta property="og:image" content="https://invitation-1-iota.vercel.app/Sameer%26Shireen/image/og-image.png">
+    <meta property="og:image:secure_url" content="https://invitation-1-iota.vercel.app/Sameer%26Shireen/image/og-image.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Sameer & Shireen — 15th August 2026">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sameer & Shireen — Walima Reception">
+    <meta name="twitter:description" content="With joy we invite you to our Walima reception celebration • 15th August 2026">
+    <meta name="twitter:image" content="https://invitation-1-iota.vercel.app/Sameer%26Shireen/image/og-image.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&family=Amiri:ital@0;1&display=swap" rel="stylesheet">
+
+    <style>
+        /* =====================================================================
+           THEME — "Jaali & Marigold": Deccani lattice-window motif,
+           bottle-green + marigold gold in place of the old plum/rose palette.
+           ===================================================================== */
+        :root{
+            --night:#0a1310;
+            --ivory:#faf5e8;
+            --ivory-2:#f2e6c9;
+            --emerald:#0c3d2e;
+            --emerald-deep:#062822;
+            --emerald-lt:#3f7a5c;
+            --marigold:#d79a2c;
+            --marigold-lt:#f0c268;
+            --marigold-soft:#fbead0;
+            --maroon:#7a2735;
+            --ink:#26211a;
+            --ink-soft:#5c5546;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html.lock,body.lock{overflow:hidden;height:100%}
+        html{scroll-behavior:smooth}
+        body{
+            width:100%;background:var(--night);color:var(--ink);
+            font-family:'Jost',sans-serif;-webkit-text-size-adjust:100%;
+            -webkit-font-smoothing:antialiased
+        }
+        .page{position:relative;max-width:460px;margin:0 auto;background:var(--ivory);
+            box-shadow:0 0 60px rgba(0,0,0,.7);overflow:hidden}
+
+        /* jaali lattice texture, used as a quiet background wash on cream sections */
+        .jaali-wash{
+            background-image:
+                repeating-linear-gradient(45deg, rgba(12,61,46,.05) 0 1px, transparent 1px 18px),
+                repeating-linear-gradient(-45deg, rgba(12,61,46,.05) 0 1px, transparent 1px 18px);
+        }
+
+        /* ============== HERO (envelope video) ============== */
+        .hero{position:relative;width:100%;height:100vh;height:100dvh;background:#000;overflow:hidden}
+        .video-gpu-accelerator{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;
+            transform:translate3d(0,0,0);will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+        #bgVideo{width:100%;height:100%;object-fit:cover;background:#000;display:block}
+
+        /* readability scrim — keeps hero text legible regardless of how bright the video is */
+        .hero-scrim{position:absolute;inset:0;z-index:3;pointer-events:none;
+            background:linear-gradient(180deg, rgba(6,19,15,.10) 0%, rgba(6,19,15,.35) 38%, rgba(6,19,15,.62) 68%, rgba(6,19,15,.8) 100%)}
+
+        .tap-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;
+            display:flex;justify-content:center;align-items:center;cursor:pointer;
+            background:rgba(0,0,0,.02);transition:opacity .5s ease}
+        .wax-seal-pulse{position:absolute;top:52%;width:92px;height:92px;border-radius:50%;
+            border:2px dashed rgba(240,194,104,.75);background:rgba(240,194,104,.1);
+            display:flex;align-items:center;justify-content:center;text-align:center;
+            animation:pulseWave 2s infinite ease-in-out;pointer-events:none}
+        .wax-seal-pulse span{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:9px;letter-spacing:2px;
+            text-transform:uppercase;color:var(--marigold-soft);line-height:1.5;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+        @keyframes pulseWave{0%{transform:scale(.9);opacity:.4}50%{transform:scale(1.15);opacity:.9}100%{transform:scale(.9);opacity:.4}}
+
+        .details-content-layer{position:absolute;top:30%;left:6%;width:88%;height:78%;z-index:5;
+            display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+            text-align:center;padding:10px 5px;opacity:0;
+            transform:translateZ(-180px) translateY(-10px) scale(.85);
+            transition:all 2.2s cubic-bezier(.15,1,.2,1);pointer-events:none}
+        .details-content-layer.active{opacity:1;transform:translateZ(0) translateY(0) scale(1);pointer-events:auto}
+        .title-header{font-family:'Jost',sans-serif;font-weight:500;font-size:10px;letter-spacing:5px;color:var(--marigold-lt);
+            text-transform:uppercase;text-shadow:0 2px 8px rgba(0,0,0,.9)}
+        .couple-headline{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;color:var(--ivory);
+            margin:4px 0;letter-spacing:.5px;text-shadow:0 4px 16px rgba(0,0,0,.85),0 0 22px rgba(240,194,104,.35)}
+        .parents-info{font-size:10px;color:var(--ivory-2);line-height:1.5;text-shadow:0 2px 8px rgba(0,0,0,.9);font-weight:400}
+
+        /* per-line reveal — each piece of hero text fades and rises in on its own beat */
+        .title-header,.couple-headline,.bottom-divider,.parents-info,.details-content-layer > p:last-child{
+            opacity:0;transform:translateY(14px);
+            transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1)}
+        .details-content-layer.active .title-header{opacity:1;transform:none;transition-delay:.15s}
+        .details-content-layer.active .couple-headline{opacity:1;transform:none;transition-delay:.4s}
+        .details-content-layer.active .bottom-divider{opacity:1;transform:none;transition-delay:.65s}
+        .details-content-layer.active .parents-info{opacity:1;transform:none;transition-delay:.8s}
+        .details-content-layer.active .parents-info + .parents-info{transition-delay:.95s}
+        .details-content-layer.active > p:last-child{opacity:1;transform:none;transition-delay:1.15s}
+        .event-card{background:rgba(10,19,16,.5);border-top:1px solid rgba(251,234,208,.2);
+            border-bottom:1px solid rgba(251,234,208,.2);padding:8px 12px;width:100%;
+            backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);border-radius:4px}
+        .event-title{font-family:'Jost',sans-serif;font-size:11px;color:#f0c268;letter-spacing:3px;font-weight:600;margin-bottom:3px;text-transform:uppercase}
+        .event-date{font-size:11.5px;font-weight:600;color:#fff;letter-spacing:.5px;margin-bottom:2px}
+        .event-venue{font-size:10px;color:#f2e3cf;line-height:1.4;font-weight:400}
+        .bottom-divider{width:40px;height:1px;background:#f0c268;margin:6px auto;opacity:.6}
+
+        .scroll-cue{position:absolute;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));z-index:8;
+            display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--marigold-soft);cursor:pointer;
+            opacity:0;pointer-events:none;transform:translateX(-50%) translateY(18px);
+            transition:opacity 1s ease, transform 1s cubic-bezier(.16,1,.3,1);
+            background:rgba(10,19,16,.6);border:1px solid rgba(240,194,104,.75);
+            padding:10px 22px 8px;border-radius:40px;
+            backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);box-shadow:0 8px 22px rgba(0,0,0,.45)}
+        .scroll-cue.show{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);
+            animation:cueGlow 2.6s ease-in-out 1s infinite}
+        @keyframes cueGlow{0%,100%{box-shadow:0 8px 22px rgba(0,0,0,.45)}
+            50%{box-shadow:0 8px 30px rgba(240,194,104,.55),0 8px 22px rgba(0,0,0,.45)}}
+        .scroll-cue span{font-family:'Jost',sans-serif;font-weight:500;font-size:8.5px;letter-spacing:3px;text-transform:uppercase}
+        .scroll-cue .chev{font-size:20px;line-height:.7;color:var(--marigold-lt);animation:bob 1.7s ease-in-out infinite}
+        @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+        /* ============== SCROLL CONTENT ============== */
+        .section{padding:52px 26px;text-align:center;position:relative}
+        .eyebrow{font-family:'Jost',sans-serif;font-weight:500;font-size:9.5px;letter-spacing:4px;text-transform:uppercase;
+            color:var(--marigold);margin-bottom:14px}
+        .section h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--ink);letter-spacing:.3px}
+        .orn{font-family:'Cormorant Garamond',serif;color:var(--marigold);letter-spacing:.5em;font-size:15px;margin:14px 0 0;opacity:.9}
+
+        .bismillah{background:linear-gradient(180deg,#fffaf0,var(--ivory))}
+        .bismillah .arabic{font-family:'Amiri',serif;font-size:27px;color:var(--marigold);direction:rtl;line-height:1.6}
+        .bismillah .translit{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--ink-soft);font-size:14px;margin-top:8px}
+        .lead{max-width:360px;margin:16px auto 0;font-size:14px;line-height:1.75;color:#4a4638;font-weight:400}
+
+        /* Countdown */
+        .countdown{display:flex;justify-content:center;gap:10px;margin-top:26px;flex-wrap:wrap}
+        .cd-box{background:linear-gradient(180deg,#fdf9ec,var(--ivory-2));border:1px solid var(--marigold-lt);
+            border-radius:4px;padding:16px 10px;min-width:70px;box-shadow:0 8px 20px rgba(12,61,46,.12);position:relative}
+        .cd-box::before{content:'';position:absolute;inset:4px;border:1px solid rgba(12,61,46,.18);border-radius:2px;pointer-events:none}
+        .cd-box b{display:block;font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--emerald);line-height:1}
+        .cd-box small{font-size:8px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--marigold);display:block;margin-top:6px}
+
+        /* Reception — jaali arch scratch card */
+        .fest-stack{margin-top:34px;display:flex;justify-content:center}
+        .fcard{position:relative;border-radius:16px;overflow:hidden;border:1px solid rgba(215,154,44,.35);
+            box-shadow:0 14px 34px rgba(6,40,34,.18);background:var(--ivory)}
+        .fcard-base{position:relative;z-index:1;padding:26px 22px;text-align:center;
+            background:radial-gradient(ellipse at top,#fffaf0,var(--ivory))}
+        .f-day{font-family:'Jost',sans-serif;font-weight:500;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--marigold)}
+        .f-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--emerald);margin-top:6px;line-height:1.05}
+        .f-tag{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--maroon);font-size:13px;margin-top:3px}
+        .f-line{width:36px;height:1px;background:var(--marigold-lt);margin:12px auto}
+        .f-date{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.4px}
+        .f-time{font-family:'Jost',sans-serif;font-weight:500;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--marigold);margin-top:5px}
+        .f-venue{font-size:11.5px;color:#4a4638;line-height:1.5;margin-top:8px}
+        .ics-btn{margin-top:16px;display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+            font-family:'Jost',sans-serif;font-size:8.5px;letter-spacing:2px;text-transform:uppercase;font-weight:600;
+            color:var(--emerald);background:transparent;border:1px solid var(--emerald);border-radius:40px;padding:9px 18px;
+            transition:background .25s ease,color .25s ease}
+        .ics-btn:hover{background:var(--emerald);color:#fff}
+
+        .scratch{position:absolute;inset:0;z-index:2;touch-action:pan-y;cursor:grab;display:block}
+        .f-hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:3;pointer-events:none;
+            background:rgba(6,40,34,.6);color:#fbead0;font-family:'Jost',sans-serif;font-weight:500;font-size:8px;letter-spacing:2px;
+            text-transform:uppercase;padding:8px 15px;border-radius:40px;white-space:nowrap;transition:opacity .4s ease}
+        .fcard.revealed .scratch,.fcard.revealed .f-hint{opacity:0;pointer-events:none}
+        .scratch,.f-hint{transition:opacity .55s ease}
+        .f-emblem{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;pointer-events:none;
+            font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:3px;color:rgba(251,234,208,.9);text-align:center}
+        .fcard.revealed .f-emblem{opacity:0;transition:opacity .4s ease}
+
+        /* Jaali arch-shaped scratch card — echoes a Deccani mihrab / lattice window */
+        .fcard.arch{width:78%;max-width:300px;aspect-ratio:3/4;border:none;box-shadow:none;background:transparent;overflow:hidden;
+            -webkit-clip-path:url(#archClip);clip-path:url(#archClip);
+            filter:drop-shadow(0 16px 26px rgba(6,40,34,.32))}
+        .fcard.arch .fcard-base{height:100%;display:flex;flex-direction:column;align-items:center;
+            justify-content:center;text-align:center;padding:20% 14% 12%;gap:2px;
+            background:
+                repeating-linear-gradient(45deg, rgba(12,61,46,.05) 0 1px, transparent 1px 16px),
+                repeating-linear-gradient(-45deg, rgba(12,61,46,.05) 0 1px, transparent 1px 16px),
+                radial-gradient(ellipse at center,#fffaf0,var(--ivory))}
+        .fcard.arch .f-name{font-size:23px}
+        .fcard.arch .f-line{margin:9px auto}
+        .fcard.arch .f-date{font-size:12px}
+        .fcard.arch .f-venue{font-size:10px}
+        .fcard.arch .ics-btn{margin-top:10px;padding:7px 14px;font-size:7.5px}
+        .fcard.arch .f-hint{bottom:10%}
+        .fcard.arch .f-emblem{top:20%;font-size:13px;letter-spacing:3px;color:rgba(255,255,255,.92)}
+
+        /* Venue */
+        .venue-block{background:linear-gradient(180deg,var(--ivory),#f4ecd6)}
+        .map-card{position:relative;max-width:400px;margin:22px auto 0;border-radius:14px;overflow:hidden;border:1px solid var(--marigold-lt);box-shadow:0 12px 28px rgba(6,40,34,.14);background:#fff}
+        .map-card iframe{display:block;width:100%;height:230px;border:0}
+        .map-shield{position:absolute;inset:0;z-index:2;background:transparent;touch-action:pan-y;cursor:pointer;display:block}
+        .vrow{max-width:380px;margin:18px auto 0;padding:16px 18px;border:1px solid rgba(215,154,44,.32);border-radius:12px;background:#fffaf0}
+        .vrow h4{font-family:'Jost',sans-serif;font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--emerald)}
+        .vrow p{font-size:11.5px;color:#4a4638;line-height:1.5;margin-top:5px}
+        .maplink{display:inline-block;margin-top:10px;font-family:'Jost',sans-serif;font-size:8.5px;letter-spacing:2px;
+            text-transform:uppercase;font-weight:600;color:#fff;background:linear-gradient(135deg,var(--emerald-lt),var(--emerald));
+            padding:9px 20px;border-radius:40px;text-decoration:none;box-shadow:0 8px 18px rgba(6,40,34,.28)}
+
+        footer{text-align:center;padding:46px 24px 60px;background:var(--night);color:#f2e3cf}
+        footer .crescent{font-size:24px;color:var(--marigold-lt);line-height:1}
+        footer .fnames{font-family:'Cormorant Garamond',serif;font-size:23px;color:#fff;margin-top:10px}
+        footer .fmeta{font-family:'Jost',sans-serif;font-weight:500;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--marigold-lt);margin-top:10px}
+        footer .fbless{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:#e8d3ba;margin-top:16px}
+
+        /* Music toggle */
+        .music-btn{position:fixed;top:14px;right:14px;z-index:60;width:44px;height:44px;border-radius:50%;
+            border:1px solid var(--marigold-lt);background:rgba(10,19,16,.6);color:var(--marigold-soft);cursor:pointer;
+            display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(0,0,0,.35)}
+        .music-btn svg{width:18px;height:18px}
+        .music-btn.playing{animation:mpulse 1.9s ease-in-out infinite}
+        @keyframes mpulse{0%,100%{box-shadow:0 6px 16px rgba(0,0,0,.35)}50%{box-shadow:0 0 0 6px rgba(240,194,104,.28)}}
+
+        /* Falling petals */
+        .petals{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+        .petal{position:absolute;top:-40px;will-change:transform,opacity}
+        @keyframes fall{0%{transform:translate(0,-40px) rotate(0);opacity:0}
+            10%{opacity:1}100%{transform:translate(var(--drift),108vh) rotate(360deg);opacity:.1}}
+
+        /* Scroll reveal */
+        .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+        .reveal.in{opacity:1;transform:none}
+        @media (prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}}
+    </style>
+</head>
+<body class="lock">
+
+    <svg width="0" height="0" aria-hidden="true" style="position:absolute;left:-9999px">
+        <defs>
+            <!-- Deccani mihrab / lattice-window arch, the signature shape for this theme -->
+            <clipPath id="archClip" clipPathUnits="objectBoundingBox">
+                <path d="M0.06,1 L0.06,0.42 C0.06,0.16 0.26,0.02 0.5,0.02 C0.74,0.02 0.94,0.16 0.94,0.42 L0.94,1 Z"/>
+            </clipPath>
+        </defs>
+    </svg>
+
+    <div class="petals" id="petals" aria-hidden="true"></div>
+
+    <button class="music-btn" id="musicBtn" aria-label="Toggle music">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    </button>
+
+    <div class="page">
+
+        <!-- ================= HERO (envelope video) ================= -->
+        <div class="hero">
+            <audio id="bgAudio" src="audio/audio.mp3" preload="auto"></audio>
+
+            <div class="video-gpu-accelerator">
+                <video id="bgVideo" playsinline webkit-playsinline preload="auto" muted x5-video-player-type="h5-page">
+                    <source src="video/videos.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="hero-scrim" aria-hidden="true"></div>
+
+            <div class="tap-overlay" id="tapOverlay" onclick="handleEnvelopeOpen()">
+                <div class="wax-seal-pulse"><span>Tap<br>to open</span></div>
+            </div>
+
+            <div class="details-content-layer" id="detailsContent">
+                <div>
+                    <p class="title-header">Valima · The Wedding</p>
+                    <h1 class="couple-headline">Shireen</h1>
+                    <div class="bottom-divider"></div>
+                    <p class="parents-info">
+                        D/o Mohammed Ghouse Ali
+                    </p>
+                    
+                </div>
+
+                <p style="font-size:9px;letter-spacing:2px;color:#fbead0;text-transform:uppercase;text-shadow:0 1px 3px #000;">
+                    ✦ Bless the Beautiful Couple ✦
+                </p>
+            </div>
+
+            <div class="scroll-cue" id="scrollCue">
+                <span>Continue</span><div class="chev">⌄</div>
+            </div>
+        </div>
+
+        <!-- ================= BISMILLAH / INVITE ================= -->
+        <section class="section bismillah" id="content">
+            <p class="arabic reveal">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+            <p class="translit reveal">In the name of Allah, the Most Gracious, the Most Merciful</p>
+            <p class="lead reveal">Together with their families, Shireen warmly invite you to their
+                Valima reception. Your presence and duas will be the greatest blessing upon this new beginning.</p>
+            <!-- <p class="translit reveal" style="margin-top:14px">With the blessings of Late mrs nd mr shaik mahboob ali</p> -->
+            <p class="orn reveal">✦ ☾ ✦</p>
+        </section>
+
+        <!-- ================= COUNTDOWN ================= -->
+        <section class="section jaali-wash" style="background:linear-gradient(180deg,var(--ivory),#f4ecd6)">
+            <div class="eyebrow reveal">Counting the days</div>
+            <h2 class="reveal">Until the Reception</h2>
+            <div class="countdown" id="countdown">
+                <div class="cd-box reveal"><b id="cd-d">--</b><small>Days</small></div>
+                <div class="cd-box reveal"><b id="cd-h">--</b><small>Hours</small></div>
+                <div class="cd-box reveal"><b id="cd-m">--</b><small>Mins</small></div>
+                <div class="cd-box reveal"><b id="cd-s">--</b><small>Secs</small></div>
+            </div>
+        </section>
+
+        <!-- ================= RECEPTION (jaali arch scratch card) ================= -->
+        <section class="section" style="background:linear-gradient(180deg,#f4ecd6,var(--ivory))">
+            <div class="eyebrow reveal">The Celebration</div>
+            <h2 class="reveal">An Evening of Joy</h2>
+            <p class="orn reveal">☾</p>
+            <div class="fest-stack" id="festStack"><!-- card injected --></div>
+        </section>
+
+        <!-- ================= VENUE ================= -->
+        <section class="section venue-block">
+            <div class="eyebrow reveal">Reach us</div>
+            <h2 class="reveal">The Venue</h2>
+
+            <div class="map-card reveal">
+                <iframe title="Reception venue map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                    src="https://maps.google.com/maps?q=SD%20Function%20Hall%20Allapur%20X%20Road%20Borabanda%20Hyderabad&z=15&output=embed"></iframe>
+                <a class="map-shield" href="https://maps.google.com/?q=SD+Function+Hall+Allapur+X+Road+Borabanda+Hyderabad" target="_blank" rel="noopener" aria-label="Open reception venue in Maps"></a>
+            </div>
+
+            <div class="vrow reveal">
+                <h4>Valima Reception</h4>
+                <p>S.D. Function Hall, Allapur X Road, Borabanda, Hyderabad · 15 Aug, 9:00 PM</p>
+                <a class="maplink" href="https://maps.google.com/?q=SD+Function+Hall+Allapur+X+Road+Borabanda+Hyderabad" target="_blank" rel="noopener">Open in Maps</a>
+            </div>
+        </section>
+
+        <footer>
+            <div class="crescent">☾</div>
+            <div class="fnames">Shireen</div>
+            <div class="fmeta">15 August 2026 · Hyderabad</div>
+            <div class="fbless">With love and prayers — bless the beautiful couple</div>
+            <div class="fmeta" style="margin-top:20px">RSVP · Mohammed Ghouse Ali</div>
+            <div class="fbless" style="margin-top:4px;font-style:normal;letter-spacing:1px">6300882069  </div>
+            <div class="fbless" style="margin-top:14px;font-size:10.5px;opacity:.85">With best compliments from near and dear</div>
+        </footer>
+
+    </div>
+
+    <script>
+    /* =====================================================================
+       CONFIG  — edit here
+       ===================================================================== */
+    var CONFIG = {
+        /* Countdown target — Valima / reception, 15 Aug 2026, 9:00 PM IST */
+        reception: '2026-08-15T21:00:00+05:30',
+        revealAt: 2,                   /* seconds into the video before the overlay appears */
+        musicSrc: 'audio/audio.mp3',
+        audioStart: 32                        /* start & loop the song from this second */
+    };
+
+    /* Only the reception remains. Times for the .ics are LOCAL floating: YYYYMMDDThhmmss. */
+    var EVENTS = [
+        {
+            key:'valima', name:'Valima', tag:'The wedding feast',
+            day:'Saturday · 15 August 2026', date:'15 August 2026',
+            time:'Dinner 9:00 PM',
+            venue:'S.D. Function Hall, Allapur X Road, Borabanda, Hyderabad',
+            shape:'arch', hint:'Scratch to reveal', emblem:'❖',
+            ics:{ title:'Valima Reception — Sameer & Shireen', start:'20260815T210000', end:'20260815T233000',
+                  loc:'S.D. Function Hall, Allapur X Road, Borabanda, Hyderabad', desc:'Valima reception dinner.' }
+        }
+    ];
+
+    /* Foil gradients for the scratch layer — bottle-green / marigold */
+    var FOILS = {
+        emerald:['#3f7a5c','#0c3d2e'],
+        marigold:['#f0c268','#d79a2c']
+    };
+
+    /* =====================================================================
+       APP  (ES5 for in-app browsers)
+       ===================================================================== */
+    (function(){
+        'use strict';
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        var videoNode   = document.getElementById('bgVideo');
+        var tapOverlay   = document.getElementById('tapOverlay');
+        var detailsContent = document.getElementById('detailsContent');
+        var audioNode    = document.getElementById('bgAudio');
+        var scrollCue    = document.getElementById('scrollCue');
+        var revealed = false;
+
+        /* ---- audio: start & loop from CONFIG.audioStart seconds ---- */
+        function seekAudioStart(){
+            var st = CONFIG.audioStart || 0;
+            try{
+                if(audioNode.readyState >= 1 && !isNaN(audioNode.duration) && st < audioNode.duration){
+                    audioNode.currentTime = st;
+                } else {
+                    audioNode.addEventListener('loadedmetadata', function onMeta(){
+                        audioNode.removeEventListener('loadedmetadata', onMeta);
+                        try{ if(st < audioNode.duration) audioNode.currentTime = st; }catch(e){}
+                    });
+                }
+            }catch(e){}
+        }
+        audioNode.addEventListener('ended', function(){   /* loop back to the 45s mark */
+            try{ audioNode.currentTime = CONFIG.audioStart || 0; audioNode.play().catch(function(){}); }catch(e){}
+        });
+
+        /* ---- warm-decode the video so frame 0 is ready before tap ---- */
+        window.addEventListener('DOMContentLoaded', function(){
+            try{ videoNode.load(); }catch(e){}
+            var p = videoNode.play();
+            if(p && p.then){
+                p.then(function(){ videoNode.pause(); videoNode.currentTime = 0; }).catch(function(){});
+            }
+        });
+
+        /* ---- reveal overlay + unlock scroll ---- */
+        function revealDetails(){
+            if(revealed) return; revealed = true;
+            detailsContent.classList.add('active');
+            document.documentElement.classList.remove('lock');
+            document.body.classList.remove('lock');
+            scrollCue.classList.add('show');
+            startPetals();
+        }
+        videoNode.addEventListener('timeupdate', function(){
+            if(videoNode.currentTime >= CONFIG.revealAt) revealDetails();
+        });
+        videoNode.addEventListener('ended', revealDetails);
+
+        /* ---- tap to open (kept global for inline onclick) ---- */
+        window.handleEnvelopeOpen = function(){
+            tapOverlay.style.opacity = '0';
+            setTimeout(function(){ tapOverlay.style.display = 'none'; }, 500);
+
+            videoNode.muted = true;
+            videoNode.currentTime = 0;
+            var pp = videoNode.play();
+            if(pp && pp.catch){ pp.catch(function(err){ if(window.console) console.log('warm start:', err); }); }
+
+            seekAudioStart();
+            audioNode.volume = 0;
+            audioNode.play().catch(function(){});
+            playing = true; setMusicIcon();
+            var vol = 0;
+            var fade = setInterval(function(){
+                vol += 0.05;
+                if(vol >= 0.6){ vol = 0.6; clearInterval(fade); }
+                audioNode.volume = vol;
+            }, 80);
+
+            /* safety: if timeupdate doesn't fire, reveal shortly after */
+            setTimeout(revealDetails, (CONFIG.revealAt + 1.4) * 1000);
+        };
+
+        scrollCue.addEventListener('click', function(){
+            document.getElementById('content').scrollIntoView({behavior:'smooth'});
+        });
+
+        /* ---- music toggle ---- */
+        var musicBtn = document.getElementById('musicBtn'), playing = false;
+        function setMusicIcon(){ musicBtn.classList.toggle('playing', playing); }
+        musicBtn.addEventListener('click', function(){
+            if(playing){ audioNode.pause(); playing = false; }
+            else { audioNode.play().catch(function(){}); playing = true; }
+            setMusicIcon();
+        });
+
+        /* ---- pause media when hidden ---- */
+        function stopMedia(){
+            try{ audioNode.pause(); }catch(e){}
+            try{ videoNode.pause(); }catch(e){}
+        }
+        document.addEventListener('visibilitychange', function(){
+            if(document.visibilityState === 'hidden'){ stopMedia(); playing = false; setMusicIcon(); }
+        });
+        window.addEventListener('pagehide', stopMedia);
+
+        /* ---- countdown ---- */
+        var target = new Date(CONFIG.reception).getTime();
+        var cdd=document.getElementById('cd-d'),cdh=document.getElementById('cd-h'),
+            cdm=document.getElementById('cd-m'),cds=document.getElementById('cd-s');
+        function tick(){
+            var t = target - Date.now();
+            if(t <= 0){
+                document.getElementById('countdown').innerHTML =
+                    '<p style="font-family:Cormorant Garamond,serif;font-style:italic;color:var(--emerald);font-size:18px">The blessed evening is here ☾</p>';
+                return;
+            }
+            cdd.textContent = Math.floor(t/86400000);
+            cdh.textContent = Math.floor(t/3600000)%24;
+            cdm.textContent = Math.floor(t/60000)%60;
+            cds.textContent = Math.floor(t/1000)%60;
+        }
+        tick(); setInterval(tick, 1000);
+
+        /* ---- build the reception scratch card ---- */
+        var stack = document.getElementById('festStack');
+        function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+        for(var i=0;i<EVENTS.length;i++){
+            (function(ev){
+                var card = document.createElement('div');
+                card.className = 'fcard' + (ev.shape==='arch' ? ' arch' : '');
+                card.setAttribute('data-key', ev.key);
+                var timeHTML = ev.time ? '<div class="f-time">'+esc(ev.time)+'</div>' : '';
+                card.innerHTML =
+                    '<div class="fcard-base">'+
+                        '<div class="f-day">'+esc(ev.day)+'</div>'+
+                        '<div class="f-name">'+esc(ev.name)+'</div>'+
+                        '<div class="f-tag">'+esc(ev.tag)+'</div>'+
+                        '<div class="f-line"></div>'+
+                        '<div class="f-date">'+esc(ev.date)+'</div>'+
+                        timeHTML+
+                        '<div class="f-venue">'+esc(ev.venue)+'</div>'+
+                        '<button class="ics-btn" '+
+                            'data-title="'+esc(ev.ics.title)+'" data-start="'+ev.ics.start+'" data-end="'+ev.ics.end+'" '+
+                            'data-loc="'+esc(ev.ics.loc)+'" data-desc="'+esc(ev.ics.desc)+'">✚ Add to Calendar</button>'+
+                    '</div>'+
+                    '<canvas class="scratch"></canvas>'+
+                    '<div class="f-emblem">'+ev.emblem+'</div>'+
+                    '<div class="f-hint">'+esc(ev.hint)+'</div>';
+                stack.appendChild(card);
+                initScratch(card, ev);
+            })(EVENTS[i]);
+        }
+
+        /* ---- scratch mechanic (alternating emerald/marigold foil bands) ---- */
+        function initScratch(card, ev){
+            var canvas = card.querySelector('.scratch');
+            var hint   = card.querySelector('.f-hint');
+            var ctx = canvas.getContext ? canvas.getContext('2d') : null;
+            if(!ctx){ finish(); return; }
+            var dpr = Math.min(window.devicePixelRatio||1, 2);
+            var done=false, coated=false;
+            var NEED=3, strokes=0;
+            var active=false, committed=null, startCX=0, startCY=0, lastX=0, lastY=0, moved=0, sinceMark=0;
+
+            function coat(){
+                var cw = card.clientWidth, ch = card.clientHeight;
+                if(!cw || !ch) return;
+                canvas.width = cw*dpr; canvas.height = ch*dpr;
+                canvas.style.width = cw+'px'; canvas.style.height = ch+'px';
+                ctx.setTransform(dpr,0,0,dpr,0,0);
+                /* diagonal jaali-band foil: alternating emerald / marigold stripes */
+                var g = ctx.createLinearGradient(0,0,cw,ch);
+                g.addColorStop(0, FOILS.emerald[1]);
+                g.addColorStop(.45, FOILS.emerald[0]);
+                g.addColorStop(.55, FOILS.marigold[0]);
+                g.addColorStop(1, FOILS.marigold[1]);
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.fillStyle = g; ctx.fillRect(0,0,cw,ch);
+                /* sheen */
+                var sh = ctx.createLinearGradient(0,0,cw,0);
+                sh.addColorStop(0,'rgba(255,255,255,0)');
+                sh.addColorStop(.5,'rgba(255,255,255,.16)');
+                sh.addColorStop(1,'rgba(255,255,255,0)');
+                ctx.fillStyle = sh; ctx.fillRect(0,0,cw,ch);
+                ctx.fillStyle = 'rgba(255,255,255,.10)'; ctx.fillRect(0,0,cw,ch*0.3);
+                coated = true;
+            }
+
+            function erase(x,y){
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath(); ctx.arc(x,y,24,0,Math.PI*2); ctx.fill();
+            }
+            function point(e){
+                var r = canvas.getBoundingClientRect();
+                var t = (e.touches && e.touches[0]) ? e.touches[0] : e;
+                return { x:t.clientX - r.left, y:t.clientY - r.top, cx:t.clientX, cy:t.clientY };
+            }
+            function addStroke(){ if(done) return; strokes++; if(strokes>=NEED) finish(); }
+
+            function down(e){
+                if(done) return;
+                if(!coated) coat();
+                active=true; moved=0; sinceMark=0;
+                /* mouse always scratches; touch waits to see scratch-vs-scroll intent */
+                committed = (e.type.indexOf('mouse')===0) ? 'scratch' : null;
+                var p=point(e); startCX=p.cx; startCY=p.cy; lastX=p.x; lastY=p.y;
+                if(committed==='scratch') erase(p.x,p.y);
+            }
+            function moveH(e){
+                if(done||!active) return;
+                var p=point(e);
+                if(committed===null){
+                    var dx=Math.abs(p.cx-startCX), dy=Math.abs(p.cy-startCY);
+                    if(dx>8 && dx>=dy){ committed='scratch'; }
+                    else if(dy>8 && dy>dx){ committed='scroll'; active=false; return; } /* let page scroll */
+                    else { return; }
+                }
+                if(committed==='scratch'){
+                    if(e.cancelable) e.preventDefault();
+                    erase(p.x,p.y);
+                    var seg=Math.abs(p.x-lastX)+Math.abs(p.y-lastY);
+                    moved+=seg; sinceMark+=seg; lastX=p.x; lastY=p.y;
+                    hint.style.opacity='0';
+                    if(sinceMark>=200){ sinceMark=0; addStroke(); } /* long continuous sweeps also count */
+                }
+            }
+            function up(){
+                if(committed==='scratch' && moved>25) addStroke();
+                active=false; committed=null; moved=0; sinceMark=0;
+            }
+
+            canvas.addEventListener('mousedown', down);
+            document.addEventListener('mousemove', moveH);
+            document.addEventListener('mouseup', up);
+            canvas.addEventListener('touchstart', function(e){ down(e); }, {passive:true});
+            canvas.addEventListener('touchmove', moveH, {passive:false});
+            canvas.addEventListener('touchend', up);
+            canvas.addEventListener('touchcancel', up);
+            window.addEventListener('resize', function(){ if(!done) coat(); });
+
+            /* coat once the card is laid out / in view */
+            if(window.IntersectionObserver){
+                var io = new IntersectionObserver(function(en){
+                    for(var k=0;k<en.length;k++){ if(en[k].isIntersecting){ coat(); io.disconnect(); } }
+                }, {threshold:.2});
+                io.observe(card);
+            } else { setTimeout(coat, 400); }
+
+            function finish(){ if(done) return; done=true; card.classList.add('revealed'); }
+        }
+
+        /* ---- Add to Calendar (.ics) ---- */
+        function pad(n){ return (n<10?'0':'')+n; }
+        function stampNow(){
+            var d=new Date();
+            return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+'T'+
+                   pad(d.getUTCHours())+pad(d.getUTCMinutes())+pad(d.getUTCSeconds())+'Z';
+        }
+        function icsEsc(s){ return String(s).replace(/\\/g,'\\\\').replace(/,/g,'\\,').replace(/;/g,'\\;').replace(/\n/g,'\\n'); }
+        function makeICS(b){
+            return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//wedding-invite//EN','CALSCALE:GREGORIAN',
+                'BEGIN:VEVENT','UID:'+Date.now()+'@invite','DTSTAMP:'+stampNow(),
+                'DTSTART:'+b.getAttribute('data-start'),'DTEND:'+b.getAttribute('data-end'),
+                'SUMMARY:'+icsEsc(b.getAttribute('data-title')),
+                'LOCATION:'+icsEsc(b.getAttribute('data-loc')),
+                'DESCRIPTION:'+icsEsc(b.getAttribute('data-desc')),
+                'END:VEVENT','END:VCALENDAR'].join('\r\n');
+        }
+        document.addEventListener('click', function(e){
+            var b = e.target;
+            while(b && b !== document && !(b.className && String(b.className).indexOf('ics-btn')>-1)){ b = b.parentNode; }
+            if(!b || b === document) return;
+            var ics = makeICS(b);
+            var name = (b.getAttribute('data-title')||'event').replace(/[^a-z0-9]+/gi,'-')+'.ics';
+            try{
+                var blob = new Blob([ics], {type:'text/calendar;charset=utf-8'});
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a'); a.href=url; a.download=name;
+                document.body.appendChild(a); a.click();
+                setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 400);
+            }catch(err){
+                window.location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+            }
+        });
+
+        /* ---- scroll reveal ---- */
+        if(window.IntersectionObserver){
+            var ro = new IntersectionObserver(function(en){
+                for(var i=0;i<en.length;i++){ if(en[i].isIntersecting){ en[i].target.classList.add('in'); ro.unobserve(en[i].target); } }
+            }, {threshold:.14});
+            var rev = document.querySelectorAll('.reveal');
+            for(var r=0;r<rev.length;r++) ro.observe(rev[r]);
+        } else {
+            var all = document.querySelectorAll('.reveal');
+            for(var a=0;a<all.length;a++) all[a].classList.add('in');
+        }
+
+        /* ---- falling petals (marigold + jasmine, in keeping with the new palette) ---- */
+        var layer = document.getElementById('petals');
+        var glyphs = ['🌼','✦','🤍','🌸'];
+        var on=false, liveCount=0, MAXP=18;
+        function spawn(){
+            if(!on || liveCount>=MAXP) return;
+            var p = document.createElement('span');
+            p.className = 'petal';
+            p.textContent = glyphs[Math.floor(Math.random()*glyphs.length)];
+            p.style.left = (Math.random()*100)+'vw';
+            p.style.fontSize = (12+Math.random()*16)+'px';
+            p.style.opacity = '0.85';
+            p.style.setProperty('--drift', (Math.random()*140-70)+'px');
+            p.style.animation = 'fall '+(6+Math.random()*5)+'s linear forwards';
+            layer.appendChild(p); liveCount++;
+            p.addEventListener('animationend', function(){ this.remove(); liveCount--; });
+        }
+        function startPetals(){
+            if(reduce || on) return; on = true;
+            for(var i=0;i<12;i++) setTimeout(spawn, i*140);
+            setInterval(spawn, 720);
+        }
+    })();
+    </script>
+</body>
+</html>
